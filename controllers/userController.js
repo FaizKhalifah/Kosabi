@@ -19,3 +19,42 @@ async function getAllUsers(req,res){
     }
 }
 
+async function getUserbyId(req,res){
+    try{
+        const fetchedUser = user.findById(req.params.id);
+        if(!fetchedUser){
+            return res.status(404).send("error");
+        }
+        res.status(200).send(fetchedUser);
+    }catch(err){
+        res.status(400).send(err);
+    }
+}
+
+async function updateUser(req,res){
+    try {
+        const updateduser = await user.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+        if (!updateUser) {
+            return res.status(404).send();
+        }
+        res.status(200).send(updateduser);
+    } catch (err) {
+        res.status(400).send(err);
+    }
+};
+
+async function deleteUser(req,res){
+    try {
+        const deletedUser = await user.findByIdAndDelete(req.params.id);
+        if (!deletedUser) {
+            return res.status(404).send();
+        }
+        res.status(200).send(deletedUser);
+    } catch (err) {
+        res.status(500).send(err);
+    }
+};
+
+export default {
+    createUser, getAllUsers,getUserbyId,deleteUser,updateUser
+}
