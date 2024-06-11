@@ -1,9 +1,9 @@
-import room from "../models/room.js"
+import Room from "../models/room.js";
 
 
 async function index(req,res){
     try{
-        const rooms = await room.find();
+        const rooms = await Room.find();
         res.render('rooms/index',{rooms});
     }catch(err){
         res.status(500).send(err);
@@ -12,11 +12,11 @@ async function index(req,res){
 
 async function show(req,res){
     try{
-        const fetchedRoom = room.findById(req.params.id);
-        if(!fetchedRoom){
+        const room = Room.findById(req.params.id);
+        if(!room){
             return res.status(404).send("error");
         }
-        res.render('rooms/show',{fetchedRoom});
+        res.render('rooms/show',{room});
     }catch(err){
         res.status(500).send(err);
     }
@@ -29,8 +29,8 @@ function create(req,res){
 
 async function store(req, res){
     try{
-        const newRoom = new room(req.body);
-        await newRoom.save();
+        const room = new Room(req.body);
+        await room.save();
         res.redirect('/rooms');
     }catch(err){
         res.status(500).send(err);
@@ -39,11 +39,11 @@ async function store(req, res){
 
 async function edit(req,res){
     try{
-        const editedRoom = await room.findById(req.params.id);
-        if(!editedRoom){
+        const room = await Room.findById(req.params.id);
+        if(!room){
             res.status(400).send('room not found');
         }
-        res.render('rooms/edit',{editedRoom});
+        res.render('rooms/edit',{room});
     }catch(err){
         res.status(500).send(err);
     }
@@ -52,8 +52,8 @@ async function edit(req,res){
 
 async function update(req,res){
     try {
-        const updatedRoom = await room.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
-        if (!updatedRoom) {
+        const room = await Room.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+        if (!room) {
             return res.status(404).send();
         }
         res.redirect('/rooms');
@@ -64,8 +64,8 @@ async function update(req,res){
 
 async function destroy(req,res){
     try {
-        const deletedRoom = await room.findByIdAndDelete(req.params.id);
-        if (!deletedRoom) {
+        const room = await Room.findByIdAndDelete(req.params.id);
+        if (!room) {
             return res.status(404).send();
         }
         res.redirect('/rooms');
@@ -75,5 +75,5 @@ async function destroy(req,res){
 };
 
 export default {
-    index,create,store,edit,update,destroy
+    index,show,create,store,edit,update,destroy
 }
