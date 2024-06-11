@@ -4,7 +4,11 @@ import Room from "../models/room.js";
 async function index(req,res){
     try{
         const rooms = await Room.find();
-        res.render('rooms/index',{rooms});
+        let message = "";
+        if(rooms.length===0){
+        message = "Belum ada rooms di database";
+        }
+        res.render('rooms/index',{rooms,message});
     }catch(err){
         res.status(500).send(err);
     }
