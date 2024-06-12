@@ -1,5 +1,5 @@
 import express from "express";
-import router from "./routes/roomRoutes.js";  
+import roomRouter from "./routes/roomRoutes.js";  
 import mongoose from "mongoose";  
 import path from "path";   
 import { fileURLToPath } from 'url';
@@ -18,5 +18,5 @@ mongoose.connect(connection)
   .then((result) => app.listen(3000))
   .catch((err) => console.log(err));
 
-app.use(router);
+app.use(roomRouter);
 console.log("hello");

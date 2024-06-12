@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add New Room</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <h1>Add New Room</h1>
+    <form action="/rooms/create" method="POST">
+        <label for="nomor_kamar">Room Number:</label>
+        <input type="text" id="nomor_kamar" name="nomor_kamar" >
+        <br>
+        <label for="harga">Price:</label>
+        <input type="number" id="harga" name="harga">
+        <br>
+        <button type="submit">Add Room</button>
+    </form>
+</body>
+</html>
