@@ -72,8 +72,8 @@ async function update(req, res) {
 
 async function destroy(req, res) {
     try {
-        const deletedRoom = await Room.findByIdAndDelete(req.params.id);
-        if (!deletedRoom) {
+        const room = await Room.findOneAndDelete({ nomor_kamar: req.params.nomor_kamar });
+        if (!room) {
             return res.status(404).send('Room not found');
         }
         res.redirect('/rooms');
