@@ -43,11 +43,12 @@ async function store(req, res) {
 
 async function edit(req, res) {
     try {
-        const editedRoom = await Room.findById(req.params.id);
-        if (!editedRoom) {
-            return res.status(400).send('Room not found');
+        const room = await Room.findOne({ nomor_kamar: req.params.nomor_kamar });
+        if (!room) {
+            res.status(400).send('Room not found');
+        } else {
+            res.render('rooms/edit', { room });
         }
-        res.render('rooms/edit', { room: editedRoom });
     } catch (err) {
         res.status(500).send(err);
     }
@@ -55,8 +56,12 @@ async function edit(req, res) {
 
 async function update(req, res) {
     try {
-        const updatedRoom = await Room.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
-        if (!updatedRoom) {
+        const room = await Room.findOneAndUpdate(
+            { nomor_kamar: req.params.nomor_kamar },
+            req.body,
+            { new: true, runValidators: true }
+        );
+        if (!room) {
             return res.status(404).send('Room not found');
         }
         res.redirect('/rooms');

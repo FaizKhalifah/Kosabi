@@ -10,11 +10,21 @@
     <% if (message) { %>
         <p><%= message %></p>
     <% } else { %>
-        <ul>
+        <table>
+            <tr>
+                <th>Nomor Kamar</th>
+                <th>Harga</th>
+                <th>Aksi</th>
+            </tr>
             <% rooms.forEach(room => { %>
-                <li><%= room.nomor_kamar %> - <%= room.tipe_kamar %> - <%= room.harga %></li>
+                <tr>
+                    <td><%= room.nomor_kamar %></td>
+                    <td><%= room.harga %></li></td>
+                    <td><a href="rooms/edit/<%=room.nomor_kamar%>">Edit</a> | <a href="/rooms/delete/:<%=room.nomor_kamar%>">Delete</a></td>
+                </tr> 
             <% }); %>
-        </ul>
+        </table>
+         
     <% } %>
     <a href="/rooms/create">Tambah ruangan</a>
 </body>
