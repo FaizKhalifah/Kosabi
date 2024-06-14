@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>Edit Room</h1>
-    <form action="/rooms/edit/<%= room.nomor_kamar %>" method="POST">
+    <form action="/rooms/edit/<%= room._id %>" method="POST">
         <label for="nomor_kamar">Room Number:</label>
         <input type="text" id="nomor_kamar" name="nomor_kamar" value="<%= room.nomor_kamar %>" required>
         <br>

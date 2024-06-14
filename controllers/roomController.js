@@ -16,11 +16,11 @@ async function index(req, res) {
 async function show(req, res) {
     try {
         console.log(req.body);
-        const fetchedRoom = await Room.findById(req.params.id);
-        if (!fetchedRoom) {
+        const room = await Room.findById(req.params.id);
+        if (room) {
             return res.status(404).send("Room not found");
         }
-        res.render('rooms/show', { room: fetchedRoom });
+        res.render('rooms/show', { room});
     } catch (err) {
         res.status(500).send(err);
     }
@@ -33,8 +33,8 @@ function create(req, res) {
 async function store(req, res) {
     try {
         console.log(req.body);
-        const newRoom = new Room(req.body);
-        await newRoom.save();
+        const room = new Room(req.body);
+        await room.save();
         res.redirect('/rooms');
     } catch (err) {
         res.status(500).send(err);
@@ -43,7 +43,7 @@ async function store(req, res) {
 
 async function edit(req, res) {
     try {
-        const room = await Room.findOne({ nomor_kamar: req.params.nomor_kamar });
+        const room = await Room.findById(req.params.id);
         if (!room) {
             res.status(400).send('Room not found');
         } else {
@@ -56,11 +56,7 @@ async function edit(req, res) {
 
 async function update(req, res) {
     try {
-        const room = await Room.findOneAndUpdate(
-            { nomor_kamar: req.params.nomor_kamar },
-            req.body,
-            { new: true, runValidators: true }
-        );
+        const room = await Room.findByIdAndUpdate(req.params.id,req.body);
         if (!room) {
             return res.status(404).send('Room not found');
         }
@@ -69,10 +65,9 @@ async function update(req, res) {
         res.status(400).send(err);
     }
 }
-
 async function destroy(req, res) {
     try {
-        const room = await Room.findOneAndDelete({ nomor_kamar: req.params.nomor_kamar });
+        const room = await Room.findByIdAndDelete(req.params.id);
         if (!room) {
             return res.status(404).send('Room not found');
         }
