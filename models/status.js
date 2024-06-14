@@ -26,5 +26,5 @@ const statusSchema = new Schema({
 
 })
 
-const status = mongoose.model('status',statusSchema);
-export default status;
+const Status = mongoose.model('status',statusSchema);
+export default Status;

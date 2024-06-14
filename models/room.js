@@ -10,7 +10,12 @@ const roomSchema = new Schema({
     harga:{
         type:Number,
         required:true
-    }
+    },
+    status: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Status'
+    }]
+
 })
 
 const Room = mongoose.model('room',roomSchema);

@@ -27,7 +27,8 @@
                                 <td><%= room.nomor_kamar %></td>
                                 <td><%= room.harga %></td>
                                 <td>
-                                    <a class="btn btn-warning btn-sm" href="rooms/edit/<%=room._id%>">Edit</a>
+                                    <a class="btn btn-info btn-sm" href="/rooms/<%=room._id%>">Info</a>
+                                    <a class="btn btn-warning btn-sm" href="/rooms/edit/<%=room._id%>">Edit</a>
                                     <a class="btn btn-danger btn-sm" href="/rooms/delete/<%=room._id%>">Delete</a>
                                 </td>
                             </tr> 

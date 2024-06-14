@@ -15,12 +15,13 @@ async function index(req, res) {
 
 async function show(req, res) {
     try {
-        console.log(req.body);
         const room = await Room.findById(req.params.id);
-        if (room) {
+        console.log('room');
+        if (!room) {
             return res.status(404).send("Room not found");
         }
-        res.render('rooms/show', { room});
+
+        res.render('rooms/show', { room });
     } catch (err) {
         res.status(500).send(err);
     }
