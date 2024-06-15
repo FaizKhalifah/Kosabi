@@ -1,5 +1,6 @@
 import express from "express";
 import roomRouter from "./routes/roomRoutes.js";  
+import authRouter from "./routes/authRoutes.js";
 import mongoose from "mongoose";  
 import path from "path";   
 import { fileURLToPath } from 'url'; 
@@ -22,4 +23,5 @@ mongoose.connect(connection)
   .catch((err) => console.log(err));
 
 app.use(roomRouter);
+app.use(authRouter);
 console.log("hello");

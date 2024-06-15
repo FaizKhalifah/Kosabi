@@ -1,4 +1,6 @@
 import Room from "../models/room.js";
+import Status from "../models/status.js";
+import User from "../models/user.js";
 
 async function index(req, res) {
     try {
@@ -15,8 +17,14 @@ async function index(req, res) {
 
 async function show(req, res) {
     try {
-        const room = await Room.findById(req.params.id);
-        console.log('room');
+        const room = await Room.findById(req.params.id).populate({
+            path: 'status',
+            populate: {
+                path: 'nik',
+                model: 'User'
+            }
+        });
+
         if (!room) {
             return res.status(404).send("Room not found");
         }
