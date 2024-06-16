@@ -26,5 +26,8 @@ mongoose.connect(connection)
   .then(console.log(`server start on port ${port}`))
   .catch((err) => console.log(err));
 
+app.get('/',(req,res)=>{
+  res.render('index');
+})
 app.use(roomRouter);
 app.use(authRouter);

@@ -1,9 +1,9 @@
-import user from "../models/user.js";
+import User from "../models/user.js";
 
 async function createUser(req, res){
     try{
         console.log(req.body);
-        const newUser = new user(req.body);
+        const newUser = new User(req.body);
         await newUser.save();
         res.status(201).send(newUser);
     }catch(err){
@@ -13,7 +13,7 @@ async function createUser(req, res){
 
 async function getAllUsers(req,res){
     try{
-        const users = await user.find();
+        const users = await User.find();
         res.status(200).send(users);
     }catch(err){
         res.status(400).send(err);
@@ -22,7 +22,7 @@ async function getAllUsers(req,res){
 
 async function getUserbyId(req,res){
     try{
-        const fetchedUser = user.findById(req.params.id);
+        const fetchedUser = User.findById(req.params.id);
         if(!fetchedUser){
             return res.status(404).send("error");
         }
@@ -34,7 +34,7 @@ async function getUserbyId(req,res){
 
 async function updateUser(req,res){
     try {
-        const updateduser = await user.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+        const updateduser = await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
         if (!updateduser) {
             return res.status(404).send();
         }

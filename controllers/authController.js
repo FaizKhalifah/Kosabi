@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import user from "../models/user.js";
+import User from "../models/user.js";
 
 const maxAge = 60*60;
 const createToken = (id)=>{
@@ -17,7 +17,7 @@ async function login_get(req,res){
 
 async function register_post(req,res){
     try{
-        const newUser = new user(req.body);
+        const newUser = new User(req.body);
         await newUser.save();
         const token = createToken(newUser._id);
         res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
@@ -29,9 +29,23 @@ async function register_post(req,res){
 }
 
 async function login_post(req,res){
-
+    const { username, password } = req.body;
+    try {
+      const user = await User.login(username, password);
+      const token = createToken(user._id);
+      res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
+      res.status(200).json({ user: user._id });
+    } 
+    catch (err) {
+      const errors = handleErrors(err);
+      res.status(400).json({ errors });
+    }
 }
 
+async function logout_get(req,res){
+    res.cookie('jwt', '', { maxAge: 1 });
+    res.redirect('/');
+}
 export default{
-    register_get,register_post,login_get
+    register_get,register_post,login_get,login_post,logout_get
 }
