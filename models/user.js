@@ -1,5 +1,6 @@
 import mongoose, {Schema} from "mongoose";
 mongoose.connect('mongodb://localhost:27017/kosabi');
+import bcrypt from "bcrypt";
 
 const userSchema = new Schema({
     nik:{
@@ -27,6 +28,13 @@ const userSchema = new Schema({
         required:true
     }
 })
+
+userSchema.pre('save', async function(next) {
+    const salt = await bcrypt.genSalt();
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
+  });
+
 
 const user = mongoose.model('user',userSchema);
 export default user;

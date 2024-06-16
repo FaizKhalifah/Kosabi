@@ -2,6 +2,7 @@ import user from "../models/user.js";
 
 async function createUser(req, res){
     try{
+        console.log(req.body);
         const newUser = new user(req.body);
         await newUser.save();
         res.status(201).send(newUser);
