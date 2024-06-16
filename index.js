@@ -4,6 +4,7 @@ import authRouter from "./routes/authRoutes.js";
 import mongoose from "mongoose";  
 import path from "path";   
 import { fileURLToPath } from 'url'; 
+import { checkUser } from "./middlewares/authMiddleware.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -29,5 +30,6 @@ mongoose.connect(connection)
 app.get('/',(req,res)=>{
   res.render('index');
 })
+// app.get('*', checkUser);
 app.use(roomRouter);
 app.use(authRouter);

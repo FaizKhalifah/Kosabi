@@ -29,23 +29,17 @@ const userSchema = new Schema({
     }
 })
 
-userSchema.pre('save', async function(next) {
-    const salt = await bcrypt.genSalt();
+userSchema.pre('save', async function (next) {
+    if (!this.isModified('password')) return next();
+    const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
     next();
-  });
+});
 
-  userSchema.statics.login = async function(username, password) {
-    const user = await this.findOne({ username });
-    if (user) {
-      const auth = await bcrypt.compare(password, user.password);
-      if (auth) {
-        return user;
-      }
-      throw Error('incorrect password');
-    }
-    throw Error('incorrect email');
-  };
+userSchema.methods.comparePassword = async function (candidatePassword) {
+    return await bcrypt.compare(candidatePassword, this.password);
+};
+
   
 
 const User = mongoose.model('user',userSchema);

@@ -12,7 +12,10 @@ form.addEventListener('submit',async(e)=>{
           headers: {'Content-Type': 'application/json'}
         });
         const data = await res.json();
-        location.assign('/rooms');
+        console.log(data);
+        if(data){
+          location.assign('/rooms');
+        }
     
       }
       catch (err) {
