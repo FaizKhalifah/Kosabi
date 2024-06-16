@@ -19,11 +19,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');  
 app.set('views', path.join(__dirname, 'views')); 
 
+const port = '3000';
 const connection ='mongodb://localhost:27017/kosabi';
 mongoose.connect(connection)
-  .then((result) => app.listen(3000))
+  .then((result) => app.listen(port))
+  .then(console.log(`server start on port ${port}`))
   .catch((err) => console.log(err));
 
 app.use(roomRouter);
 app.use(authRouter);
-console.log("hello");

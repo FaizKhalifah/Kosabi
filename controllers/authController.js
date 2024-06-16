@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-import userController from "./userController.js";
 import bcrypt from "bcrypt";
 import user from "../models/user.js";
 
@@ -27,6 +26,10 @@ async function register_post(req,res){
         res.status(400).json(err);
     }
     
+}
+
+async function login_post(req,res){
+
 }
 
 export default{

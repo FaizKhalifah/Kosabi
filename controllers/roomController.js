@@ -41,7 +41,6 @@ function create(req, res) {
 
 async function store(req, res) {
     try {
-        console.log(req.body);
         const room = new Room(req.body);
         await room.save();
         res.redirect('/rooms');
