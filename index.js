@@ -1,6 +1,7 @@
 import express from "express";
 import roomRouter from "./routes/roomRoutes.js";  
 import authRouter from "./routes/authRoutes.js";
+import adminRouter from "./routes/adminRoutes.js";
 import mongoose from "mongoose";  
 import cookieParser from "cookie-parser";
 import authMiddleware from "./middlewares/authMiddleware.js";
@@ -32,7 +33,7 @@ app.get('/',(req,res)=>{
   res.render('index');
 })
 
-
+app.use(adminRouter);
 app.use(authRouter);
 app.use(roomRouter);
 app.use('/rooms', authMiddleware.requireAuth, roomRouter);
