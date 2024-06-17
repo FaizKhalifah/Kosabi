@@ -1,17 +1,17 @@
-import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
-import User from "../models/user.js";
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
+import User from '../models/user.js';
 
-const maxAge = 60*60;
-const createToken = (id)=>{
-    return jwt.sign({id},'tokenRahasia',{expiresIn:maxAge});
-}
+const maxAge = 60 * 60; // 1 hour
+const createToken = (id) => {
+    return jwt.sign({ id }, 'tokenRahasia', { expiresIn: maxAge });
+};
 
-async function register_get(req,res){
+async function register_get(req, res) {
     res.render('auth/register');
 }
 
-async function login_get(req,res){
+async function login_get(req, res) {
     res.render('auth/login');
 }
 
@@ -29,6 +29,7 @@ async function register_post(req, res) {
 
 async function login_post(req, res) {
     const { username, password } = req.body;
+    console.log(req.body)
     try {
         const user = await User.findOne({ username });
         if (!user) {
@@ -46,10 +47,15 @@ async function login_post(req, res) {
     }
 }
 
-async function logout_get(req,res){
+async function logout_get(req, res) {
     res.cookie('jwt', '', { maxAge: 1 });
     res.redirect('/');
 }
-export default{
-    register_get,register_post,login_get,login_post,logout_get
-}
+
+export default {
+    register_get,
+    register_post,
+    login_get,
+    login_post,
+    logout_get
+};

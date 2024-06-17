@@ -2,9 +2,10 @@ import express from "express";
 import roomRouter from "./routes/roomRoutes.js";  
 import authRouter from "./routes/authRoutes.js";
 import mongoose from "mongoose";  
+import cookieParser from "cookie-parser";
+import authMiddleware from "./middlewares/authMiddleware.js";
 import path from "path";   
 import { fileURLToPath } from 'url'; 
-import { checkUser } from "./middlewares/authMiddleware.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -13,9 +14,8 @@ const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
-
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cookieParser());
 
 app.set('view engine', 'ejs');  
 app.set('views', path.join(__dirname, 'views')); 
@@ -27,9 +27,10 @@ mongoose.connect(connection)
   .then(console.log(`server start on port ${port}`))
   .catch((err) => console.log(err));
 
+app.get('*',authMiddleware.checkUser)
 app.get('/',(req,res)=>{
   res.render('index');
 })
-// app.get('*', checkUser);
 app.use(roomRouter);
 app.use(authRouter);
+app.use('/rooms', authMiddleware.requireAuth, roomRouter);

@@ -1,33 +1,35 @@
-import mongoose, {Schema} from "mongoose";
+import mongoose, { Schema } from 'mongoose';
+import bcrypt from 'bcrypt';
+
 mongoose.connect('mongodb://localhost:27017/kosabi');
-import bcrypt from "bcrypt";
 
 const userSchema = new Schema({
-    nik:{
-        type:String,
-        required:true,
-        unique:true
+    nik: {
+        type: String,
+        required: true,
+        unique: true
     },
-    nama:{
-        type:String,
-        required:true
+    nama: {
+        type: String,
+        required: true
     },
-    email:{
-        type:String,
-        required:true
-    },username:{
-        type:String,
-        required:true
+    email: {
+        type: String,
+        required: true
     },
-    password:{
-        type:String,
-        required:true
+    username: {
+        type: String,
+        required: true
     },
-    tipe:{
-        type:String,
-        required:true
+    password: {
+        type: String,
+        required: true
+    },
+    tipe: {
+        type: String,
+        required: true
     }
-})
+});
 
 userSchema.pre('save', async function (next) {
     if (!this.isModified('password')) return next();
@@ -36,11 +38,9 @@ userSchema.pre('save', async function (next) {
     next();
 });
 
-userSchema.methods.comparePassword = async function (candidatePassword) {
-    return await bcrypt.compare(candidatePassword, this.password);
+userSchema.methods.comparePassword = function (candidatePassword) {
+    return bcrypt.compare(candidatePassword, this.password);
 };
 
-  
-
-const User = mongoose.model('user',userSchema);
+const User = mongoose.model('User', userSchema);
 export default User;
