@@ -29,7 +29,6 @@ async function register_post(req, res) {
 
 async function login_post(req, res) {
     const { username, password } = req.body;
-    console.log(req.body)
     try {
         const user = await User.findOne({ username });
         if (!user) {

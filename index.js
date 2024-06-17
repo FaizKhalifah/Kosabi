@@ -31,6 +31,8 @@ app.get('*',authMiddleware.checkUser)
 app.get('/',(req,res)=>{
   res.render('index');
 })
-app.use(roomRouter);
+
+
 app.use(authRouter);
+app.use(roomRouter);
 app.use('/rooms', authMiddleware.requireAuth, roomRouter);
