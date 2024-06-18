@@ -9,7 +9,7 @@
 <body>
     <div class="container mt-5">
         <h1 class="mb-4">Edit Room</h1>
-        <form action="/rooms/edit/<%= room._id %>" method="POST">
+        <form action="/admin/rooms/edit/<%= room._id %>" method="POST">
             <div class="mb-3">
                 <label for="nomor_kamar">Room Number:</label>
                 <input type="text" id="nomor_kamar" name="nomor_kamar" value="<%= room.nomor_kamar %>" required>
@@ -22,7 +22,7 @@
                 <button type="submit" class="btn btn-primary mt-4">Update Room</button>
             </div>
         </form>
-        <a href="/rooms" class="btn btn-secondary mt-4">Kembali</a>
+        <a href="/admin/rooms" class="btn btn-secondary mt-4">Kembali</a>
     
     </div>
     </body>

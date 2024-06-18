@@ -39,16 +39,15 @@ async function checkUser (req, res, next){
     next();
 };  
 
-async function authRole(tipe){
-    return async(req,res,next)=>{
-        const token = req.cookies.jwt;
+async function checkAdmin(req,res,next){
+    const token = req.cookies.jwt;
         if(token){
             try{
             const decodedToken = jwt.verify(token, 'tokenRahasia');
             req.user = await User.findById(decodedToken.id);
             if(req.user){
                 const user = req.user;
-                if(user.tipe!=tipe){
+                if(user.tipe!="admin"){
                     res.status(401);
                     res.redirect('/');
                 }
@@ -63,7 +62,7 @@ async function authRole(tipe){
         }else{
             res.redirect('/login');
         }
-    }
 }
 
-export default {requireAuth,checkUser}
+
+export default {requireAuth,checkUser,checkAdmin}
