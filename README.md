@@ -1,4 +1,5 @@
 # Kosabi
+![logo](https://github.com/FaizKhalifah/Kosabi/assets/118319595/6869b4b5-9f5b-41ea-ace3-ee20deb7e124)
 
 # Background
 Dormatory management commonly undergo a complicated and ineffective process. Usually the payment proses was done using messanger application or done manually on site. The customer 
@@ -14,4 +15,8 @@ damage the business process and customer satisfaction. Therefore, a management a
 ![Express](https://img.shields.io/badge/Express-white?style=for-the-badge) ![Mongodb](https://img.shields.io/badge/Mongodb-00e935?style=for-the-badge)
 ![Mongoose](https://img.shields.io/badge/Mongoose-901403?style=for-the-badge) ![NPM](https://img.shields.io/badge/NPM-c91800?style=for-the-badge) 
 ![EJS](https://img.shields.io/badge/EJS-c9006b?style=for-the-badge) ![CSS](https://img.shields.io/badge/CSS-blue?style=for-the-badge) 
+
+# Screenshot
+## Main page
+![WhatsApp Image 2024-06-19 at 10 10 55](https://github.com/FaizKhalifah/Kosabi/assets/118319595/7100bf76-d5f6-47cc-84e1-a37c232a7af1)
 
