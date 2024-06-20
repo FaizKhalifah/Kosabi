@@ -80,6 +80,16 @@
                 </div>
             </div>
         </div>
+        <div class="rooms">
+            <h1>Rooms</h1>
+            <% rooms.forEach(room => { %>
+                <div>
+                    <h2><%= room.name %></h2>
+                    <p>Capacity: <%= room.capacity %></p>
+                    <p>Amenities: <%= room.amenities.join(', ') %></p>
+                </div>
+            <% }); %>
+        </div>
     </main>
 </body>
 </html>

@@ -5,6 +5,7 @@ import adminRouter from "./routes/adminRoutes.js";
 import mongoose from "mongoose";  
 import cookieParser from "cookie-parser";
 import authMiddleware from "./middlewares/authMiddleware.js";
+import Room from "./models/room.js";
 import path from "path";   
 import { fileURLToPath } from 'url'; 
 
@@ -30,7 +31,14 @@ mongoose.connect(connection)
 
 app.get('*',authMiddleware.checkUser)
 app.get('/',(req,res)=>{
-  res.render('index');
+  res.render('index', async (request, response) => {
+    try {
+        const rooms = await Room.find();
+        response.render('rooms', { rooms });
+    } catch (err) {
+        console.log(err);
+    }
+});
 })
 
 app.use(adminRouter);
