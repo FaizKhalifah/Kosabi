@@ -29,17 +29,15 @@ mongoose.connect(connection)
   .then(console.log(`server start on port ${port}`))
   .catch((err) => console.log(err));
 
-app.get('*',authMiddleware.checkUser)
-app.get('/',(req,res)=>{
-  res.render('index', async (request, response) => {
-    try {
-        const rooms = await Room.find();
-        response.render('rooms', { rooms });
-    } catch (err) {
-        console.log(err);
-    }
+app.get('*',authMiddleware.checkUser);
+app.get('/',async(req,res)=>{
+  try{
+    const rooms = await Room.find();
+    res.render('index',{rooms});
+  }catch(err){
+    res.status(500).send('Error retrieving rooms');
+  }
 });
-})
 
 app.use(adminRouter);
 app.use(authRouter);

@@ -84,9 +84,9 @@
             <h1>Rooms</h1>
             <% rooms.forEach(room => { %>
                 <div>
-                    <h2><%= room.name %></h2>
-                    <p>Capacity: <%= room.capacity %></p>
-                    <p>Amenities: <%= room.amenities.join(', ') %></p>
+                    <h2><%= room.nomor_kamar %></h2>
+                    <p>Harga : <%= room.harga %></p>
+                    <p>Status : <%= room.status %></p>
                 </div>
             <% }); %>
         </div>
