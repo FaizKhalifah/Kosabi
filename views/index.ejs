@@ -24,7 +24,7 @@
                 <li><a href="#">Overview</a></li>
                 <li><a href="#">Rooms</a></li>
                 <li><a href="#">Facilites</a></li>
-                <li><a href="#">Dorm rooms</a></li>
+                <li><a href="#">Nearby</a></li>
                 <li><a href="#">About</a></li>
             </ul>
         </nav>
@@ -72,7 +72,7 @@
                     </ul>
                 </div>
                 <div class="overviewAbout">
-                    <h2 style="color:#1D2F6F">Why</h2>
+                    <h2 style="color:#1D2F6F">Why Us?</h2>
                     <p>Choosing kosabi as your place to stay is fabolous idea. We have many top notch fasilities and services.
                         Are you come far away from home? don't worry, in kosabi, you will feel at home all day. Feeling bored at
                         your room? kosabi strategic locations let you explore the city with ease.
@@ -81,15 +81,43 @@
             </div>
         </div>
         <div class="rooms">
-            <h1>Rooms</h1>
-            <% rooms.forEach(room => { %>
-                <div>
-                    <h2><%= room.nomor_kamar %></h2>
-                    <p>Harga : <%= room.harga %></p>
-                    <p>Status : <%= room.status %></p>
-                </div>
-            <% }); %>
+            <div class="roomPicture">
+
+            </div>
+            <div class="roomTable">
+                <table>
+                    <tr>
+                        <th>Nomor</th>
+                        <th>Harga</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                    <% if (rooms.length > 0) { %>
+                        <% rooms.forEach(room => { %>
+                            <tr>
+                                <td><%= room.nomor_kamar %></td>
+                                <td><%= room.harga %></td>
+                                
+                                <% if (room.status!="") { %>
+                                    <td><%= room.status %></td>
+                                <% } else { %>
+                                    <td>Available</td>
+                                <% } %>
+                                
+                                <td><a href="#">Pesan</a></td>
+                            </tr>
+                        <% }); %>
+                    <% } else { %>
+                        <tr>
+                            <td colspan="4">No rooms available.</td>
+                        </tr>
+                    <% } %>
+                </table>
+                
+            </div>
+            
         </div>
+        
     </main>
 </body>
 </html>
