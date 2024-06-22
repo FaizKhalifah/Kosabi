@@ -219,3 +219,30 @@ main div{
     color: #1D2F6F;
     background-color: white;
 }
+
+.facilities{
+    padding: 3rem;
+    border: 1px solid gray;
+    border-radius: 1rem;
+    box-shadow: 2px 2px 5px black;
+}
+
+.facilitiesCards{
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    padding: 1.5rem;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.facilitiesCards div{
+    width: 20rem;
+    text-align: center;
+    padding: 2rem;
+    border: 1px solid gray;
+}
+
+.facilitiesCards img{
+    width: 50%;
+}
