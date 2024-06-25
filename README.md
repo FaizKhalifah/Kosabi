@@ -15,6 +15,7 @@ damage the business process and customer satisfaction. Therefore, a management a
 ![Express](https://img.shields.io/badge/Express-white?style=for-the-badge) ![Mongodb](https://img.shields.io/badge/Mongodb-00e935?style=for-the-badge)
 ![Mongoose](https://img.shields.io/badge/Mongoose-901403?style=for-the-badge) ![NPM](https://img.shields.io/badge/NPM-c91800?style=for-the-badge) 
 ![EJS](https://img.shields.io/badge/EJS-c9006b?style=for-the-badge) ![CSS](https://img.shields.io/badge/CSS-blue?style=for-the-badge) 
+![Bootstrap](https://img.shields.io/badge/Bootstrap-purple?style=for-the-badge) ![CSS](https://img.shields.io/badge/CSS-blue?style=for-the-badge) 
 
 # Screenshot
 ## Main page
