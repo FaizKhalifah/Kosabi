@@ -246,3 +246,31 @@ main div{
 .facilitiesCards img{
     width: 50%;
 }
+
+
+.nearby{
+    padding: 3rem;
+    border: 1px solid gray;
+    border-radius: 1rem;
+    box-shadow: 2px 2px 5px black;
+}
+
+.nearbyCards{
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    padding: 1.5rem;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.nearbyCards div{
+    width: 20rem;
+    text-align: center;
+    padding: 2rem;
+    border: 1px solid gray;
+}
+
+.nearby img{
+    width: 50%;
+}
