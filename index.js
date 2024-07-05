@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import path from "path";
 import cookieParser from "cookie-parser";
 import { fileURLToPath } from "url";
-
+import authRouter from "./routes/authRoutes.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -12,6 +12,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(cookieParser());
+
+
+//router
+app.use(authRouter);
 
 const port = '3000';
 const connection ='mongodb://localhost:27017/kosabi';
