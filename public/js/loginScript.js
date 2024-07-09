@@ -13,7 +13,9 @@ form.addEventListener('submit',async(e)=>{
           });
           const data = await res.json();
           console.log(data);
-          if (data.user) {
+          const user = data.user;
+          console.log(user);
+          if (user) {
             location.assign('/');
           }
     }catch(err){

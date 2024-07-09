@@ -4,6 +4,8 @@ import path from "path";
 import cookieParser from "cookie-parser";
 import { fileURLToPath } from "url";
 import authRouter from "./routes/authRoutes.js";
+import adminRouter from "./routes/adminRoutes.js";
+import userRouter from "./routes/userRoutes.js";
 import authMiddleware from "./middleware/authMiddleware.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -17,6 +19,8 @@ app.use(cookieParser());
 
 //router
 app.use(authRouter);
+app.use(adminRouter);
+app.use(userRouter);
 
 //view engine
 app.set('view engine', 'ejs');
@@ -29,6 +33,3 @@ mongoose.connect(connection)
   .catch((err) => console.log(err));
 
 app.get('*',authMiddleware.requireAuth);
-app.get('/',(req,res)=>{
-  res.render('user/index');
-})
