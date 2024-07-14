@@ -63,7 +63,7 @@ async function destroy(){
         res.status(500).send(err);
     }
 }
-
+           
 export default{
     index,create,store,edit,update,destroy
 }
