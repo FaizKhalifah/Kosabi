@@ -12,11 +12,14 @@ form.addEventListener('submit',async(e)=>{
             headers: {'Content-Type': 'application/json'}
           });
           const data = await res.json();
-          console.log(data);
           const user = data.user;
-          console.log(user);
+          console.log(data);
           if (user) {
-            location.assign('/');
+            if(data.role=="admin"){
+              location.assign('/dashboard');
+            }else{
+              location.assign('/');
+            }
           }
     }catch(err){
        console.log(err);
