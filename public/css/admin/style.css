@@ -13,7 +13,7 @@ nav{
     color: white;
 }
 
-nav ul, .searchBar{
+nav ul, .searchBar, .searchForm{
     list-style-type: none;
     display: flex;
     flex-direction: row;
@@ -29,6 +29,18 @@ nav ul{
     gap: 2rem;
 }
 
+.searchForm{
+    gap: 0rem;
+    align-items: stretch;
+}
+
+.searchForm button{
+    padding: 0rem 1.1rem;
+    background-color: #EC9A29;
+    color: white;
+    border: none;
+}
+
 .searchBar a{
     text-decoration: none;
     color: white;
@@ -36,4 +48,22 @@ nav ul{
 
 nav input[type=text]{
     padding: 0.5rem 1rem;
+}
+
+aside{
+    background-color: #EC9A29;
+    color: white;
+    width: 12%;
+    padding: 2rem;
+    padding-bottom: 15rem;
+}
+
+aside ul{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: flex-start;
+    gap: 3rem;
+    font-weight: bold;
+    list-style-type: none;
 }
