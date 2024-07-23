@@ -52,10 +52,14 @@ nav input[type=text]{
 
 aside{
     background-color: #EC9A29;
-    color: white;
     width: 12%;
     padding: 2rem;
     padding-bottom: 15rem;
+}
+
+aside a{
+    text-decoration: none;
+    color: white;
 }
 
 aside ul{
