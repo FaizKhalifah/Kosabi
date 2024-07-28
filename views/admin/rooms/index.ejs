@@ -1,10 +1,28 @@
-<%- include('../partials/nav'); -%>
-<div class="content">
-    <%- include('../partials/sidebar'); -%>
-    <main>
-        <h1>Ini adalah page room</h1>
-    </main>
-</div>
-
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Rooms</title>
+    <link rel="stylesheet" href="/css/admin/style.css">
+</head>
+<body>
+    <%- include('../partials/nav'); -%>
+    <div class="container">
+        <%- include('../partials/sidebar'); -%>
+        <main>
+            <h1>Rooms Management</h1>
+            <div class="content">
+                <p>Here is some content for the rooms management page.</p>
+                <% if (rooms.length === 0) { %>
+                    <p>Tidak ada order sama sekali</p>
+                  <% } else { %>
+                    
+                    <% } %>
+            </div>
+        </main>
+    </div>
 </body>
 </html>
+
+
+    
+
