@@ -15,7 +15,25 @@
                 <% if (rooms.length === 0) { %>
                     <p>Tidak ada order sama sekali</p>
                   <% } else { %>
-                    
+                    <table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th>Nomor kamar</th>
+                            <th>Harga</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% rooms.forEach(room => { %>
+                            <tr>
+                              <td><%= room.nomor_kamar%></td>
+                              <td><%= room.harga %> - <%= order.room.nama %></td>
+                              <td>
+                                <a href="admin/rooms/add">Add</a>
+                              </td>
+                            </tr>
+                          <% }) %>
+                        </tbody>
+                      </table>
                     <% } %>
             </div>
         </main>
