@@ -21,7 +21,7 @@ async function store(req,res){
     try{
         const room = new Room(req.body);
         await room.save();
-        res.redirect('/admin/rooms/index');
+        res.redirect('/dashboard/rooms');
     }catch(err){
         res.status(500).send(err);
     }
@@ -52,13 +52,13 @@ async function update(){
     }
 }
 
-async function destroy(){
+async function destroy(req,res){
     try {
         const room = await Room.findByIdAndDelete(req.params.id);
         if (!room) {
             return res.status(404).send('Room not found');
         }
-        res.redirect('admin/rooms/delete');
+        res.redirect('/dashboard/rooms');
     } catch (err) {
         res.status(500).send(err);
     }

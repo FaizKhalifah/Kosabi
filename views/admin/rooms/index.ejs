@@ -20,21 +20,22 @@
                           <tr>
                             <th>Nomor kamar</th>
                             <th>Harga</th>
+                            <th>Action</th>
                           </tr>
                         </thead>
                         <tbody>
                           <% rooms.forEach(room => { %>
                             <tr>
                               <td><%= room.nomor_kamar%></td>
-                              <td><%= room.harga %> - <%= order.room.nama %></td>
-                              <td>
-                                <a href="admin/rooms/add">Add</a>
-                              </td>
+                              <td><%= room.harga %></td>
+                              <td><a href="/dashboard/rooms/edit/<%= room._id %>">edit</a> | 
+                                <a href="/dashboard/rooms/delete/<%= room._id %>">Delete</a></td>
                             </tr>
                           <% }) %>
                         </tbody>
                       </table>
                     <% } %>
+                    <a href="/dashboard/rooms/create">Add</a>
             </div>
         </main>
     </div>
