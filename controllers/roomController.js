@@ -40,13 +40,15 @@ async function edit(req,res){
     }
 }
 
-async function update(){
+async function update(req,res){
     try{
+        console.log(req.params);
         const room = await Room.findByIdAndUpdate(req.params.id, req.body);
+        console.log(room);
         if (!room) {
             return res.status(404).send('Room not found');
         }
-        res.redirect('admin/rooms/index');
+        res.redirect('/dashboard/rooms');
     }catch(err){
         res.status(500).send(err);
     }
