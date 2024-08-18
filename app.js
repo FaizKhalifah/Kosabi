@@ -25,13 +25,14 @@ app.use(authRouter);
 app.use(adminRouter);
 app.use(userRouter);
 
+
 //view engine
 app.set('view engine', 'ejs');
 
 const port = '3000';
 const connection ='mongodb://localhost:27017/kosabi';
 mongoose.connect(connection)
-.then((result) => app.listen(port))
+.then(() => app.listen(port))
   .then(console.log(`server start on port ${port}`))
   .catch((err) => console.log(err));
 
