@@ -15,6 +15,7 @@
             <div class="content">
                 <form action="/dashboard/rooms/edit" method="POST">
                     <label for="nomor_kamar">Nomor Kamar : </label>
+                    <input type="hidden" name="id" value="<%= room._id %>">
                     <input type="number" name="nomor_kamar" id="nomor_kamar" value="<%= room.nomor_kamar %>"><br>
                     <label for="harga">Harga : </label>
                     <input type="number" name="harga" id="harga" value="<%= room.harga %>"><br>

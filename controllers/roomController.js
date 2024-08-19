@@ -42,8 +42,11 @@ async function edit(req,res){
 
 async function update(req,res){
     try{
+        console.log("req params : ");
         console.log(req.params);
-        const room = await Room.findByIdAndUpdate(req.params.id, req.body);
+        console.log(req.body);
+        const room = await Room.findByIdAndUpdate(req.body.id,req.body);
+        console.log("Room : ");
         console.log(room);
         if (!room) {
             return res.status(404).send('Room not found');
