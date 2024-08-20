@@ -3,6 +3,7 @@
 <head>
     <title>Admin Rooms</title>
     <link rel="stylesheet" href="/css/admin/style.css">
+    <link rel="stylesheet" href="/css/admin/room/index.css">
 </head>
 <body>
     <%- include('../partials/nav'); -%>
@@ -27,14 +28,14 @@
                             <tr>
                               <td><%= room.nomor_kamar%></td>
                               <td><%= room.harga %></td>
-                              <td><a href="/dashboard/rooms/edit/<%= room._id %>">edit</a> | 
-                                <a href="/dashboard/rooms/delete/<%= room._id %>">Delete</a></td>
+                              <td><a href="/dashboard/rooms/edit/<%= room._id %>" class="edit">edit</a> | 
+                                <a href="/dashboard/rooms/delete/<%= room._id %>" class="delete">Delete</a></td>
                             </tr>
                           <% }) %>
                         </tbody>
                       </table>
                     <% } %>
-                    <a href="/dashboard/rooms/create">Add</a>
+                    <a href="/dashboard/rooms/create" class="add">Add</a>
             </div>
         </main>
     </div>
