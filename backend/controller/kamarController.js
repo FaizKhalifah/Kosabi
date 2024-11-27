@@ -1,50 +1,28 @@
-const { Kamar, User } = require('../models');
+const { getAllKamarService,getKamarByIdService,addKamarService,updateKamarService,deleteKamarService,rentKamarService
+} = require('../service/kamarService.js')
 
 async function getAllKamar(req,res) {
-    const kamar = await Kamar.findAll({ include: { model: User, as: 'penyewa' } });
-    res.json(kamar);
+    getAllKamarService(req,res);
 }
 
 async function getKamarById(req,res) {
-    const kamar = await Kamar.findByPk(req.params.id, { include: { model: User, as: 'penyewa' } });
-    if (!kamar) return res.status(404).json({ error: 'Room not found' });
-    res.json(kamar);
+    getKamarByIdService(req,res);
 }
 
 async function addKamar(req,res) {
-    const { nomor, status } = req.body;
-    const kamar = await Kamar.create({ nomor, status });
-    res.status(201).json(kamar);
+    addKamarService(req,res);
 }
 
 async function updateKamar(req,res) {
-    const { nomor, status } = req.body;
-    const kamar = await Kamar.findByPk(req.params.id);
-    if (!kamar) return res.status(404).json({ error: 'Room not found' });
-    await kamar.update({ nomor, status });
-    res.json(kamar);
+   updateKamarService(req,res);
 }
 
 async function deleteKamar(req,res) {
-    const kamar = await Kamar.findByPk(req.params.id);
-    if (!kamar) return res.status(404).json({ error: 'Room not found' });
-    await kamar.destroy();
-    res.status(204).send();
+    deleteKamarService(req,res)
 }
 
 async function rentKamar(req,res) {
-    const { userId } = req.body; // ID user yang ingin menyewa
-    const kamar = await Kamar.findByPk(req.params.id);
-    if (!kamar || kamar.status === 'disewa') return res.status(400).json({ error: 'Room is not available' });
-  
-    const user = await User.findByPk(userId);
-    if (!user || user.kamarId) return res.status(400).json({ error: 'User has already rented a room' });
-  
-    await kamar.update({ status: 'disewa' });
-    await user.update({ kamarId: kamar.id });
-  
-    res.json({ message: 'Room rented successfully', kamar });
-
+    rentKamarService(req,res);
 }
 
 module.exports = {
