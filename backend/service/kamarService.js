@@ -1,6 +1,7 @@
 const { Kamar, User } = require('../models');
 
 async function getAllKamarService(req,res) {
+    const{page=1,limit=10}=req.query;
     const kamar = await Kamar.findAll({ include: { model: User, as: 'penyewa' } });
     res.json(kamar);
 }
