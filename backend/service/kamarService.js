@@ -2,8 +2,27 @@ const { Kamar, User } = require('../models');
 
 async function getAllKamarService(req,res) {
     const{page=1,limit=10}=req.query;
-    const kamar = await Kamar.findAll({ include: { model: User, as: 'penyewa' } });
-    res.json(kamar);
+    const offset = (page - 1) * limit;
+
+    try{
+        const {count,rows} = await Kamar.findAndCountAll({
+            include: { model: User, as: 'penyewa' },
+            limit: parseInt(limit),
+            offset: parseInt(offset),
+        })
+
+        const totalPages = Math.ceil(count / limit);
+
+        res.json({
+          totalItems: count,
+          totalPages,
+          currentPage: parseInt(page),
+          data: rows,
+        });
+
+    }catch(err){
+        return res.status(400).json({msg:"Terjadi error"})
+    }
 }
 
 async function getKamarByIdService(req,res) {
