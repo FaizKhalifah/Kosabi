@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const { Kamar, User } = require('../models');
 const { getAllKamar,getKamarById,addKamar,updateKamar,deleteKamar,rentKamar} = require('../controller/kamarController.js')
 
 // Get all rooms
