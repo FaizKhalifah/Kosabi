@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { User } = require('../models');
+const bcrypt = require("bcrypt");
 
 async function registerService(req,res) {
     const {name,email,password} = req.body;
@@ -14,17 +15,34 @@ async function registerService(req,res) {
 
 async function loginService(req,res) {
     const { email, password } = req.body;
-
+    console.log(email)
+    console.log(password)
     try {
       const user = await User.findOne({ where: { email } });
-      if (!user || !user.validPassword(password)) {
-        return res.status(401).json({ error: 'Invalid email or password' });
+      console.log(user);
+      
+      console.log(user.id)
+      console.log(user.role)
+
+      if (!user) {
+        return res.status(401).json({ error: 'Invalid email' });
       }
-  
+      console.log("user ditemukan");
+      console.log("password request : " + password)
+      console.log("password asli : " +user.password)
+      const passwordMatch = await bcrypt.compare(password.toString(), user.password);
+      if (!passwordMatch) {
+            return res.status(400).json({msg: 'Wrong password' });
+      }
+      console.log("password ditemukan");
+     
+      console.log("password dan email ditemukan")
       // Generate JWT
-      const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, {
+      const token = jwt.sign({ id: user.id, role: user.role }, 'process.env.JWT_SECRET', {
         expiresIn: '1h',
       });
+
+      console.log(token)
   
       res.json({ message: 'Login successful', token });
     } catch (err) {
