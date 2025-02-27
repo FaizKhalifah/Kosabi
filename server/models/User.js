@@ -1,16 +1,16 @@
-module.exports=(sequalize,dataTypes)=>{
-    const User = sequalize.define('User',{
+module.exports = (sequelize, DataTypes) => {
+  const User = sequelize.define('User', {
     id: {
-      type: dataTypes.UUID,
-      defaultValue: dataTypes.UUIDV4,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
     name: {
-      type: dataTypes.STRING,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     email: {
-      type: dataTypes.STRING,
+      type: DataTypes.STRING,
       allowNull: false,
       unique: true,
       validate: {
@@ -18,20 +18,26 @@ module.exports=(sequalize,dataTypes)=>{
       },
     },
     password: {
-      type: dataTypes.STRING,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     domicile: {
-      type: dataTypes.STRING,
+      type: DataTypes.STRING,
       allowNull: true,
     },
     role: {
-      type: dataTypes.ENUM('guest', 'renter', 'admin'),
+      type: DataTypes.ENUM('guest', 'renter', 'admin'),
       allowNull: false,
       defaultValue: 'guest',
     },
   }, {
-    timestamps: false
-  }
-    )
-}
+    timestamps: true
+  });
+
+  User.associate = (models) => {
+    User.hasMany(models.Room, { foreignKey: 'ownerId', as: 'rooms' });
+    User.hasMany(models.Rent, { foreignKey: 'userId', as: 'rents' });
+  };
+
+  return User;
+};
