@@ -1,6 +1,7 @@
-const {Room} = require("../models/room");
+const {Room} = require("../../../../models/room");
+const {IRoomServices} = require("./IRoomServices");
 
-class roomRepository{
+class roomServices extends IRoomServices{
     async findAll(){
         return await Room.findAll();
     }
@@ -22,4 +23,4 @@ class roomRepository{
       }
 }
 
-module.exports = new roomRepository();
+module.exports = new roomServices();
