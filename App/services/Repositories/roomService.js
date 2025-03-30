@@ -1,4 +1,5 @@
-const Room = require("../../models/room");
+const model = require("../../models");
+const Room = model.Room;
 class roomService{
     async getAll(){
         return await Room.findAll();

@@ -37,9 +37,10 @@ Object.keys(db).forEach(modelName => {
   }
 });
 
-db.User = require('./entities/User')(sequelize, DataTypes);
-db.Room = require('./entities/Room')(sequelize, DataTypes);
-db.Rent = require('./entities/Rent')(sequelize, DataTypes);
+const DataTypes = Sequelize.DataTypes;
+
+
+db.Room = require('./room')(sequelize, DataTypes);
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
