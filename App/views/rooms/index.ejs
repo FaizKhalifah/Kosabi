@@ -6,6 +6,33 @@
     <title>Room</title>
 </head>
 <body>
+    <%- include("./layouts/dashboard.ejs") %>
     <h1>Room</h1>
+    <a href="/rooms/new">Add New Room</a>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Number</th>
+            <th>Type</th>
+            <th>Price</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+        <% rooms.forEach(room => { %>
+            <tr>
+            <td><%= room.id %></td>
+            <td><%= room.number %></td>
+            <td><%= room.type %></td>
+            <td><%= room.price %></td>
+            <td><%= room.status %></td>
+            <td>
+                <form method="POST" action="/rooms/<%= room.id %>/delete">
+                <button type="submit">Delete</button>
+                </form>
+            </td>
+            </tr>
+        <% }) %>
+    </table>
+
 </body>
 </html>
