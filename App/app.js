@@ -2,6 +2,8 @@ const bodyParser = require("body-parser");
 const path = require("path");
 var express = require("express");
 var port = process.env.PORT || 8080;
+const mainRouter = require("./routes/indexRoutes");
+
 
 var app = express();
 app.use(bodyParser.json());
@@ -10,6 +12,7 @@ app.use(bodyParser.json());
 app.set('view engine', 'ejs');
 app.use(express.static('views'));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(mainRouter);
 
 app.get('/',(req,res)=>{
     res.render('main');
