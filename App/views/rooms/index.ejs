@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room</title>
-</head>
-<body>
-    <%- include("./layouts/dashboard.ejs") %>
+
+    <% layout('../layouts/dashboard') %>
+
+    <% title = "Manage Rooms" %>
     <h1>Room</h1>
     <a href="/rooms/new">Add New Room</a>
     <table>
@@ -33,6 +28,3 @@
             </tr>
         <% }) %>
     </table>
-
-</body>
-</html>
