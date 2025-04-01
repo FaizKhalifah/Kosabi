@@ -1,11 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room</title>
-</head>
-<body>
+
+    <% layout('../layouts/dashboard') %>
+
+    <% title = "Manage Rooms" %>
     <h1>Room</h1>
-</body>
-</html>
+    <a href="/rooms/new">Add New Room</a>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Number</th>
+            <th>Type</th>
+            <th>Price</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+        <% rooms.forEach(room => { %>
+            <tr>
+            <td><%= room.id %></td>
+            <td><%= room.number %></td>
+            <td><%= room.type %></td>
+            <td><%= room.price %></td>
+            <td><%= room.status %></td>
+            <td>
+                <form method="POST" action="/rooms/<%= room.id %>/delete">
+                <button type="submit">Delete</button>
+                </form>
+            </td>
+            </tr>
+        <% }) %>
+    </table>
