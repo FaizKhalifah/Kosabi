@@ -1,0 +1,50 @@
+aside {
+    width: 10%;
+    background: #9DC5BB;
+    color: #333;
+    height: 100vh;
+}
+
+aside .serviceToggle{
+    font-weight: bold;
+}
+
+aside .menu {
+    margin-top: 0;
+    text-align: left;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 0;
+}
+
+.services {
+    width: 100%;
+    padding: 1rem 0rem;
+}
+
+.serviceToggle{
+    padding-left: 1rem;
+}
+aside a {
+    color: #333;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.service-items {
+  display: none;
+  width: 50%;
+  list-style: none;
+}
+
+.services.active .service-items {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  justify-content: flex-start;
+}
