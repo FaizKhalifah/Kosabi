@@ -1,0 +1,22 @@
+aside {
+    width: 10rem;
+    background: #9DC5BB;
+    color: #333;
+    padding: 20px;
+    height: 100vh;
+}
+
+aside ul {
+    list-style: none;
+    padding: 0;
+}
+
+aside ul li {
+    margin-bottom: 10px;
+}
+
+aside a {
+    color: #333;
+    font-weight: bold;
+    text-decoration: none;
+}
