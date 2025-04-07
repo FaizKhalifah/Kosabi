@@ -11,7 +11,8 @@ class roomService{
 
     async create(data){
         console.log("data room untuk dicreate : " + data)
-        return await Room.create(data);
+        const {number,type,price} = data;
+        return await Room.create({number,type,price});
     }
 
     async update(data,id){

@@ -8,7 +8,7 @@ const engine = require("ejs-mate");
 
 var app = express();
 app.use(bodyParser.json());
-
+app.use(express.urlencoded({ extended: true }));
 
 
 // set up view
