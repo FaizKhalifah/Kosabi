@@ -10,6 +10,7 @@ class roomService{
     }
 
     async create(data){
+        console.log("data room untuk dicreate : " + data)
         return await Room.create(data);
     }
 

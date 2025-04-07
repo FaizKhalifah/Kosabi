@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dashboardStyle.css">
     <link rel="icon" type="image/x-icon" href="/images/logo.png">
     <title>Kosabi</title>
 </head>
 <body>
-    <%- include("../partials/navbar") %>
+    
+    <%- include("../partials/sidebar") %>
 
-    <div class="container">
-        <%- include("../partials/sidebar") %>
-
+    <div class="main">
+        <%- include("../partials/navbar") %>
         <main class="content">
             <%- body %>  <!-- Tempat untuk halaman -->
         </main>
