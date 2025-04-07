@@ -4,10 +4,10 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Rooms', {
       id: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
       },
       number: {
         type: Sequelize.INTEGER
@@ -20,11 +20,7 @@ module.exports = {
       },
       ownerId: {
         type: Sequelize.UUID,
-        allowNull:true,
-        references:{
-        model:'Tenant',
-        key:'id'
-        }
+        allowNull:true
       },
       createdAt: {
         allowNull: false,

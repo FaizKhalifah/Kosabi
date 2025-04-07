@@ -14,6 +14,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Room.init({
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+      allowNull: false
+    },
     number: DataTypes.INTEGER,
     type: DataTypes.STRING,
     price: DataTypes.INTEGER,
