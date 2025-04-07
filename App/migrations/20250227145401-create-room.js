@@ -19,7 +19,12 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       ownerId: {
-        type: Sequelize.UUID
+        type: Sequelize.UUID,
+        allowNull:true,
+        references:{
+        model:'Tenant',
+        key:'id'
+        }
       },
       createdAt: {
         allowNull: false,

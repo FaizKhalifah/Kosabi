@@ -17,7 +17,14 @@ module.exports = (sequelize, DataTypes) => {
     number: DataTypes.INTEGER,
     type: DataTypes.STRING,
     price: DataTypes.INTEGER,
-    ownerId: DataTypes.UUID
+    ownerId: {
+      type:DataTypes.UUID,
+        allowNull:true,
+        references:{
+        model:'Tenant',
+        key:'id'
+      }
+    }
   }, {
     sequelize,
     modelName: 'Room',
