@@ -37,3 +37,45 @@ th,td{
     border-bottom: 1px solid rgb(77, 74, 74);
     padding: 1rem;
 }
+
+.actionButtons{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.editButton{
+    background-color: #FFBA08;
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+    border: 1px solid white;
+    padding: 1rem 1.5rem;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.editButton:hover{
+    background-color: white;
+    color: #FFBA08;
+    border-color: #FFBA08;
+}
+
+.deleteButton{
+    background-color: #D00000;
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+    padding: 1rem 1.5rem;
+    border: 1px solid white;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.deleteButton:hover{
+    background-color: white;
+    border-color: #D00000;
+    color: #D00000;
+}

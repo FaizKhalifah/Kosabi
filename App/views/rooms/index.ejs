@@ -3,7 +3,6 @@
     <link rel="stylesheet" href="/css/room/index.css">
 
     <div class="container">
-        <title>Rooms</title>
         <h1>Room</h1>
         <a class="addButton" href="/rooms/add">Add New Room</a>
         <div class="tableContainer">
@@ -21,9 +20,10 @@
                     <td><%= room.number %></td>
                     <td><%= room.type %></td>
                     <td><%= room.price %></td>
-                    <td>
+                    <td class="actionButtons">
+                        <a href="/rooms/<%= room.id %>/edit" class="editButton">Edit</a>
                         <form method="POST" action="/rooms/<%= room.id %>/delete">
-                        <button type="submit">Delete</button>
+                        <button type="submit" class="deleteButton">Delete</button>
                         </form>
                     </td>
                     </tr>

@@ -16,7 +16,8 @@ class roomService{
     }
 
     async update(data,id){
-        return await Room.update(data,{where:{id}});
+        const {number,type,price} =  data;
+        return await Room.update({number,type,price},{where:{id}});
     }
 
     async delete(id) {

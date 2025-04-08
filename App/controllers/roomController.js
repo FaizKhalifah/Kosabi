@@ -17,6 +17,16 @@ class roomController{
         res.redirect('/rooms');
     }
 
+    async edit(req,res){
+        const room = await roomService.getById(req.params.id);
+        res.render('rooms/edit',{room})
+    }
+
+    async update(req,res){
+        await roomService.update(req.body);
+        res.redirect('/rooms');
+    }
+
     async delete(req, res) {
         await roomService.delete(req.params.id);
         res.redirect('/rooms');
