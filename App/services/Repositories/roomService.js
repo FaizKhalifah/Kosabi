@@ -15,8 +15,9 @@ class roomService{
         return await Room.create({number,type,price});
     }
 
-    async update(data,id){
-        const {number,type,price} =  data;
+    async update(data){
+        console.log("data di service : " + data);
+        const {id,number,type,price} =  data;
         return await Room.update({number,type,price},{where:{id}});
     }
 

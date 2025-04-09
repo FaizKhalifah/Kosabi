@@ -3,5 +3,19 @@
 
     <h1>Edit Room</h1>
     <div class="edit-room-content">
-
+        <form action="/rooms/<%= room.id %>/edit" method="post">
+            <input type="hidden" name="id" value="<%= room.id %>">
+            <div>
+                <label for="number">Number</label>
+                <input type="text" id="number" name="number" required value="<%= room.number %>">
+            </div>
+            <div>
+                <label for="type">Type</label>
+                <input type="text" id="type" name="type" required value="<%= room.type %>"> 
+            </div>
+            <div>
+                <label for="price">Price</label>
+                <input type="text" id="price" name="price" required value="<%= room.price %>">
+            </div>
+            <button>submit</button>
     </div>

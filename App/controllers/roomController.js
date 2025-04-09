@@ -23,6 +23,7 @@ class roomController{
     }
 
     async update(req,res){
+        console.log(req.body);
         await roomService.update(req.body);
         res.redirect('/rooms');
     }
