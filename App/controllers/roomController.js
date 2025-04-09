@@ -11,12 +11,25 @@ class roomController{
     }
 
     async store(req,res){
+        console.log("request : " + req)
+        console.log("request body : " + req.body);
         await roomService.create(req.body);
         res.redirect('/rooms');
     }
 
+    async edit(req,res){
+        const room = await roomService.getById(req.params.id);
+        res.render('rooms/edit',{room})
+    }
+
+    async update(req,res){
+        console.log(req.body);
+        await roomService.update(req.body);
+        res.redirect('/rooms');
+    }
+
     async delete(req, res) {
-        await RoomService.delete(req.params.id);
+        await roomService.delete(req.params.id);
         res.redirect('/rooms');
     }
 }

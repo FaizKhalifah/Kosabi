@@ -1,0 +1,81 @@
+.addButton{
+    background-color: #9DC5BB;
+    text-decoration: none;
+    color: white;
+    border: 1px solid white;
+    font-weight: bold;
+    padding: 1rem;
+    border-radius: 1rem;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.addButton:hover{
+    background-color: white;
+    color: #333;
+    border-color: #9DC5BB;
+}
+
+.tableContainer{
+    margin-top: 3rem;
+    border: 1px solid rgb(65, 64, 64);
+    padding: 1rem;
+    border-radius: 1rem;
+    box-shadow: 1px 1px 5px;
+}
+
+table, th,tr, td{
+    border-spacing: 0;
+}
+table{
+    margin: auto;
+    width: 90%;
+    text-align: center;
+}
+
+th,td{
+    border-bottom: 1px solid rgb(77, 74, 74);
+    padding: 1rem;
+}
+
+.actionButtons{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.editButton{
+    background-color: #FFBA08;
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+    border: 1px solid white;
+    padding: 1rem 1.5rem;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.editButton:hover{
+    background-color: white;
+    color: #FFBA08;
+    border-color: #FFBA08;
+}
+
+.deleteButton{
+    background-color: #D00000;
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+    padding: 1rem 1.5rem;
+    border: 1px solid white;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.deleteButton:hover{
+    background-color: white;
+    border-color: #D00000;
+    color: #D00000;
+}

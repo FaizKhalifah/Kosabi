@@ -1,8 +1,14 @@
 aside {
-    width: 10%;
-    background: #9DC5BB;
-    color: #333;
+    width: 15%;
+    /* background: #9DC5BB; */
+    background-color: #333;
+    color: white;
     height: 100vh;
+}
+
+aside img{
+    width: 5rem;
+    margin: 2rem auto 1rem;
 }
 
 aside .serviceToggle{
@@ -28,8 +34,9 @@ aside .menu {
 .serviceToggle{
     padding-left: 1rem;
 }
+
 aside a {
-    color: #333;
+    color: rgb(221, 219, 219);
     font-weight: bold;
     text-decoration: none;
 }
