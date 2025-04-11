@@ -5,6 +5,18 @@ class roomService{
         return await Room.findAll();
     }
 
+    async  paginate({ limit, offset }) {
+        const { count, rows } = await Room.findAndCountAll({
+            limit,
+            offset,
+            order: [['createdAt', 'DESC']],
+        });
+    
+        const totalPages = Math.ceil(count / limit);
+    
+        return { rooms: rows, totalPages };
+    }
+
     async getById(id){
         return await Room.findByPk(id);
     }
