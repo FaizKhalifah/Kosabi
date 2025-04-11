@@ -2,8 +2,17 @@ const roomService = require("../services/Repositories/roomService");
 
 class roomController{
     async index(req,res){
-        const rooms = await roomService.getAll();
-        res.render('rooms/index',{rooms});
+        const page = parseInt(req.query.page) || 1;
+        const limit = 5; // jumlah item per halaman
+        const offset = (page - 1) * limit;
+
+        const { rooms, totalPages } = await roomService.paginate({ limit, offset });
+
+        res.render('room/index', {
+            rooms,
+            currentPage: page,
+            totalPages
+        });
     }
 
     async add(req,res){
