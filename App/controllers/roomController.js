@@ -8,7 +8,7 @@ class roomController{
 
         const { rooms, totalPages } = await roomService.paginate({ limit, offset });
 
-        res.render('room/index', {
+        res.render('rooms/index', {
             rooms,
             currentPage: page,
             totalPages
