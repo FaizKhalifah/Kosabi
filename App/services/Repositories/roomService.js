@@ -1,8 +1,26 @@
 const model = require("../../models");
+const { Op } = require('sequelize');
+
 const Room = model.Room;
 class roomService{
     async getAll(){
         return await Room.findAll();
+    }
+
+    async searchRooms(keyword) {
+        if (!keyword) {
+            return await Room.findAll({ order: [['createdAt', 'DESC']] });
+        }
+    
+        return await Room.findAll({
+            where: {
+                [Op.or]: [
+                    { number: { [Op.iLike]: `%${keyword}%` } },
+                    { type: { [Op.iLike]: `%${keyword}%` } },
+                ]
+            },
+            order: [['createdAt', 'DESC']]
+        });
     }
 
     async  paginate({ limit, offset }) {
