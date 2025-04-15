@@ -5,6 +5,24 @@
     <div class="container">
         <h1>Room</h1>
         <a class="addButton" href="/rooms/add">Add New Room</a>
+        <form action="/rooms" method="get" style="margin-bottom: 20px;">
+          <input type="text" name="search" placeholder="Search room..." value="<%= typeof search !== 'undefined' ? search : '' %>">
+        
+          <select name="sortBy">
+            <option value="">Sort By</option>
+            <option value="number" <%= sortBy === 'number' ? 'selected' : '' %>>Number</option>
+            <option value="type" <%= sortBy === 'type' ? 'selected' : '' %>>Type</option>
+            <option value="price" <%= sortBy === 'price' ? 'selected' : '' %>>Price</option>
+          </select>
+        
+          <select name="order">
+            <option value="asc" <%= order === 'asc' ? 'selected' : '' %>>Ascending</option>
+            <option value="desc" <%= order === 'desc' ? 'selected' : '' %>>Descending</option>
+          </select>
+        
+          <button type="submit">Apply</button>
+        </form>
+        
         <div class="tableContainer">
             <table>
                 <tr>
