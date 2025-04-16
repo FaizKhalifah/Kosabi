@@ -7,21 +7,31 @@ class roomService{
         return await Room.findAll();
     }
 
-    async searchRooms(keyword) {
-        if (!keyword) {
-            return await Room.findAll({ order: [['createdAt', 'DESC']] });
-        }
+    async sortRooms(sortBy,order){
+        const validSortFields = ['number', 'type', 'price', 'createdAt'];
+        const sortField = validSortFields.includes(sortBy) ? sortBy : 'createdAt';
+        const sortOrder = ['asc', 'desc'].includes(order) ? order : 'desc';
     
         return await Room.findAll({
-            where: {
-                [Op.or]: [
-                    { number: { [Op.iLike]: `%${keyword}%` } },
-                    { type: { [Op.iLike]: `%${keyword}%` } },
-                ]
-            },
-            order: [['createdAt', 'DESC']]
+            order: [[sortField, sortOrder]]
         });
     }
+
+    // async searchRooms(keyword) {
+    //     if (!keyword) {
+    //         return await Room.findAll({ order: [['createdAt', 'DESC']] });
+    //     }
+    
+    //     return await Room.findAll({
+    //         where: {
+    //             [Op.or]: [
+    //                 { number: { [Op.iLike]: `%${keyword}%` } },
+    //                 { type: { [Op.iLike]: `%${keyword}%` } },
+    //             ]
+    //         },
+    //         order: [['createdAt', 'DESC']]
+    //     });
+    // }
 
     async  paginate({ limit, offset }) {
         const { count, rows } = await Room.findAndCountAll({
@@ -32,7 +42,7 @@ class roomService{
     
         const totalPages = Math.ceil(count / limit);
     
-        return { rooms: rows, totalPages };
+        return { rowCount: rows, totalPages };
     }
 
     async getById(id){
