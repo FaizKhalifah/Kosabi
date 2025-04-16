@@ -2,14 +2,22 @@ const roomService = require("../services/Repositories/roomService");
 
 class roomController{
     async index(req,res){
+        const sortBy = req.query.sortBy || 'createdAt';
+        const order = req.query.order || 'desc';
+
         const page = parseInt(req.query.page) || 1;
         const limit = 5; // jumlah item per halaman
         const offset = (page - 1) * limit;
 
-        const { rooms, totalPages } = await roomService.paginate({ limit, offset });
+        const { rowCount, totalPages } = await roomService.paginate({ limit, offset });
+
+        const rooms = await roomService.sortRooms(sortBy, order);
 
         res.render('rooms/index', {
             rooms,
+            rowCount,
+            sortBy,
+            order,
             currentPage: page,
             totalPages
         });
