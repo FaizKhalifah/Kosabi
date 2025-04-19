@@ -79,3 +79,19 @@ th,td{
     border-color: #D00000;
     color: #D00000;
 }
+
+select{
+    margin-top: 2rem;
+    border-radius: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: white;
+    border: 1px solid black;
+}
+
+.apply{
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
+    border: none;
+    color: white;
+    background-color: navy;
+}
