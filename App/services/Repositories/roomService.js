@@ -7,42 +7,24 @@ class roomService{
         return await Room.findAll();
     }
 
-    async sortRooms(sortBy,order){
+    async getSortingOption( sortBy, order){
         const validSortFields = ['number', 'type', 'price', 'createdAt'];
         const sortField = validSortFields.includes(sortBy) ? sortBy : 'createdAt';
         const sortOrder = ['asc', 'desc'].includes(order) ? order : 'desc';
-    
-        return await Room.findAll({
-            order: [[sortField, sortOrder]]
-        });
+
+        return [[sortField, sortOrder]];
     }
 
-    // async searchRooms(keyword) {
-    //     if (!keyword) {
-    //         return await Room.findAll({ order: [['createdAt', 'DESC']] });
-    //     }
-    
-    //     return await Room.findAll({
-    //         where: {
-    //             [Op.or]: [
-    //                 { number: { [Op.iLike]: `%${keyword}%` } },
-    //                 { type: { [Op.iLike]: `%${keyword}%` } },
-    //             ]
-    //         },
-    //         order: [['createdAt', 'DESC']]
-    //     });
-    // }
-
-    async  paginate({ limit, offset }) {
+    async  paginateRooms({ limit, offset, order }) {
         const { count, rows } = await Room.findAndCountAll({
             limit,
             offset,
-            order: [['createdAt', 'DESC']],
+            order
         });
     
         const totalPages = Math.ceil(count / limit);
     
-        return { rowCount: rows, totalPages };
+        return { rooms: rows, totalPages };
     }
 
     async getById(id){

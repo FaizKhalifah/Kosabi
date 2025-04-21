@@ -9,17 +9,19 @@ class roomController{
         const limit = 5; // jumlah item per halaman
         const offset = (page - 1) * limit;
 
-        const { rowCount, totalPages } = await roomService.paginate({ limit, offset });
-
-        const rooms = await roomService.sortRooms(sortBy, order);
+        const sortingOptions = await roomService.getSortingOption(sortBy,order);
+        const { rooms, totalPages } = await roomService.paginateRooms({
+        limit,
+        offset,
+        order:sortingOptions
+    });
 
         res.render('rooms/index', {
             rooms,
-            rowCount,
             sortBy,
             order,
             currentPage: page,
-            totalPages
+            totalPages,
         });
     }
 
