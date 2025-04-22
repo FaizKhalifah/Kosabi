@@ -4,6 +4,7 @@
 
     <div class="container">
         <h1>Room</h1>
+        <div class="upperButtons">
         <a class="addButton" href="/rooms/add">Add New Room</a>
         <form action="/rooms" method="get" style="margin-bottom: 20px;">
         
@@ -21,11 +22,10 @@
         
           <button type="submit" class="apply">Apply</button>
         </form>
-        
+        </div>
         <div class="tableContainer">
             <table>
                 <tr>
-                    <th>id</th>
                     <th>Number</th>
                     <th>Type</th>
                     <th>Price</th>
@@ -33,7 +33,6 @@
                 </tr>
                 <% rooms.forEach(room => { %>
                     <tr>
-                    <td><%= room.id %></td>
                     <td><%= room.number %></td>
                     <td><%= room.type %></td>
                     <td><%= room.price %></td>
@@ -47,22 +46,15 @@
                 <% }) %>
             </table>
             <div class="pagination">
-                <% if (currentPage > 1) { %>
-                  <a href="?page=<%= currentPage - 1 %>">Previous</a>
-                <% } %>
-              
-                <% for (let i = 1; i <= totalPages; i++) { %>
-                  <% if (i === currentPage) { %>
-                    <span><%= i %></span>
-                  <% } else { %>
-                    <a href="?page=<%= i %>"><%= i %></a>
-                  <% } %>
-                <% } %>
-              
-                <% if (currentPage < totalPages) { %>
-                  <a href="?page=<%= currentPage + 1 %>">Next</a>
-                <% } %>
-              </div>
+              <% for(let i = 1; i <= totalPages; i++) { %>
+                  <a 
+                      href="?page=<%= i %>&sortBy=<%= sortBy %>&order=<%= order %>" 
+                      class="<%= currentPage === i ? 'active' : '' %>">
+                      <%= i %>
+                  </a>
+              <% } %>
+          </div>
+          
         </div>
     </div>
    

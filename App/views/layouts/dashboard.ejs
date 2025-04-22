@@ -1,22 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/dashboardStyle.css">
-    <link rel="icon" type="image/x-icon" href="/images/logo.png">
-    <title>Kosabi</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/css/dashboardStyle.css" />
+  <link rel="icon" type="image/x-icon" href="/images/logo.png" />
+  <title>Kosabi</title>
 </head>
 <body>
-    
+  <div class="layout"> <!-- Tambahkan wrapper layout -->
     <%- include("../partials/sidebar") %>
 
     <div class="main">
-        <%- include("../partials/navbar") %>
-        <main class="content">
-            <%- body %>  <!-- Tempat untuk halaman -->
-        </main>
+      <%- include("../partials/navbar") %>
+      <main class="content">
+        <%- body %>
+      </main>
     </div>
-<script src="/script/sidebar.js"></script>
+  </div>
+
+  <script src="/script/sidebar.js"></script>
 </body>
 </html>
