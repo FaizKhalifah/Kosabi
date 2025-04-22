@@ -1,5 +1,6 @@
 const model = require("../../models");
 const { Op } = require('sequelize');
+const multer = require("multer");
 
 const Room = model.Room;
 class roomService{
@@ -25,6 +26,11 @@ class roomService{
         const totalPages = Math.ceil(count / limit);
     
         return { rooms: rows, totalPages };
+    }
+
+    async uploadRoomPhoto(){
+        const upload = multer({dest:'uploads/roomPhotos/'});
+        upload.single('file');
     }
 
     async getById(id){
