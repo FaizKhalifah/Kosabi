@@ -30,8 +30,14 @@ module.exports = (sequelize, DataTypes) => {
         model:'Tenant',
         key:'id'
       }
+    },
+    photo: {
+      type: DataTypes.STRING, // untuk path foto
+      allowNull: true,
     }
-  }, {
+  },
+   
+  {
     sequelize,
     modelName: 'Room',
   });

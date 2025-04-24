@@ -22,6 +22,10 @@ module.exports = {
         type: Sequelize.UUID,
         allowNull:true
       },
+      photo: {
+        type:Sequelize.STRING, // untuk path foto
+        allowNull: true,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -29,7 +33,11 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      }
+      },
+    photo: {
+      type:Sequelize.STRING, // untuk path foto
+      allowNull: true,
+    }
     });
   },
   async down(queryInterface, Sequelize) {
