@@ -28,19 +28,15 @@ class roomService{
         return { rooms: rows, totalPages };
     }
 
-    async uploadRoomPhoto(){
-        const upload = multer({dest:'uploads/roomPhotos/'});
-        upload.single('file');
-    }
-
     async getById(id){
         return await Room.findByPk(id);
     }
 
-    async create(data){
+    async create(data, photoPath){
         console.log("data room untuk dicreate : " + data)
+        console.log("photoPath : " + photoPath);
         const {number,type,price} = data;
-        return await Room.create({number,type,price});
+        return await Room.create({number,type,price,photo:photoPath});
     }
 
     async update(data){
