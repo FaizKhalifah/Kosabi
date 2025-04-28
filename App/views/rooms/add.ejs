@@ -4,7 +4,7 @@
 <h1>Add Room</h1>
 
 <div class="add-room-content">
-    <form action="/rooms/add" method="post">
+    <form action="/rooms/add" method="post" enctype="multipart/form-data">
         <div>
             <label for="number">Number</label>
             <input type="text" id="number" name="number" required>
@@ -16,6 +16,10 @@
         <div>
             <label for="price">Price</label>
             <input type="text" id="price" name="price" required>
+        </div>
+        <div>
+            <label for="photo">Upload Foto:</label>
+            <input type="file" name="photo" accept="image/*" />
         </div>
         <!-- <div>
             <label for="ownerId">Owner Id </label>

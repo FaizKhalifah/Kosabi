@@ -30,12 +30,18 @@
                     <th>Type</th>
                     <th>Price</th>
                     <th>Action</th>
+                    <th>Photo</th>
                 </tr>
                 <% rooms.forEach(room => { %>
                     <tr>
                     <td><%= room.number %></td>
                     <td><%= room.type %></td>
                     <td><%= room.price %></td>
+                    <td><% if (room.photo) { %>
+                        <img src="<%= room.photo %>" alt="Room Photo" style="width: 200px; height: auto;" />
+                      <% } else { %>
+                        <p>No photo available</p>
+                      <% } %></td>
                     <td class="actionButtons">
                         <a href="/rooms/<%= room.id %>/edit" class="editButton">Edit</a>
                         <form method="POST" action="/rooms/<%= room.id %>/delete">
