@@ -1,5 +1,5 @@
 .addButton{
-    background-color: #9DC5BB;
+    background-color: navy;
     text-decoration: none;
     color: white;
     border: 1px solid white;
@@ -13,7 +13,7 @@
 .addButton:hover{
     background-color: white;
     color: #333;
-    border-color: #9DC5BB;
+    border-color: navy
 }
 
 .tableContainer{
