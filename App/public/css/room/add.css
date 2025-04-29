@@ -25,9 +25,18 @@ input{
     font-size: 16px;
 }
 
+select{
+    border-radius: 0.5rem;
+    width: 20rem;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: white;
+    border: 1px solid black;
+}
+
 button{
-    color: rgb(49, 49, 49);
-    background-color: #9DC5BB;
+    color: white;
+    background-color: navy;
     border: 1px solid white;
     width: 8rem;
     border-radius: 0.8rem;
@@ -37,7 +46,8 @@ button{
 }
 
 button:hover{
-    border-color: #9DC5BB;
+    border-color: navy;
     background-color: white;
+    color: navy;
 }
 
