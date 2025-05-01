@@ -41,11 +41,12 @@ class roomController{
         res.render('rooms/edit',{room})
     }
 
-    async update(req,res){
-        console.log(req.body);
-        await roomService.update(req.body);
+    async update(req, res) {
+        const photoPath = req.file ? '/uploads/rooms/' + req.file.filename : null;
+        await roomService.update(req.body, photoPath); // semua diserahkan ke service
         res.redirect('/rooms');
     }
+    
 
     async delete(req, res) {
         await roomService.delete(req.params.id);

@@ -1,6 +1,8 @@
 const model = require("../../models");
 const { Op } = require('sequelize');
 const multer = require("multer");
+const fs = require('fs');
+const path = require('path');
 
 const Room = model.Room;
 class roomService{
@@ -38,10 +40,33 @@ class roomService{
         return await Room.create({number,type,price,photo:photoPath});
     }
 
-    async update(data){
-        console.log("data di service : " + data);
-        const {id,number,type,price} =  data;
-        return await Room.update({number,type,price},{where:{id}});
+    // async update(data,photoPath){
+    //     const {id,number,type,price} =  data;
+    //     return await Room.update({number,type,price,photo:photoPath},{where:{id}});
+    // }
+
+    async update(data, photoPath) {
+        const { id, number, type, price } = data;
+    
+        const room = await Room.findByPk(id);
+    
+        if (!room) {
+            throw new Error("Room not found");
+        }
+    
+        if (photoPath && room.photo) {
+            const oldPath = path.join('public', room.photo);
+            if (fs.existsSync(oldPath)) {
+                fs.unlinkSync(oldPath);
+            }
+        }
+    
+        const updateData = { number, type, price };
+        if (photoPath) {
+            updateData.photo = photoPath;
+        }
+    
+        return await Room.update(updateData, { where: { id } });
     }
 
     async delete(id) {
