@@ -17,5 +17,12 @@
                 <label for="price">Price</label>
                 <input type="text" id="price" name="price" required value="<%= room.price %>">
             </div>
+            <div>
+                <label for="photo">Photo</label>
+                <input type="file" name="photo" accept="image/*" />
+                <% if (room.photo) { %>
+                    <img src="<%= room.photo %>" alt="Foto Kamar" width="150" />
+                  <% } %>
+            </div>
             <button>submit</button>
     </div>
