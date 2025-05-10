@@ -43,6 +43,7 @@ class roomController{
 
     async update(req, res) {
         const photoPath = req.file ? '/uploads/rooms/' + req.file.filename : null;
+        console.log("photo path di controller : " + photoPath);
         await roomService.update(req.body, photoPath); // semua diserahkan ke service
         res.redirect('/rooms');
     }

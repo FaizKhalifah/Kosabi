@@ -3,7 +3,7 @@
 
     <h1>Edit Room</h1>
     <div class="edit-room-content">
-        <form action="/rooms/<%= room.id %>/edit" method="post">
+        <form action="/rooms/<%= room.id %>/edit" method="post" enctype="multipart/form-data">
             <input type="hidden" name="id" value="<%= room.id %>">
             <div>
                 <label for="number">Number</label>
@@ -16,6 +16,13 @@
             <div>
                 <label for="price">Price</label>
                 <input type="text" id="price" name="price" required value="<%= room.price %>">
+            </div>
+            <div>
+                <label for="photo">Photo</label>
+                <input type="file" name="photo" accept="image/*" />
+                <% if (room.photo) { %>
+                    <img src="<%= room.photo %>" alt="Foto Kamar" width="150" />
+                  <% } %>
             </div>
             <button>submit</button>
     </div>
