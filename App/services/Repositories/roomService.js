@@ -65,7 +65,8 @@ class roomService{
         if (photoPath) {
             updateData.photo = photoPath;
         }
-    
+        console.log(photoPath)
+        console.log("updateData : " + updateData.number + " " + updateData.type + " " + updateData.price + " " + updateData.photo);
         return await Room.update(updateData, { where: { id } });
     }
 

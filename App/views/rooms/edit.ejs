@@ -3,7 +3,7 @@
 
     <h1>Edit Room</h1>
     <div class="edit-room-content">
-        <form action="/rooms/<%= room.id %>/edit" method="post">
+        <form action="/rooms/<%= room.id %>/edit" method="post" enctype="multipart/form-data">
             <input type="hidden" name="id" value="<%= room.id %>">
             <div>
                 <label for="number">Number</label>
