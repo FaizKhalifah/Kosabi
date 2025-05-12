@@ -3,6 +3,7 @@ const { Op } = require('sequelize');
 const multer = require("multer");
 const fs = require('fs');
 const path = require('path');
+const deletePhotoUtil = require("../../utilities/deletePhotoUtil");
 
 const Room = model.Room;
 class roomService{
@@ -71,6 +72,13 @@ class roomService{
     }
 
     async delete(id) {
+        const room = await Room.findByPk(id);
+        if (!room) {
+            throw new Error("Room not found");
+        }
+        if (room.photo) {
+            deletePhotoUtil(room.photo);
+        }
         return await Room.destroy({ where: { id } });
     }
 }

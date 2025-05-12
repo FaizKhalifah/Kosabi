@@ -38,7 +38,7 @@
                       <td><%= room.type %></td>
                       <td><%= room.price %></td>
                       <td><% if (room.photo) { %>    
-                        <img src="<%= room.photo %>" alt="Room Photo" class="roomImage" />
+                        <img src="<%= room.photo %>" alt="Room Photo" class="roomImage" onclick="showModal('<%= room.photo %>')"  />
                         <% } else { %>
                           <p>No photo available</p>
                         <% } %>
@@ -66,4 +66,22 @@
           
         </div>
     </div>
-   
+   <!-- Modal structure -->
+<div id="imageModal" class="modal" onclick="hideModal()">
+  <span class="close" onclick="hideModal()">&times;</span>
+  <img class="modal-content" id="modalImage">
+</div>
+<script>
+  function showModal(src) {
+    const modal = document.getElementById("imageModal");
+    const modalImg = document.getElementById("modalImage");
+    modal.style.display = "block";
+    modalImg.src = src;
+    modalImg.style.width = "20rem";
+  }
+
+  function hideModal() {
+    document.getElementById("imageModal").style.display = "none";
+  }
+</script>
+
