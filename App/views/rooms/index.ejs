@@ -29,26 +29,28 @@
                     <th>Number</th>
                     <th>Type</th>
                     <th>Price</th>
-                    <th>Action</th>
                     <th>Photo</th>
+                    <th>Action</th>
                 </tr>
                 <% rooms.forEach(room => { %>
                     <tr>
-                    <td><%= room.number %></td>
-                    <td><%= room.type %></td>
-                    <td><%= room.price %></td>
-                     <td class="actionButtons">
-                            <a href="/rooms/<%= room.id %>/edit" class="editButton">Edit</a>
-                        <form method="POST" action="/rooms/<%= room.id %>/delete">
-                        <button type="submit" class="deleteButton">Delete</button>
-                        </form>
-                    </td>
-                    <td><% if (room.photo) { %>    
-                      <img src="<%= room.photo %>" alt="Room Photo" class="roomImage" />
-                      <% } else { %>
-                        <p>No photo available</p>
-                      <% } %></td>
-                    </td>
+                      <td><%= room.number %></td>
+                      <td><%= room.type %></td>
+                      <td><%= room.price %></td>
+                      <td><% if (room.photo) { %>    
+                        <img src="<%= room.photo %>" alt="Room Photo" class="roomImage" />
+                        <% } else { %>
+                          <p>No photo available</p>
+                        <% } %>
+                      </td>
+                      <td >
+                        <div class="actionButtons">
+                          <a href="/rooms/<%= room.id %>/edit" class="editButton">Edit</a>
+                          <form method="POST" action="/rooms/<%= room.id %>/delete">
+                          <button type="submit" class="deleteButton">Delete</button>
+                          </form>
+                        </div>
+                      </td>
                     </tr>
                 <% }) %>
             </table>
