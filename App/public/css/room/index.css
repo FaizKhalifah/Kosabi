@@ -124,9 +124,9 @@ select{
     border-color: navy;
 }
 
-td img{
-    margin-top: 0.5rem;
-    max-width: 100%;
+.roomImage {
+    width: 130px;
     height: auto;
-    border-radius: 4px;
+    object-fit: cover;
+    border-radius: 8px;
 }

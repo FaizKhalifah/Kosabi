@@ -37,16 +37,17 @@
                     <td><%= room.number %></td>
                     <td><%= room.type %></td>
                     <td><%= room.price %></td>
-                    <td><% if (room.photo) { %>
-                        <img src="<%= room.photo %>" alt="Room Photo" style="width: 200px; height: auto;" />
-                      <% } else { %>
-                        <p>No photo available</p>
-                      <% } %></td>
-                    <td class="actionButtons">
-                        <a href="/rooms/<%= room.id %>/edit" class="editButton">Edit</a>
+                     <td class="actionButtons">
+                            <a href="/rooms/<%= room.id %>/edit" class="editButton">Edit</a>
                         <form method="POST" action="/rooms/<%= room.id %>/delete">
                         <button type="submit" class="deleteButton">Delete</button>
                         </form>
+                    </td>
+                    <td><% if (room.photo) { %>    
+                      <img src="<%= room.photo %>" alt="Room Photo" class="roomImage" />
+                      <% } else { %>
+                        <p>No photo available</p>
+                      <% } %></td>
                     </td>
                     </tr>
                 <% }) %>
