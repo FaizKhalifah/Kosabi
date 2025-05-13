@@ -41,6 +41,7 @@ const DataTypes = Sequelize.DataTypes;
 
 
 db.Room = require('./room')(sequelize, DataTypes);
+db.Tenant = require('./tenant')(sequelize, DataTypes);
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
