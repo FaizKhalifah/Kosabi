@@ -7,6 +7,25 @@ class tenantService {
         return await Tenant.findAll();
     }
 
+    async getSortingOption(sortBy, order) {
+        const validSortFields = ['fullName', 'username', 'email', 'createdAt'];
+        const sortField = validSortFields.includes(sortBy) ? sortBy : 'createdAt';
+        const sortOrder = ['asc', 'desc'].includes(order) ? order : 'desc';
+
+        return [[sortField, sortOrder]];
+    }
+
+    async paginateTenants({ limit, offset, order }) {
+        const { count, rows } = await Tenant.findAndCountAll({
+            limit,
+            offset,
+            order
+        });
+
+        const totalPages = Math.ceil(count / limit);
+
+        return { tenants: rows, totalPages };
+    }
     async getById(id) {
         if (!id) {
             throw new Error("Tenant ID is required");

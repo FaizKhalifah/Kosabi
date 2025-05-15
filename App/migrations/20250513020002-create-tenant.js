@@ -28,6 +28,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       roomId: {
+        allowNull: true,
         type: Sequelize.UUID
       },
       createdAt: {
