@@ -9,3 +9,6 @@ npx sequelize-cli model:generate --name modelName --attributes firstName:string,
 
 to start migration use the command : 
 npx sequelize-cli db:migrate
+
+to undo migration :
+npx sequelize-cli db:migrate:undo
