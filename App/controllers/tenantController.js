@@ -38,6 +38,42 @@ class TenantController {
             res.status(500).send("Internal Server Error");
         }
     }
+
+    async edit(req, res) {
+        const tenant = await tenantService.findById(req.params.id);
+        if (!tenant) {
+            return res.status(404).send('Tenant not found');
+        }
+        res.render('tenants/edit', { tenant });
+    }
+
+    async update(req, res) {
+        try {
+            const tenant = await tenantService.findById(req.params.id);
+            if (!tenant) {
+                return res.status(404).send('Tenant not found');
+            }
+            await tenantService.update(req.params.id, req.body);
+            res.redirect('/tenants');
+        } catch (error) {
+            console.error("Error updating tenant:", error);
+            res.status(500).send("Internal Server Error");
+        }
+    }
+
+    async delete(req, res) {
+        try {
+            const tenant = await tenantService.findById(req.params.id);
+            if (!tenant) {
+                return res.status(404).send('Tenant not found');
+            }
+            await tenantService.delete(req.params.id);
+            res.redirect('/tenants');
+        } catch (error) {
+            console.error("Error deleting tenant:", error);
+            res.status(500).send("Internal Server Error");
+        }
+    }
 }
 
 module.exports = new TenantController();
