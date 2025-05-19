@@ -1,0 +1,24 @@
+    <% layout('../views/layouts/dashboard') %>
+    <link rel="stylesheet" href="/css/tenant/index.css">
+    <div class="container">
+        <h1>Tenants</h1>
+        <div class="upperButtons">
+            <a class="addButton" href="/tenants/add">Add New Tenant</a>
+            <form action="/rooms" method="get" style="margin-bottom: 20px;">
+            
+            <select name="sortBy">
+                <option value="">Sort By</option>
+                <option value="fullName" <%= sortBy === 'fullName' ? 'selected' : '' %>>Full Name</option>
+                <option value="username" <%= sortBy === 'username' ? 'selected' : '' %>>Username</option>
+                <option value="email" <%= sortBy === 'email' ? 'selected' : '' %>>Email</option>
+            </select>
+            
+            <select name="order">
+                <option value="asc" <%= order === 'asc' ? 'selected' : '' %>>Ascending</option>
+                <option value="desc" <%= order === 'desc' ? 'selected' : '' %>>Descending</option>
+            </select>
+            
+            <button type="submit" class="apply">Apply</button>
+            </form>
+        </div>
+    </div>
