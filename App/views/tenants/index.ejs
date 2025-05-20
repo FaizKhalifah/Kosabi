@@ -1,0 +1,62 @@
+    <% layout('../views/layouts/dashboard') %>
+    <link rel="stylesheet" href="/css/tenant/index.css">
+    <div class="container">
+        <h1>Tenants</h1>
+        <div class="upperButtons">
+            <a class="addButton" href="/tenants/add">Add New Tenant</a>
+            <form action="/rooms" method="get" style="margin-bottom: 20px;">
+            
+            <select name="sortBy">
+                <option value="">Sort By</option>
+                <option value="fullName" <%= sortBy === 'fullName' ? 'selected' : '' %>>Full Name</option>
+                <option value="username" <%= sortBy === 'username' ? 'selected' : '' %>>Username</option>
+                <option value="email" <%= sortBy === 'email' ? 'selected' : '' %>>Email</option>
+            </select>
+            
+            <select name="order">
+                <option value="asc" <%= order === 'asc' ? 'selected' : '' %>>Ascending</option>
+                <option value="desc" <%= order === 'desc' ? 'selected' : '' %>>Descending</option>
+            </select>
+            
+            <button type="submit" class="apply">Apply</button>
+            </form>
+        </div>
+        <div class="tableContainer">
+            <table>
+                <tr>
+                    <th>Full Name</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>NIK</th>
+                    <th>Domisili</th>
+                </tr>
+                <% tenants.forEach(tenant => { %>
+                    <tr>
+                      <td><%= tenant.fullName %></td>
+                      <td><%= tenant.Username %></td>
+                      <td><%= tenant.email %></td>
+                      <td><%= tenant.nik %></td>
+                      <td><%= tenant.domisili %></td>
+                      <td >
+                        <div class="actionButtons">
+                          <a href="/tenants/<%= tenant.id %>/edit" class="editButton">Edit</a>
+                          <form method="POST" action="/tenants/<%= tenant.id %>/delete">
+                          <button type="submit" class="deleteButton">Delete</button>
+                          </form>
+                        </div>
+                      </td>
+                    </tr>
+                <% }) %>
+            </table>
+            <div class="pagination">
+              <% for(let i = 1; i <= totalPages; i++) { %>
+                  <a 
+                      href="?page=<%= i %>&sortBy=<%= sortBy %>&order=<%= order %>" 
+                      class="<%= currentPage === i ? 'active' : '' %>">
+                      <%= i %>
+                  </a>
+              <% } %>
+          </div>
+          
+        </div>
+    </div>
