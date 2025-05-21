@@ -1,4 +1,4 @@
-const tenantService = require('../services/tenantService');
+const tenantService = require('../services/Repositories/tenantService');
 
 class TenantController {
     async index(req, res) {
