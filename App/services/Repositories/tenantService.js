@@ -39,6 +39,7 @@ class tenantService {
     }
 
     async create(data) {
+        console.log("Creating tenant with data:", data);
         const existingTenant = await Tenant.findOne({
             where: {
                 [Op.or]: [

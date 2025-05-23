@@ -29,11 +29,12 @@
                     <th>Email</th>
                     <th>NIK</th>
                     <th>Domisili</th>
+                    <th>Action</th>
                 </tr>
                 <% tenants.forEach(tenant => { %>
                     <tr>
                       <td><%= tenant.fullName %></td>
-                      <td><%= tenant.Username %></td>
+                      <td><%= tenant.username %></td>
                       <td><%= tenant.email %></td>
                       <td><%= tenant.nik %></td>
                       <td><%= tenant.domisili %></td>

@@ -31,6 +31,7 @@ class TenantController {
     
     async store(req, res) {
         try {
+            console.log("Creating tenant with data:", req.body);
             await tenantService.create(req.body);
             res.redirect('/tenants');
         } catch (error) {
