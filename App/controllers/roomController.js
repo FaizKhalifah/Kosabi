@@ -30,7 +30,8 @@ class roomController{
     }
 
     async store(req,res){
-        console.log("request : " + req)
+        console.log("request : " + req);
+        console.log(req.body);
         const photoPath = req.file ? '/uploads/rooms/' + req.file.filename : null;
         await roomService.create(req.body,photoPath);
         res.redirect('/rooms');
