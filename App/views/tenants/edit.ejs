@@ -1,0 +1,36 @@
+<% layout('../views/layouts/dashboard') %>
+<link rel="stylesheet" href="/css/tenant/edit.css">
+
+<h1>Edit Tenant</h1>
+<div class="edit-tenant-content">
+    <form action="/tenants/<%= tenant.id %>/edit" method="post">
+        <input type="hidden" name="id" value="<%= tenant.id %>">
+
+        <div>
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" name="fullName" required value="<%= tenant.fullName %>">
+        </div>
+
+        <div>
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required value="<%= tenant.username %>">
+        </div>
+
+        <div>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required value="<%= tenant.email %>">
+        </div>
+
+        <div>
+            <label for="nik">NIK</label>
+            <input type="text" id="nik" name="nik" required value="<%= tenant.nik %>">
+        </div>
+
+        <div>
+            <label for="domisili">Domisili</label>
+            <input type="text" id="domisili" name="domisili" required value="<%= tenant.domisili %>">
+        </div>
+
+        <button type="submit">Submit</button>
+    </form>
+</div>
