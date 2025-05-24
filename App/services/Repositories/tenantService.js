@@ -58,6 +58,7 @@ class tenantService {
     async update(data) {
         const { id, fullName, username, email, password, nik, domisili, roomId } = data;
 
+        console.log("Updating tenant with data:", data);
         const tenant = await Tenant.findByPk(id);
 
         if (!tenant) {
