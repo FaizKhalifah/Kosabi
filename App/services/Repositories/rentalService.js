@@ -14,7 +14,7 @@ class RentalService {
     }
 
     async getSortingOption(sortBy, order) {
-        const validSortFields = ['startDate', 'endDate', 'status', 'createdAt'];
+        const validSortFields = ['startDate', 'endDate',  'createdAt'];
         const sortField = validSortFields.includes(sortBy) ? sortBy : 'createdAt';
         const sortOrder = ['asc', 'desc'].includes(order) ? order : 'desc';
 
