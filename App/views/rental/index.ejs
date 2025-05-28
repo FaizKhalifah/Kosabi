@@ -1,0 +1,24 @@
+<% layout('../views/layouts/dashboard') %>
+<link rel="stylesheet" href="/css/rental/index.css">
+
+<div class="container">
+    <h1>Rental</h1>
+    <div class="upperButtons">
+        <a class="addButton" href="/rentals/add">Add New Room</a>
+        <form action="/rooms" method="get" style="margin-bottom: 20px;">
+            <select name="sortBy">
+                <option value="">Sort By</option>
+                <option value="startDate" <%= sortBy === 'startDate' ? 'selected' : '' %>>Start date</option>
+                <option value="endDate" <%= sortBy === 'endDate' ? 'selected' : '' %>>End date</option>
+                <option value="createdAt" <%= sortBy === 'createdAt' ? 'selected' : '' %>>Created At</option>
+            </select>
+            <select name="order">
+            <option value="asc" <%= order === 'asc' ? 'selected' : '' %>>Ascending</option>
+            <option value="desc" <%= order === 'desc' ? 'selected' : '' %>>Descending</option>
+          </select>
+        </form>
+    </div>
+    <div class="tableContainer">
+
+    </div>
+</div>
