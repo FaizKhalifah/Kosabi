@@ -7,8 +7,8 @@ class RentalService {
     async getAll() {
         return await Rental.findAll({
             include: [
-                { model: Tenant, as: 'tenant' },
-                { model: Room, as: 'room' }
+                { model: Tenant },
+                { model: Room }
             ]
         });
     }
@@ -27,8 +27,8 @@ class RentalService {
             offset,
             order,
             include: [
-                { model: Tenant, as: 'tenant' },
-                { model: Room, as: 'room' }
+                { model: Tenant},
+                { model: Room }
             ]
         });
 

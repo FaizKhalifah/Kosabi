@@ -2,7 +2,6 @@
 const {
   Model
 } = require('sequelize');
-const Rental = require('./rental');
 module.exports = (sequelize, DataTypes) => {
   class Room extends Model {
     /**
@@ -11,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Room.hasOne(Rental,{ foreignKey: 'tenantId' });
+      Room.hasOne(models.Rental,{ foreignKey: 'roomId' });
     }
   }
   Room.init({

@@ -2,8 +2,6 @@
 const {
   Model
 } = require('sequelize');
-const Tenant = require('./tenant');
-const Room = require('./room');
 module.exports = (sequelize, DataTypes) => {
   class Rental extends Model {
     /**
@@ -12,8 +10,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Rental.belongsTo(Tenant, { foreignKey: 'tenantId' });
-      Rental.belongsTo(Room, { foreignKey: 'roomId' });
+      Rental.belongsTo(models.Tenant, { foreignKey: 'tenantId'});
+      Rental.belongsTo(models.Room, { foreignKey: 'roomId'});
     }
   }
   Rental.init({
