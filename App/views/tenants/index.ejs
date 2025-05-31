@@ -31,6 +31,11 @@
                     <th>Domisili</th>
                     <th>Action</th>
                 </tr>
+                 <% if (tenants.length === 0) { %>
+                <tr>
+                    <td colspan="7">Belum ada tenant di database</td>
+                </tr>
+                <% } else { %>
                 <% tenants.forEach(tenant => { %>
                     <tr>
                       <td><%= tenant.fullName %></td>
@@ -48,6 +53,7 @@
                       </td>
                     </tr>
                 <% }) %>
+             <% } %>
             </table>
             <div class="pagination">
               <% for(let i = 1; i <= totalPages; i++) { %>

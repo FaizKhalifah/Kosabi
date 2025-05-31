@@ -32,6 +32,11 @@
                     <th>Photo</th>
                     <th>Action</th>
                 </tr>
+                <% if (rooms.length === 0) { %>
+                <tr>
+                  <td colspan="7">Belum ada ruangan di database.</td>
+                </tr>
+              <% } else { %>
                 <% rooms.forEach(room => { %>
                     <tr>
                       <td><%= room.number %></td>
@@ -53,6 +58,7 @@
                       </td>
                     </tr>
                 <% }) %>
+                <% } %>
             </table>
             <div class="pagination">
               <% for(let i = 1; i <= totalPages; i++) { %>
