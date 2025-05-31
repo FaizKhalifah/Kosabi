@@ -1,0 +1,37 @@
+<% layout('../views/layouts/dashboard') %>
+<link rel="stylesheet" href="/css/rental/add.css">
+
+<h1>Add rental</h1>
+<div class="add-rental-content">
+    <form action="/rentals/add" method="post" >
+        <div>
+            <label for="tenantId">Tenant</label>
+            <select id="tenantId" name="tenantId" required>
+                <% tenants.forEach(tenant => { %>
+                    <option value="<%= tenant.id %>"><%= tenant.fullName %></option>
+                <% }) %>
+            </select>
+        </div>
+
+        <div>
+            <label for="roomId">Room</label>
+            <select id="roomId" name="roomId" required>
+                <% rooms.forEach(room => { %>
+                    <option value="<%= room.id %>"><%= room.number %></option>
+                <% }) %>
+            </select>
+        </div>
+
+        <div>
+            <label for="startDate">Start Date</label>
+            <input type="date" id="startDate" name="startDate" required>
+        </div>
+
+        <div>
+            <label for="endDate">End Date</label>
+            <input type="date" id="endDate" name="endDate">
+        </div>
+
+        <button type="submit">Submit</button>
+    </form>
+</div>

@@ -13,6 +13,14 @@ class RentalService {
         });
     }
 
+    async getAllTenants() {
+        return await Tenant.findAll();
+    }
+
+    async getAllRooms() {
+        return await Room.findAll();
+    }
+    
     async getSortingOption(sortBy, order) {
         const validSortFields = ['startDate', 'endDate',  'createdAt'];
         const sortField = validSortFields.includes(sortBy) ? sortBy : 'createdAt';

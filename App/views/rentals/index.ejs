@@ -16,11 +16,13 @@
             <option value="asc" <%= order === 'asc' ? 'selected' : '' %>>Ascending</option>
             <option value="desc" <%= order === 'desc' ? 'selected' : '' %>>Descending</option>
           </select>
+          <button type="submit" class="apply">Apply</button>
         </form>
     </div>
     <div class="tableContainer">
     <table>
          <tr>
+            <th>No</th>
             <th>Nama Tenant</th>
             <th>Nomor Kamar</th>
             <th>Tanggal Mulai</th>
@@ -37,15 +39,17 @@
         <tr>
           <td><%= index + 1 %></td>
           <td><%= rental.Tenant ? rental.Tenant.fullName : 'N/A' %></td>
-          <td><%= rental.Room ? rental.Room.nomor_kamar : 'N/A' %></td>
+          <td><%= rental.Room ? rental.Room.number: 'N/A' %></td>
           <td><%= rental.startDate %></td>
           <td><%= rental.endDate ? rental.endDate : '-' %></td>
           <td><%= rental.status %></td>
           <td>
-            <a href="/rentals/<%= rental.id %>/edit" class="btn btn-sm btn-warning">Edit</a>
+            <div class="actionButtons">
+            <a href="/rentals/<%= rental.id %>/edit" class="editButton">Edit</a>
             <form action="/rentals/<%= rental.id %>/delete" method="POST" style="display:inline;">
-              <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Yakin hapus sewa ini?')">Hapus</button>
+              <button type="submit" class="deleteButton">Hapus</button>
             </form>
+            </div>
           </td>
         </tr>
       <% }) %>
