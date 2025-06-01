@@ -12,3 +12,6 @@ npx sequelize-cli db:migrate
 
 to undo migration :
 npx sequelize-cli db:migrate:undo
+
+to undo all migration : 
+npx sequelize db:migrate:undo:all
