@@ -1,0 +1,40 @@
+<% layout('../views/layouts/dashboard') %>
+<link rel="stylesheet" href="/css/rental/edit.css">
+
+<h1>Edit rental</h1>
+<div class="edit-rental-content">
+    <form action="/rentals/<%= rental.id %>/edit" method="post">
+
+        <input type="hidden" name="id" value="<%= rental.id %>">
+
+        <div>
+            <label for="tenantId">Tenant</label>
+            <select id="tenantId" name="tenantId" required>
+                <% tenants.forEach(tenant => { %>
+                    <option value="<%= tenant.id %>" <%= tenant.id === rental.tenantId ? 'selected' : '' %>><%= tenant.fullName %></option>
+                <% }) %>
+            </select>
+        </div>
+
+        <div>
+            <label for="roomId">Room</label>
+            <select id="roomId" name="roomId" required>
+                <% rooms.forEach(room => { %>
+                    <option value="<%= room.id %>" <%= room.id === rental.roomId ? 'selected' : '' %>><%= room.number %></option>
+                <% }) %>
+            </select>
+        </div>
+
+        <div>
+            <label for="startDate">Start Date</label>
+            <input type="date" id="startDate" name="startDate" required value="<%= rental.startDate.toISOString().split('T')[0] %>">
+        </div>
+
+        <div>
+            <label for="endDate">End Date</label>
+            <input type="date" id="endDate" name="endDate" value="<%= rental.endDate ? rental.endDate.toISOString().split('T')[0] : '' %>">
+        </div>
+
+        <button type="submit">Submit</button>
+    </form>
+</div>

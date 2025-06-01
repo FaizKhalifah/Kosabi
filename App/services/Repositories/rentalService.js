@@ -48,8 +48,8 @@ class RentalService {
     async getById(id) {
         const rental = await Rental.findByPk(id, {
             include: [
-                { model: Tenant, as: 'tenant' },
-                { model: Room, as: 'room' }
+                { model: Tenant},
+                { model: Room }
             ]
         });
         if (!rental) {
