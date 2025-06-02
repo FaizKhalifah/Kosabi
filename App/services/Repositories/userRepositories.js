@@ -18,6 +18,7 @@ class userService {
     }
     return user;
   }
+
   async create(data) {
     console.log("Creating user with data:", data);
     const existingUser = await User.findOne({
@@ -34,6 +35,25 @@ class userService {
     const { fullName, username, email, password } = data;
     return await User.create({ fullName, username, email, password });
   }
+
+  async authenticate(username, password) {
+    if (!username || !password) {
+      throw new Error("Username and password are required");
+    }
+
+    const user = await User.findOne({
+      where: {
+        username,
+        password // Pastikan password sudah di-hash jika menggunakan hashing
+      }
+    });
+
+    if (!user) {
+      throw new Error("Invalid username or password");
+    }
+
+    return user;
+}
 }
 
 module.exports = new userService();
