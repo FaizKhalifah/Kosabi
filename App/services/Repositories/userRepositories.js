@@ -1,25 +1,39 @@
-const {User} = require("../../models/user");
+const model = require("../../models");
+const { Op } = require('sequelize');
 
-class UserRepository{
-    async findAll(){
-        return await User.findAll();
+const User = model.User;
+class userService {
+  async getAll() {
+    return await User.findAll();
+  }
+  
+  async getById(id) {
+    if (!id) {
+      throw new Error("User ID is required");
     }
 
-    async findById(id) {
-        return await User.findByPk(id);
+    const user = await User.findByPk(id);
+    if (!user) {
+      throw new Error("User not found");
     }
-
-    async create(userData) {
-        return await User.create(userData);
+    return user;
+  }
+  async create(data) {
+    console.log("Creating user with data:", data);
+    const existingUser = await User.findOne({
+      where: {
+        [Op.or]: [
+          { email: data.email },
+          { username: data.username }
+        ]
       }
-    
-      async update(id, updatedData) {
-        return await User.update(updatedData, { where: { id } });
-      }
-    
-      async delete(id) {
-        return await User.destroy({ where: { id } });
-      }
+    });
+    if (existingUser) {
+      throw new Error("Email or username already exists");
+    }
+    const { fullName, username, email, password } = data;
+    return await User.create({ fullName, username, email, password });
+  }
 }
 
-module.exports= new UserRepository();
+module.exports = new userService();
