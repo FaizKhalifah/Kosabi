@@ -1,5 +1,7 @@
 const model = require("../../models");
 const { Op } = require('sequelize');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const User = model.User;
 class userService {
@@ -33,7 +35,8 @@ class userService {
       throw new Error("Email or username already exists");
     }
     const { fullName, username, email, password } = data;
-    return await User.create({ fullName, username, email, password });
+    const hashedPassword = await bcrypt.hash(password, 10); // Hash password before saving
+    return await User.create({ fullName, username, email, hashedPassword});
   }
 
   async authenticate(username, password) {
@@ -52,7 +55,8 @@ class userService {
       throw new Error("Invalid username or password");
     }
 
-    return user;
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    return{ user, token };
 }
 }
 
