@@ -20,20 +20,22 @@ class accountController {
     }
 
     async authenticate(req, res) {
-        const { username, password } = req.body;
         try {
-            const user = await userService.authenticate(username, password);
-            if (user) {
-                req.session.user = user; // Simpan user ke session
-                res.redirect('/'); // Redirect ke halaman utama atau dashboard
-            } else {
-                res.render('accounts/login', { error: 'Invalid username or password' });
-            }
-        } catch (error) {
-            console.error("Authentication error:", error);
-            res.render('accounts/login', { error: error.message });
+            const {user,token} = await userService.authenticate(req.body.username, req.body.password);
+            req.session.user = user; // Simpan user ke session
+            req.session.token = token; // Simpan token ke session
+            res.redirect('/'); // Redirect ke halaman utama atau dashboard
+        }
+        catch(err){
+             res.status(401).send(err.message);
         }
     }
+
+    logout(req, res) {
+    req.session.destroy(() => {
+      res.redirect('/login');
+    });
+  }
 }
 
 module.exports = new accountController();
