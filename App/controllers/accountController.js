@@ -22,6 +22,7 @@ class accountController {
     async authenticate(req, res) {
         try {
             const {user,token} = await userService.authenticate(req.body.username, req.body.password);
+            console.log("user di authenticate:", user);
             req.session.user = user; // Simpan user ke session
             req.session.token = token; // Simpan token ke session
             res.redirect('/'); // Redirect ke halaman utama atau dashboard

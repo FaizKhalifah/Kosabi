@@ -1,7 +1,8 @@
 const model = require("../../models");
 const { Op } = require('sequelize');
-const bcrypt = require('bcryptjs');
+const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
+const user = require("../../models/user");
 
 const User = model.User;
 class userService {
@@ -34,28 +35,39 @@ class userService {
     if (existingUser) {
       throw new Error("Email or username already exists");
     }
-    const { fullName, username, email, password } = data;
+    const { username, email, password } = data;
+    console.log("password:", password)
     const hashedPassword = await bcrypt.hash(password, 10); // Hash password before saving
-    return await User.create({ fullName, username, email, hashedPassword});
+    console.log("hashedPassword:", hashedPassword)
+    return await User.create({username, email, password:hashedPassword});
   }
 
   async authenticate(username, password) {
     if (!username || !password) {
       throw new Error("Username and password are required");
     }
-
+    const hashedPassword = await bcrypt.hash(password, 10); // Hash password for comparison
     const user = await User.findOne({
       where: {
-        username,
-        password // Pastikan password sudah di-hash jika menggunakan hashing
+        [Op.or]:[
+          {username: username},
+          {password: hashedPassword} // Pastikan password sudah di-hash jika menggunakan hashing
+        ]// Pastikan password sudah di-hash jika menggunakan hashing
       }
     });
 
     if (!user) {
       throw new Error("Invalid username or password");
     }
+    const comparePassword = await bcrypt.compare(password, user.password);
+    if (!comparePassword) {
+      throw new Error("Invalid password");
+    }
 
-    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    console.log("compare password berhasil")
+
+    const token = jwt.sign({ id: user.id }, "koderahasia", { expiresIn: '1h' });
+    console.log("token berhasil dibuat");
     return{ user, token };
 }
 }
