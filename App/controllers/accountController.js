@@ -28,7 +28,7 @@ class accountController {
             res.redirect('/'); // Redirect ke halaman utama atau dashboard
         }
         catch(err){
-             res.status(401).send(err.message);
+             res.render('accounts/login', { user: null, error: err.message });
         }
     }
 

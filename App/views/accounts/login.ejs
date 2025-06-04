@@ -1,5 +1,8 @@
 <link rel="stylesheet" href="/css/account/login.css">
 <h1>Login</h1>
+<% if (typeof error !== 'undefined') { %>
+  <div class="error"><%= error %></div>
+<% } %>
 <form action="/login" method="post">
     <div>
         <label for="username">Username:</label>
