@@ -4,7 +4,9 @@ var express = require("express");
 var port = process.env.PORT || 8080;
 const mainRouter = require("./routes/indexRoutes");
 const engine = require("ejs-mate");
-const session = require("express-session")
+const session = require("express-session");
+const authMiddleware = require("./middleware/authMiddleware");
+
 
 var app = express();
 app.use(bodyParser.json());
@@ -22,7 +24,7 @@ app.engine("ejs", engine);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(mainRouter);
 
-app.get('/',(req,res)=>{
+app.get('/',authMiddleware.isAuthenticated,(req,res)=>{
     res.render('main');
 })
 app.listen(3000,()=>{
