@@ -4,11 +4,16 @@ var express = require("express");
 var port = process.env.PORT || 8080;
 const mainRouter = require("./routes/indexRoutes");
 const engine = require("ejs-mate");
-
+const session = require("express-session")
 
 var app = express();
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(session({
+  secret: 'rahasia-anda',
+  resave: false,
+  saveUninitialized: false,
+}));
 
 
 // set up view

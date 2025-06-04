@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="/css/account/login.css">
 <h1>Login</h1>
 <form action="/login" method="post">
     <div>
@@ -11,8 +12,5 @@
     </div>
 
     <button type="submit">Login</button>
-
-    <% if (error) { %>
-        <p style="color: red;"><%= error %></p>
-    <% } %>
+    <p>Don't have an account? <a href="/register">Register here</a>.</p>
 </form>

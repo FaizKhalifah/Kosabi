@@ -1,0 +1,47 @@
+*{
+    font-family: Arial, sans-serif;
+}
+
+form, form>div{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+form{
+    gap: 2rem;
+    border: 0.3px solid rgb(204, 203, 203);
+    box-shadow: 0.5px 1px 3px;
+    border-radius: 1rem;
+    padding: 1rem;
+}
+
+form>div{
+    gap: 0.7rem;
+}
+
+input{
+    width: 20rem;
+    border-radius: 0.3rem;
+    border: 1px solid black;
+    padding: 0.5rem 1rem;
+    font-size: 16px;
+}
+
+button{
+    color: white;
+    background-color: navy;
+    border: 1px solid white;
+    width: 8rem;
+    border-radius: 0.8rem;
+    padding: 1rem;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+button:hover{
+    border-color: navy;
+    background-color: white;
+    color: navy;
+}
