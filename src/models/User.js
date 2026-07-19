@@ -1,35 +1,41 @@
 import mongoose from "mongoose";
-import { boolean } from "webidl-conversions";
 
 const UserSchema = new mongoose.Schema({
 
     name: { 
         type: String, 
-        required: true 
+        required: true,
+        trim:true
     },
 
     email: {
         type: String,
         unique: true,
-        required: true
+        required: true,
+        trim:true,
+        unique:true,
+        lowercase:true
     },
 
     phone: {
         type: String,
         unique: true,
-        required: true
+        required: true,
+        trim:true,
+        unique:true
     },
 
     password: {
         type: String,
-        required: true
+        required: true,
+        select:false,
+        minLength:8
     },
 
-     role: {
+    role: {
         type: String,
-        enum: ['admin', 'tuser'],
-        default:'admin',
-        required: true
+        enum: ['ADMIN', 'TENANT'],
+        default: 'TENANT'
     },
 
     isActive: {
@@ -38,18 +44,14 @@ const UserSchema = new mongoose.Schema({
 
     lastLogin: {
         type: Date,
+        default:null
     },
 
     createdAt: {
         type: Date,
         default: Date.now
     },
-
-    updatedAt: {
-        type: Date
-    }
-
-});
+}, {timestamps:true});
 
 const User = mongoose.model('User',UserSchema);
 export default User;
