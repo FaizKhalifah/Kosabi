@@ -6,62 +6,84 @@ const BoardingHouseSchema = new mongoose.Schema({
         required: true,
         trim:true
     },
+
     description: { 
         type: String
     },
+
     address: { 
-        type: String
+        type: String,
+        trim:true
     },
+
     city: { 
-        type: String
+        type: String,
+        trim:true
     },
+
     province: { 
-        type: String
+        type: String,
+        trim:true
     },
+
     postalCode: { 
-        type: String
+        type: String,
+        trim:true
     },
+
     email: { 
         type: String,
-        unique: true,
         required: true,
         trim:true,
         unique:true,
         lowercase:true
     },
+
     phone: { 
         type: String,
-        unique: true,
         required: true,
         trim:true,
         unique:true
     },
-    rules:{
-        type:Array
-    },
-    facilities:{
-        type:Array
-    },
-    photos:{
-        type:Array
-    },
-    location:{
+
+    rules: [{
+        type: String,
+        trim: true
+    }],
+
+    facilities:[{
         type:String
+    }],
+
+    photos:[{
+        type:String
+    }],
+
+    location:{
+        latitude:Number,
+        longitude:Number
     },
+
     checkInTime:{
         type: Date,
         default:null
     },
+
     checkOutTime:{
         type: Date,
         default:null
     },
-    createdAt: {
-        type: Date,
-        default: Date.now
+
+    status:{
+        type:String,
+        enum:["ACTIVE","INACTIVE"],
+        default:"ACTIVE"
     },
+    
     createdBy: {
-        type: String
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true
     },
 },{timestamps:true});
 
