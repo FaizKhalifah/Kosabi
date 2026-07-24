@@ -3,31 +3,38 @@ import mongoose from "mongoose";
 
 const RoomSchema = new mongoose.Schema({
     boardingHouse:{
-        type:UUID,
+        type: mongoose.Schema.Types.ObjectId,
         required: true,
     },
 
     roomNumber:{
-        type:Number,
+        type:String,
         required:true
     },
 
     floor:{
         type:Number,
+        min:1,
         required:true
     },
 
     type:{
         type:String,
+            enum:[
+            "STANDARD",
+            "DELUXE",
+            "VIP"
+        ],
         required:true
     },
 
     price:{
         type:Number,
+        min:0,
         required:true
     },
 
-    depocit:{
+    deposit:{
         type:Number,
         required:true
     },
@@ -35,19 +42,15 @@ const RoomSchema = new mongoose.Schema({
     capacity:{
         type:Number,
         required:true,
+        min:1,
         default:1
-    },
-
-    occupied:{
-        type:Boolean,
-        required:true,
-        default:false
     },
 
     status:{
         type:String,
         required:true,
         enum: ['AVAILABLE', 'OCCUPIED', 'MAINTENANCE', 'RESERVED'],
+        default:'AVAILABLE'
     },
 
     size:{
@@ -56,7 +59,8 @@ const RoomSchema = new mongoose.Schema({
     },
 
     facilities:[{
-        type:String
+        type:String,
+        trim:true
     }],
 
     photos:[{
