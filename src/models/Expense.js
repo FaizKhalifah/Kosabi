@@ -1,47 +1,72 @@
 import mongoose from "mongoose";
 
-const ExpenseSchema = new mongoose.Schema({
-    title:{
-        type:String,
-        required:true
-    },
+const ExpenseSchema = new mongoose.Schema(
+    {
+        boardingHouse: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "BoardingHouse",
+            required: true
+        },
 
-    category:{
-        type:String,
-        enum:[
-            "UTILITY",
-            "MAINTENANCE",
-            "SALARY",
-            "PURCHASE",
-            "OTHER"
-        ],
-        required:true
-    },
-    amount:{
-        type:String,
-        required:true
-    },
+        title: {
+            type: String,
+            required: true,
+            trim: true
+        },
 
-    expenseDate:{
-        type:Date,
-        required:true
-    },
+        category: {
+            type: String,
+            enum: [
+                "UTILITY",
+                "MAINTENANCE",
+                "SALARY",
+                "PURCHASE",
+                "OTHER"
+            ],
+            required: true
+        },
 
-    receiptImage:{
-        type:String
-    },
+        amount: {
+            type: Number,
+            required: true,
+            min: 0
+        },
 
-    description:{
-        type:String
-    },
+        expenseDate: {
+            type: Date,
+            required: true
+        },
 
-    createdBy: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        default: null
+        receiptImage: {
+            type: String,
+            default: null
+        },
+
+        description: {
+            type: String,
+            trim: true
+        },
+
+        createdBy: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            default: null
+        }
+    },
+    {
+        timestamps: true
     }
+);
 
-}, {timestamps:true})
+ExpenseSchema.index({
+    boardingHouse: 1,
+    expenseDate: -1
+});
 
-const Expense = mongoose.model("Expense",ExpenseSchema);
+ExpenseSchema.index({
+    category: 1
+});
+
+const Expense = mongoose.model("Expense", ExpenseSchema);
+
 export default Expense;
