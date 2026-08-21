@@ -2,11 +2,6 @@ import mongoose from "mongoose";
 
 const ExpenseSchema = new mongoose.Schema(
     {
-        boardingHouse: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "BoardingHouse",
-            required: true
-        },
 
         title: {
             type: String,
@@ -58,10 +53,6 @@ const ExpenseSchema = new mongoose.Schema(
     }
 );
 
-ExpenseSchema.index({
-    boardingHouse: 1,
-    expenseDate: -1
-});
 
 ExpenseSchema.index({
     category: 1
