@@ -1,62 +1,83 @@
 import mongoose from "mongoose";
 
-const ComplaintSchema = new mongoose.Schema({
-    tenant:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref:"User",
-        required: true,
-    },
+const ComplaintSchema = new mongoose.Schema(
+    {
+        tenant: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            required: true
+        },
 
-    room:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref:"Room",
-        required: true,
-    },
+        room: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Room",
+            required: true
+        },
 
-    title:{
-        type:String,
-        required:true
-    },
+        title: {
+            type: String,
+            required: true,
+            trim: true
+        },
 
-    description:{
-        type:String,
-        required:true
-    },
+        description: {
+            type: String,
+            required: true,
+            trim: true
+        },
 
-    photos:{
-        type:String
-    },
+        photos: {
+            type: [String],
+            default: []
+        },
 
-    status:{
-        type:String,
-        enum:[
-            "OPEN",
-            "PROCESS",
-            "RESOLVED",
-            "CLOSED"
-        ]
-    },
+        status: {
+            type: String,
+            enum: [
+                "OPEN",
+                "PROCESS",
+                "RESOLVED",
+                "CLOSED"
+            ],
+            default: "OPEN"
+        },
 
-    priority:{
-        type:String,
-        enum:[
-            "LOW",
-            "MEDIUM",
-            "HIGH"
-        ]
-    },
+        priority: {
+            type: String,
+            enum: [
+                "LOW",
+                "MEDIUM",
+                "HIGH"
+            ],
+            default: "MEDIUM"
+        },
 
-    response:{
-        type:String,
-        required:true,
-        trim:true
-    },
+        response: {
+            type: String,
+            trim: true,
+            default: null
+        },
 
-    resolvedAt:{
-        type:Date
+        respondedBy: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            default: null
+        },
+
+        resolvedAt: {
+            type: Date,
+            default: null
+        }
+    },
+    {
+        timestamps: true
     }
+);
 
-}, {timestamps:true});
+ComplaintSchema.index({ tenant: 1 });
+ComplaintSchema.index({ status: 1 });
+ComplaintSchema.index({ tenant: 1, status: 1 });
 
-const Complaint = mongoose.model("Complaint",ComplaintSchema);
-export default ComplaintSchema;
+const Complaint = mongoose.model("Complaint", ComplaintSchema);
+
+export default Complaint;
