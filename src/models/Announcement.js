@@ -1,40 +1,60 @@
 import mongoose from "mongoose";
 
-const AnnouncementSchema = new mongoose.Schema({
+const AnnouncementSchema = new mongoose.Schema(
+    {
+        title: {
+            type: String,
+            required: true,
+            trim: true
+        },
 
-    title:{
-        type:String,
-        required:true,
-        trim:true
+        content: {
+            type: String,
+            required: true,
+            trim: true
+        },
+
+        attachments: {
+            type: [String],
+            default: []
+        },
+
+        status: {
+            type: String,
+            enum: [
+                "DRAFT",
+                "PUBLISHED",
+                "ARCHIVED"
+            ],
+            default: "DRAFT"
+        },
+
+        publishedAt: {
+            type: Date,
+            default: null
+        },
+
+        expiredAt: {
+            type: Date,
+            default: null
+        },
+
+        createdBy: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            required: true
+        }
     },
-
-    content:{
-        type:String,
-        required:true,
-        trim:true
-    },
-
-    attachments:{
-        type:Array,
-    },
-
-    publishedDate:{
-        type:Date,
-        required:true
-    },
-
-    expiredAt:{
-        type:Date,
-        required:true
-    },
-
-    createdBy: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
+    {
+        timestamps: true
     }
+);
 
+AnnouncementSchema.index({
+    status: 1,
+    publishedAt: -1
+});
 
-}, {timestamps:true});
+const Announcement = mongoose.model("Announcement", AnnouncementSchema);
 
-const Announcement = mongoose.model("Announcment",AnnouncementSchema);
 export default Announcement;
