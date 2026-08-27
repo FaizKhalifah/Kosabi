@@ -1,59 +1,72 @@
 import mongoose from "mongoose";
 
-const SettingSchema = new mongoose.Schema({
-    boardingHouse:{
-        type:mongoose.Types.ObjectId,
-        ref:"BoardingHouse",
-        required:true
-    },
+const SettingSchema = new mongoose.Schema(
+    {
+        boardingHouse: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "BoardingHouse",
+            required: true,
+            unique: true
+        },
 
-    paymentDueDay:{
-        type:String,
-        required:true
-    },
+        paymentDueDay: {
+            type: Number,
+            min: 1,
+            max: 31,
+            default: 5
+        },
 
-    lateFee:{
-        type:String,
-        required:true
-    },
+        lateFee: {
+            type: Number,
+            min: 0,
+            default: 0
+        },
 
-    currency:{
-        type:String,
-        required:true
-    },
+        currency: {
+            type: String,
+            default: "IDR",
+            trim: true
+        },
 
-    allowVisitor:{
-        type:String,
-        required:true
-    },
+        allowVisitor: {
+            type: Boolean,
+            default: true
+        },
 
-    maxVisitor:{
-        type:String,
-        required:true
-    },
+        maxVisitor: {
+            type: Number,
+            min: 0,
+            default: 1
+        },
 
-    automaticInvoice:{
-        type:Boolean,
-        required:true
-    },
+        automaticInvoice: {
+            type: Boolean,
+            default: true
+        },
 
-    waterFee:{
-        type:String,
-        required:true
-    },
+        waterFee: {
+            type: Number,
+            min: 0,
+            default: 0
+        },
 
-    electricFee:{
-        type:String,
-        requiredTrue
-    },
+        electricFee: {
+            type: Number,
+            min: 0,
+            default: 0
+        },
 
-    wifiFee:{
-        type:String,
-        requiredTrue
+        wifiFee: {
+            type: Number,
+            min: 0,
+            default: 0
+        }
+    },
+    {
+        timestamps: true
     }
-
-
-}, {timestamps:true});
+);
 
 const Setting = mongoose.model("Setting", SettingSchema);
+
 export default Setting;

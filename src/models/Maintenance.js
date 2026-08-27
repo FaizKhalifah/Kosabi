@@ -1,51 +1,81 @@
 import mongoose from "mongoose";
 
-const MaintenanceSchema = new mongoose.Schema({
-    room:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref:"Room",
-        required: true,
-    },
+const MaintenanceSchema = new mongoose.Schema(
+    {
+        room: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Room",
+            required: true
+        },
 
-    reportedBy:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref:"User",
-        required: true,
-    },
+        complaint: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Complaint",
+            default: null
+        },
 
-    title:{
-        type:String,
-        required:true,
-        trim:true
-    },
+        reportedBy: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            required: true
+        },
 
-    description:{
-        type:String,
-        required:true,
-        trim:true
-    },
+        title: {
+            type: String,
+            required: true,
+            trim: true
+        },
 
-    status:{
-        type:String,
-        required:true
-    },
+        description: {
+            type: String,
+            required: true,
+            trim: true
+        },
 
-    cost:{
-        type:String,
-        required:true
-    },
+        status: {
+            type: String,
+            enum: [
+                "REPORTED",
+                "IN_PROGRESS",
+                "COMPLETED",
+                "CANCELLED"
+            ],
+            default: "REPORTED"
+        },
 
-    startDate:{
-        type:Date,
-        required:true
-    },
+        cost: {
+            type: Number,
+            min: 0,
+            default: 0
+        },
 
-    endDate:{
-        type:Date,
-        required:true
+        photos: {
+            type: [String],
+            default: []
+        },
+
+        startedAt: {
+            type: Date,
+            default: null
+        },
+
+        completedAt: {
+            type: Date,
+            default: null
+        }
+    },
+    {
+        timestamps: true
     }
+);
 
-}, {timestamps:true});
+MaintenanceSchema.index({ room: 1 });
+MaintenanceSchema.index({ status: 1 });
+MaintenanceSchema.index({ room: 1, status: 1 });
 
-const Maintenance = mongoose.model("Maintenance",MaintenanceSchema);
+const Maintenance = mongoose.model(
+    "Maintenance",
+    MaintenanceSchema
+);
+
 export default Maintenance;
