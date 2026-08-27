@@ -1,43 +1,81 @@
 import mongoose from "mongoose";
 
-const VisitorSchema = new mongoose.Schema({
-    tenant:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref:"User",
-        required: true,
-    },
+const VisitorSchema = new mongoose.Schema(
+    {
+        tenant: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            required: true
+        },
 
-    visitorName:{
-        type:String,
-        required:true
-    },
+        room: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Room",
+            required: true
+        },
 
-    phone:{
-        type:String,
-        required:true
-    },
+        visitorName: {
+            type: String,
+            required: true,
+            trim: true
+        },
 
-    visitDate:{
-        type:Date,
-        required:true
-    },
+        phone: {
+            type: String,
+            required: true,
+            trim: true
+        },
 
-    checkIn:{
-        type:String,
-        required:true
-    },
+        scheduledVisitAt: {
+            type: Date,
+            required: true
+        },
 
-    checkOut:{
-        type:String,
-        required:true
-    },
+        checkIn: {
+            type: Date,
+            default: null
+        },
 
-    notes:{
-        type:String,
-        trim:true
+        checkOut: {
+            type: Date,
+            default: null
+        },
+
+        status: {
+            type: String,
+            enum: [
+                "REGISTERED",
+                "CHECKED_IN",
+                "CHECKED_OUT",
+                "CANCELLED"
+            ],
+            default: "REGISTERED"
+        },
+
+        notes: {
+            type: String,
+            trim: true
+        }
+    },
+    {
+        timestamps: true
     }
+);
 
-}, {timestamps:true});
+VisitorSchema.index({
+    tenant: 1,
+    createdAt: -1
+});
 
-const Visitor = mongoose.model("Visitor",VisitorSchema);
+VisitorSchema.index({
+    room: 1,
+    status: 1
+});
+
+VisitorSchema.index({
+    scheduledVisitAt: -1
+});
+
+const Visitor = mongoose.model("Visitor", VisitorSchema);
+
 export default Visitor;
