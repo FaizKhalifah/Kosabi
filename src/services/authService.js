@@ -53,19 +53,19 @@ export default class AuthService{
                 case !data.password:
                     throw new Error("Tenant Password is required");
             }
-        const hashedPassword = await bcrypt.hash(data,10);
-        data.password = hashedPassword;
-        data.role = "TENANT";
-        const token = jwt.sign({
-            id:data.id,
-            name:data.name,
-            role:data.role
-        }, 
-        'your_jwt_secret',
-        { expiresIn: '1h' }
-        )
+            const hashedPassword = await bcrypt.hash(data,10);
+            data.password = hashedPassword;
+            data.role = "TENANT";
+            const token = jwt.sign({
+                id:data.id,
+                name:data.name,
+                role:data.role
+            }, 
+            'your_jwt_secret',
+            { expiresIn: '1h' }
+            )
 
-        return {tenant:data, token};
+            return {tenant:data, token};
         }catch(err){
             return err.message
         }
@@ -90,7 +90,16 @@ export default class AuthService{
 
     async changePassword(data){
         try{
-            
+            const user = await this.repository.findByEmail(data.email);
+            if(!user){
+                throw new Error("user email not found");
+            }
+            if(user.password == data.newPassword){
+                throw new Error("new password cannot be the same as the old password");
+            }
+            const newPassword = await bcrypt.hash(data.newPassword,10);
+            user.password == newPassword;
+            return {message:"user password has been changed"}
         }catch(err){
             return err.message
         }
