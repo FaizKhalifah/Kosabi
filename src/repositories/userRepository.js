@@ -10,4 +10,8 @@ export default class UserRepository extends BaseRepository{
         return User.findOne({name});
     }
 
+    async findByEmail(email){
+        return User.findOne({email});
+    }
+
 }
