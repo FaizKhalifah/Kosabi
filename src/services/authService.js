@@ -1,40 +1,53 @@
 import UserRepository from "../repositories/userRepository.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import APP_SECRET from "../config/index.js";
 
 export default class AuthService{
     constructor() {
-        this.repository = UserRepository();
+        this.repository = new UserRepository();
     }
 
     async registerAdmin(data){
         try{
-            switch(data){
-            case !data.name:
-                throw new Error("Admin name is required");
-            case !data.email:
-                throw new Error("Admin email is required");
-            case !data.phone :
-                throw new Error("Admin phone number is required");
-            case !data.password:
-                throw new Error("Admin assword is required");
-            case data.password !== data.confirmedPassowrd:
-                throw new Error("Password didn't match");
-
+        const { name, email, phone, password, confirmPassword } = data; 
+        if (!name) { 
+            throw new Error("Admin name is required"); 
+        } 
+        if (!email) { 
+            throw new Error("Admin email is required"); 
+        } 
+        if (!phone) { 
+            throw new Error("Admin phone number is required"); 
+        } 
+        if (!password) { 
+            throw new Error("Admin password is required"); 
+        } 
+        if (password !== confirmPassword) { 
+            throw new Error("Password didn't match"); 
         }
-        const hashedPassword = await bcrypt.hash(data,10);
+
+        const existingUser = await this.repository.findByEmail(email);
+        if(existingUser){
+            throw new Error("Email is already registered");
+        }
+
+
+        const hashedPassword = await bcrypt.hash(data.password,10);
         data.password = hashedPassword;
-        data.role = "ADMIN";
+        const user = await this.repository.create(
+            { name, email, phone, password: hashedPassword, role: "ADMIN", isActive: true }
+        );
+        
         const token = jwt.sign({
             id:data.id,
             name:data.name,
             role:data.role
         }, 
-        'your_jwt_secret',
+        APP_SECRET,
         { expiresIn: '1h' }
         )
-
-        return {admin:data, token};
+        return { id: user._id, name: user.name, email: user.email, phone: user.phone, role: user.role, token:token };
         }catch(err){
             return err.message
         }
@@ -43,29 +56,20 @@ export default class AuthService{
 
     async registerTenant(data){
         try{
-            switch(data){
-                case !data.name:
-                    throw new Error("Tenant name is required");
-                case !data.email:
-                    throw new Error("Tenant email is required");
-                case !data.phone :
-                    throw new Error("Tenant phone number is required");
-                case !data.password:
-                    throw new Error("Tenant Password is required");
-            }
-            const hashedPassword = await bcrypt.hash(data,10);
+            const hashedPassword = await bcrypt.hash(data.password,10);
             data.password = hashedPassword;
             data.role = "TENANT";
+            const Tenant = await this.repository.create(data);
             const token = jwt.sign({
                 id:data.id,
                 name:data.name,
                 role:data.role
             }, 
-            'your_jwt_secret',
+            APP_SECRET,
             { expiresIn: '1h' }
             )
 
-            return {tenant:data, token};
+            return {tenant:Tenant, token};
         }catch(err){
             return err.message
         }
@@ -81,7 +85,7 @@ export default class AuthService{
             if (!isPasswordValid) {
                 throw new Error("Invalid password");
             }
-            const token = jwt.sign({ id: admin.id, name:admin.name, role:admin.role }, 'your_jwt_secret', { expiresIn: '1h' });
+            const token = jwt.sign({ id: admin.id, name:admin.name, role:admin.role }, APP_SECRET, { expiresIn: '1h' });
             return { admin, token };
         }catch(err){
             return err.message
@@ -105,7 +109,4 @@ export default class AuthService{
         }
     }
 
-    async forgotPassword(){
-
-    }
 }
