@@ -15,7 +15,17 @@ export default class UserService{
         }
     }
 
-    async changeUserRole(){
-
+    async changeUserRole(id, role){
+        const user = await this.repository.findById(id);
+        if(!user){
+            throw new Error("User not found"); 
+        }
+        if (user.role == role){
+            throw new Error("cannot change to the same role");
+        }
+        user.role == role;
+        return{
+            message:`user role changed to ${role}`
+        }
     }
 }
