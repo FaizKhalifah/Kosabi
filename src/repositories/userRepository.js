@@ -14,4 +14,13 @@ export default class UserRepository extends BaseRepository{
         return User.findOne({email});
     }
 
+    async activate(id){
+        return User.updateOne({_id:id},{ $set: { isActive: true }});
+    }
+
+    async deactivate(id){
+        return User.updateOne({_id:id},{ $set: { isActive: false}});
+    }
+
+
 }
