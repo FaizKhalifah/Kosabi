@@ -1,8 +1,12 @@
 import Room from "../models/Room.js";
 import BaseRepository from "./baseRepository.js";
 
-export default class RoomRepository extends BaseRepository{
-    constructor(){
-        super(Room);
-    }
+export default class RoomRepository extends BaseRepository {
+  constructor() {
+    super(Room);
+  }
+
+  async findByOccupantId(id) {
+    return Room.findOne({ occupant: id });
+  }
 }

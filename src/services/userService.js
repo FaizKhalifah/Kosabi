@@ -1,8 +1,12 @@
 import UserRepository from "../repositories/UserRepository.js";
+import RoomRepository from "../repositories/roomRepository.js";
+import RentalRepository from "../repositories/rentalRepository.js";
 
 export default class UserService {
   constructor() {
     this.repository = new UserRepository();
+    this.roomRepository = new RoomRepository();
+    this.rentalRepository = new RentalRepository();
   }
 
   async getUserById(id) {
@@ -93,5 +97,33 @@ export default class UserService {
     } catch (err) {
       return err.message;
     }
+  }
+
+  async getUserRoom(id) {
+    const user = await this.repository.findById(id);
+    if (!user) {
+      throw new Error("User not found");
+    }
+    const userRoom = await this.roomRepository.findByOccupantId(id);
+    if (!userRoom) {
+      throw new Error("User room not found");
+    }
+    return {
+      room: userRoom,
+    };
+  }
+
+  async getUserRental(id) {
+    const user = await this.repository.findById(id);
+    if (!user) {
+      throw new Error("User not found");
+    }
+    const userRental = await this.rentalRepository.findByTenant(id);
+    if (!userRental) {
+      throw new Error("User rental not found");
+    }
+    return {
+      rental: userRental,
+    };
   }
 }
