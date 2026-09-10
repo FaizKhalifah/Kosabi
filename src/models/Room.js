@@ -1,78 +1,87 @@
 import { UUID } from "bson";
 import mongoose from "mongoose";
 
-const RoomSchema = new mongoose.Schema({
-    boardingHouse:{
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
+const RoomSchema = new mongoose.Schema(
+  {
+    boardingHouse: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
     },
 
-    roomNumber:{
-        type:String,
-        required:true
+    occupant: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+      default: null,
     },
 
-    floor:{
-        type:Number,
-        min:1,
-        required:true
+    roomNumber: {
+      type: String,
+      required: true,
     },
 
-    type:{
-        type:String,
-            enum:[
-            "STANDARD",
-            "DELUXE",
-            "VIP"
-        ],
-        required:true
+    floor: {
+      type: Number,
+      min: 1,
+      required: true,
     },
 
-    price:{
-        type:Number,
-        min:0,
-        required:true
+    type: {
+      type: String,
+      enum: ["STANDARD", "DELUXE", "VIP"],
+      required: true,
     },
 
-    deposit:{
-        type:Number,
-        required:true
+    price: {
+      type: Number,
+      min: 0,
+      required: true,
     },
 
-    capacity:{
-        type:Number,
-        required:true,
-        min:1,
-        default:1
+    deposit: {
+      type: Number,
+      required: true,
     },
 
-    status:{
-        type:String,
-        required:true,
-        enum: ['AVAILABLE', 'OCCUPIED', 'MAINTENANCE', 'RESERVED'],
-        default:'AVAILABLE'
+    capacity: {
+      type: Number,
+      required: true,
+      min: 1,
+      default: 1,
     },
 
-    size:{
-        type:Number,
-        required:true
+    status: {
+      type: String,
+      required: true,
+      enum: ["AVAILABLE", "OCCUPIED", "MAINTENANCE", "RESERVED"],
+      default: "AVAILABLE",
     },
 
-    facilities:[{
-        type:String,
-        trim:true
-    }],
+    size: {
+      type: Number,
+      required: true,
+    },
 
-    photos:[{
-        type:String
-    }],
+    facilities: [
+      {
+        type: String,
+        trim: true,
+      },
+    ],
 
-    description:{
-        type:String,
-        trim:true
-    }
+    photos: [
+      {
+        type: String,
+      },
+    ],
 
-}, {timestamps:true});
+    description: {
+      type: String,
+      trim: true,
+    },
+  },
+  { timestamps: true },
+);
 
 const Room = mongoose.model("Room", RoomSchema);
 export default Room;
