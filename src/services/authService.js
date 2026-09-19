@@ -105,7 +105,6 @@ class AuthService {
       role: "TENANT",
       isActive: true,
     });
-    console.log("user berhasil dibuat");
     const token = jwt.sign(
       {
         id: user._id,
@@ -115,7 +114,6 @@ class AuthService {
       config.APP_SECRET,
       { expiresIn: "1h" },
     );
-    console.log("service selesai");
     return {
       user: {
         id: user._id,
@@ -128,7 +126,8 @@ class AuthService {
     };
   }
 
-  async login(email, password) {
+  async login(data) {
+    const { email, password } = data;
     if (!email || !password) {
       throw new Error("Email and password are required");
     }
@@ -141,9 +140,8 @@ class AuthService {
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
-
     if (!isPasswordValid) {
-      throw new Error("Invalid email or password");
+      throw new Error("Invalid password");
     }
 
     await this.repository.update(user._id, { lastLogin: new Date() });
