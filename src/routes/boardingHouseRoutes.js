@@ -1,5 +1,5 @@
 import express from "express";
-import BoardingHouseController from "../controllers/boardingHouseController";
+import BoardingHouseController from "../controllers/boardingHouseController.js";
 
 const boardingHouseController = new BoardingHouseController();
 const boardingHouseRouter = express.Router();

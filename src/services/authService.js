@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import config from "../config/index.js";
 
-export default class AuthService {
+class AuthService {
   constructor() {
     this.repository = new UserRepository();
   }
@@ -26,9 +26,14 @@ export default class AuthService {
       throw new Error("Password didn't match");
     }
 
-    const existingUser = await this.repository.findByEmail(email);
-    if (existingUser) {
+    const isEmailUsed = await this.repository.findByEmail(email);
+    if (isEmailUsed) {
       throw new Error("Email is already registered");
+    }
+
+    const isPhoneNumberUsed = await this.repository.findByPhone(phone);
+    if (isPhoneNumberUsed) {
+      throw new Error("Phone number already used");
     }
 
     const hashedPassword = await bcrypt.hash(data.password, 10);
@@ -80,11 +85,17 @@ export default class AuthService {
       throw new Error("Password didn't match");
     }
 
-    const existingUser = await this.repository.findByEmail(email);
+    const isEmailUsed = await this.repository.findByEmail(email);
 
-    if (existingUser) {
+    if (isEmailUsed) {
       throw new Error("Email is already registered");
     }
+
+    const isPhoneNumberUsed = await this.repository.findByPhone(phone);
+    if (isPhoneNumberUsed) {
+      throw new Error("Phone number already used");
+    }
+
     const hashedPassword = await bcrypt.hash(data.password, 10);
     const user = await this.repository.create({
       name,
@@ -94,6 +105,7 @@ export default class AuthService {
       role: "TENANT",
       isActive: true,
     });
+    console.log("user berhasil dibuat");
     const token = jwt.sign(
       {
         id: user._id,
@@ -103,6 +115,7 @@ export default class AuthService {
       config.APP_SECRET,
       { expiresIn: "1h" },
     );
+    console.log("service selesai");
     return {
       user: {
         id: user._id,
@@ -195,3 +208,5 @@ export default class AuthService {
     return { message: "Password has been changed successfully" };
   }
 }
+
+export default new AuthService();

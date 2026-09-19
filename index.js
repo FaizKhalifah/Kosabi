@@ -1,10 +1,14 @@
-import bodyParser from "body-parser";
+import bodyParser, { json } from "body-parser";
 import path from "path";
 import cookieParser from "cookie-parser";
 import express from "express";
 import session from "express-session";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+
+//routers
+import authRouter from "./src/routes/authRoutes.js";
+import boardingHouseRouter from "./src/routes/boardingHouseRoutes.js";
 
 import { fileURLToPath } from "url";
 
@@ -19,7 +23,17 @@ var app = express();
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 
+//use routers
+app.use(authRouter);
+app.use(boardingHouseRouter);
+
+app.get("/", (req, res) => {
+  res.json({ message: "Halo ini adalah kosabi" });
+});
+
 const connection = process.env.MONGODB_URI;
-mongoose.connect(connection).then((result) => app.listen(port))
-.then(console.log(`server start on port ${port}`))
-.catch((err) => console.log(err));
+mongoose
+  .connect(connection)
+  .then((result) => app.listen(port))
+  .then(console.log(`server start on port ${port}`))
+  .catch((err) => console.log(err));
