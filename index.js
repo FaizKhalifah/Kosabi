@@ -1,4 +1,4 @@
-import bodyParser from "body-parser";
+import bodyParser, { json } from "body-parser";
 import path from "path";
 import cookieParser from "cookie-parser";
 import express from "express";
@@ -26,6 +26,10 @@ app.use(express.urlencoded({ extended: true }));
 //use routers
 app.use(authRouter);
 app.use(boardingHouseRouter);
+
+app.get("/", (req, res) => {
+  res.json({ message: "Halo ini adalah kosabi" });
+});
 
 const connection = process.env.MONGODB_URI;
 mongoose

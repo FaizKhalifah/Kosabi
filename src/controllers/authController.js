@@ -1,13 +1,9 @@
 import AuthService from "../services/authService.js";
 
 export default class AuthController {
-  constructor() {
-    this.authService = new AuthService();
-  }
-
   async registerAdmin(req, res) {
     try {
-      const admin = await this.authService.registerAdmin(req.body);
+      const admin = await AuthService.registerAdmin(req.body);
       res.status(201).json({ message: "Registrasi admin berhasil", admin });
     } catch (err) {
       res.status(400).json({ error: err.message });
@@ -16,7 +12,7 @@ export default class AuthController {
 
   async registerTenant(req, res) {
     try {
-      const tenant = await this.authService.registerTenant(req.body);
+      const tenant = await AuthService.registerTenant(req.body);
       res.status(201).json({ message: "Registrasi tenant berhasil", tenant });
     } catch (err) {
       res.status(400).json({ error: err.message });
@@ -25,7 +21,7 @@ export default class AuthController {
 
   async login(req, res) {
     try {
-      const result = await this.authService.login(req.body);
+      const result = await AuthService.login(req.body);
       res.status(200).json({ message: "Login berhasil", ...result });
     } catch (err) {
       res.status(400).json({ error: err.message });
