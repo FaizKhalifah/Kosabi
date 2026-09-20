@@ -23,7 +23,6 @@ export default class ClassBoardingHouseController {
 
   async create(req, res) {
     try {
-      console.log("data di controller" + JSON.stringify(req.body));
       const createResult = await BoardingHouseService.createBoardingHouse(
         req.body,
         req.files,

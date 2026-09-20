@@ -46,11 +46,20 @@ class BoardingHouseService {
       status,
     } = data;
 
+    const isEmailUsed = await this.repository.findByEmail(email);
+    if (isEmailUsed) {
+      throw new Error("Email has been used");
+    }
+
+    const isPhoneUsed = await this.repository.findByPhone(phone);
+    if (isPhoneUsed) {
+      throw new Error("Phone number has been used");
+    }
+
     const parsedRules = rules ? JSON.parse(rules) : [];
     const parsedFacilities = facilities ? JSON.parse(facilities) : [];
     const parsedLocation = location ? JSON.parse(location) : null;
 
-    console.log("file photo : " + JSON.stringify(photos));
     const photoPaths = photos ? photos.map((file) => file.path) : [];
 
     return await this.repository.create({
