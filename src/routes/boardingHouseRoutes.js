@@ -32,7 +32,11 @@ boardingHouseRouter.post(
   boardingHouseController.create,
 );
 boardingHouseRouter.get(`${baseUrl}/:id`, boardingHouseController.getById);
-boardingHouseRouter.put(`${baseUrl}/:id`, boardingHouseController.update);
+boardingHouseRouter.put(
+  `${baseUrl}/:id`,
+  upload.array("photos"),
+  boardingHouseController.update,
+);
 boardingHouseRouter.delete(`${baseUrl}/:id`, boardingHouseController.delete);
 
 export default boardingHouseRouter;

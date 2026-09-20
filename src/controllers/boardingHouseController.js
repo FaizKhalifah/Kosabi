@@ -36,7 +36,9 @@ export default class ClassBoardingHouseController {
   async update(req, res) {
     try {
       const updateResult = await BoardingHouseService.updateBoardingHouse(
+        req.params.id,
         req.body,
+        req.files,
       );
       res.status(201).json({ success: true, data: updateResult });
     } catch (err) {
@@ -47,9 +49,9 @@ export default class ClassBoardingHouseController {
   async delete(req, res) {
     try {
       const deleteResult = await BoardingHouseService.deleteBoardingHouse(
-        req.body,
+        req.params.id,
       );
-      res.status(201).json({ success: true, data: deleteResult });
+      res.status(201).json({ success: true, message: deleteResult });
     } catch (err) {
       res.status(500).json({ message: err.message });
     }

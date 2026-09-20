@@ -79,21 +79,9 @@ class BoardingHouseService {
     });
   }
 
-  async updateBoardingHouse(id, data, photopath) {
+  async updateBoardingHouse(id, data, photos) {
     if (!id) {
       throw new Error("Id is required to update boarding house");
-    }
-
-    const boardingHouse = await this.repository.findById(id);
-    if (!boardingHouse) {
-      throw new Error("Boarding house not found");
-    }
-
-    if (photopath && boardingHouse.photo) {
-      const oldPath = path.join("public", boardingHouse.photo);
-      if (fs.existsSync(oldPath)) {
-        fs.unlinkSync(oldPath);
-      }
     }
 
     const {
@@ -111,7 +99,18 @@ class BoardingHouseService {
       status,
     } = data;
 
-    return await this.repository.update({
+    const boardingHouse = await this.repository.findById(id);
+    if (!boardingHouse) {
+      throw new Error("Boarding house not found");
+    }
+
+    const photoPaths = photos ? photos.map((file) => file.path) : [];
+
+    const parsedRules = rules ? JSON.parse(rules) : [];
+    const parsedFacilities = facilities ? JSON.parse(facilities) : [];
+    const parsedLocation = location ? JSON.parse(location) : null;
+
+    return await this.repository.update(id, {
       name,
       description,
       address,
@@ -120,11 +119,11 @@ class BoardingHouseService {
       postalCode,
       email,
       phone,
-      rules,
-      facilities,
-      location,
+      rules: parsedRules,
+      facilities: parsedFacilities,
+      location: parsedLocation,
       status,
-      photo: photopath,
+      photos: photoPaths,
     });
   }
 
