@@ -2,7 +2,7 @@ import UserRepository from "../repositories/UserRepository.js";
 import RoomRepository from "../repositories/roomRepository.js";
 import RentalRepository from "../repositories/rentalRepository.js";
 
-export default class UserService {
+class UserService {
   constructor() {
     this.repository = new UserRepository();
     this.roomRepository = new RoomRepository();
@@ -113,3 +113,5 @@ export default class UserService {
     };
   }
 }
+
+export default new UserService();
