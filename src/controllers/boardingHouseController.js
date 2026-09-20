@@ -1,14 +1,9 @@
 import BoardingHouseService from "../services/boardingHouseService.js";
 
 export default class ClassBoardingHouseController {
-  constructor() {
-    this.boardingHouseService = new BoardingHouseService();
-  }
-
   async getAll(req, res) {
     try {
-      const boardingHouses =
-        await this.boardingHouseService.getAllBoardingHouse();
+      const boardingHouses = await BoardingHouseService.getAllBoardingHouse();
       res.status(201).json(boardingHouses);
     } catch (err) {
       res.status(500).json({ message: err.message });
@@ -17,8 +12,9 @@ export default class ClassBoardingHouseController {
 
   async getById(req, res) {
     try {
-      const boardingHouse =
-        await this.boardingHouseService.getBoardingHouseById(req.params.id);
+      const boardingHouse = await BoardingHouseService.getBoardingHouseById(
+        req.params.id,
+      );
       res.status(201).json(boardingHouse);
     } catch (err) {
       res.status(500).json({ message: err.message });
@@ -27,8 +23,10 @@ export default class ClassBoardingHouseController {
 
   async create(req, res) {
     try {
-      const createResult = await this.boardingHouseService.createBoardingHouse(
+      console.log("data di controller" + JSON.stringify(req.body));
+      const createResult = await BoardingHouseService.createBoardingHouse(
         req.body,
+        req.files,
       );
       res.status(201).json({ success: true, data: createResult });
     } catch (err) {
@@ -38,7 +36,7 @@ export default class ClassBoardingHouseController {
 
   async update(req, res) {
     try {
-      const updateResult = await this.boardingHouseService.updateBoardingHouse(
+      const updateResult = await BoardingHouseService.updateBoardingHouse(
         req.body,
       );
       res.status(201).json({ success: true, data: updateResult });
@@ -49,7 +47,7 @@ export default class ClassBoardingHouseController {
 
   async delete(req, res) {
     try {
-      const deleteResult = await this.boardingHouseService.deleteBoardingHouse(
+      const deleteResult = await BoardingHouseService.deleteBoardingHouse(
         req.body,
       );
       res.status(201).json({ success: true, data: deleteResult });
