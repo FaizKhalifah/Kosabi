@@ -1,6 +1,6 @@
 import BoardingHouseRepository from "../repositories/boardingHouseRepository.js";
 
-export default class BoardingHouseService {
+class BoardingHouseService {
   constructor() {
     this.repository = new BoardingHouseRepository();
   }
@@ -27,7 +27,7 @@ export default class BoardingHouseService {
     };
   }
 
-  async createBoardingHouse(data, photopath) {
+  async createBoardingHouse(data, photos) {
     if (!data) {
       throw new Error("Data diperlukan untuk membuat boarding house baru");
     }
@@ -43,10 +43,15 @@ export default class BoardingHouseService {
       rules,
       facilities,
       location,
-      checkInTime,
-      checkOutTime,
       status,
     } = data;
+
+    const parsedRules = rules ? JSON.parse(rules) : [];
+    const parsedFacilities = facilities ? JSON.parse(facilities) : [];
+    const parsedLocation = location ? JSON.parse(location) : null;
+
+    console.log("file photo : " + JSON.stringify(photos));
+    const photoPaths = photos ? photos.map((file) => file.path) : [];
 
     return await this.repository.create({
       name,
@@ -57,13 +62,11 @@ export default class BoardingHouseService {
       postalCode,
       email,
       phone,
-      rules,
-      facilities,
-      location,
-      checkInTime,
-      checkOutTime,
+      rules: parsedRules,
+      facilities: parsedFacilities,
+      location: parsedLocation,
       status,
-      photo: photopath,
+      photos: photoPaths,
     });
   }
 
@@ -96,8 +99,6 @@ export default class BoardingHouseService {
       rules,
       facilities,
       location,
-      checkInTime,
-      checkOutTime,
       status,
     } = data;
 
@@ -113,8 +114,6 @@ export default class BoardingHouseService {
       rules,
       facilities,
       location,
-      checkInTime,
-      checkOutTime,
       status,
       photo: photopath,
     });
@@ -135,3 +134,5 @@ export default class BoardingHouseService {
     };
   }
 }
+
+export default new BoardingHouseService();
