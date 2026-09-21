@@ -36,14 +36,20 @@ class UserService {
   }
 
   async updateUserProfile(id, data) {
+    if (!id) {
+      throw new Error("Id is required to update user data");
+    }
+
+    const { name, email, phone } = data;
     const user = await this.repository.findById(id);
     if (!user) {
       throw new Error("User not found");
     }
-    await this.repository.update(id, data);
-    return {
-      message: "user profile updated",
-    };
+    return await this.repository.update(id, {
+      name,
+      email,
+      phone,
+    });
   }
 
   async activateUser(id) {
