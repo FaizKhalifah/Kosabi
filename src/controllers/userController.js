@@ -23,13 +23,13 @@ export default class UserController {
 
   async updateUserProfile(req, res) {
     try {
-      const result = await userService.updateUserProfile(
+      const updateResult = await userService.updateUserProfile(
         req.params.id,
         req.body,
       );
-      res.status(200).json({ message: result });
+      res.status(201).json({ success: true, data: updateResult });
     } catch (err) {
-      res.status(400).json({ error: err.message });
+      res.status(500).json({ success: false, message: err.message });
     }
   }
 }
