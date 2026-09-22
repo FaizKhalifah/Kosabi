@@ -104,7 +104,7 @@ class RoomService {
     } = data;
 
     const room = await this.roomRepository.findById(id);
-    if (!id) {
+    if (!room) {
       throw new Error("Room not found");
     }
 
@@ -155,9 +155,53 @@ class RoomService {
     };
   }
 
-  async getAvailableRooms() {}
+  async getAvailableRooms() {
+    const availableRooms = await this.roomRepository.findAvailable();
+    if (!availableRooms || availableRooms.length == 0) {
+      return {
+        message: "belum ada kamar yang tersedia",
+      };
+    }
+    return {
+      availableRooms: availableRooms,
+    };
+  }
 
-  async getOcuppiedRooms() {}
+  async getOccupiedRooms() {
+    const occupiedRooms = await this.roomRepository.findOccupied();
+    if (!occupiedRooms || occupiedRooms.length == 0) {
+      return {
+        message: "belum ada kamar yang ditempati",
+      };
+    }
+    return {
+      occupiedRooms: occupiedRooms,
+    };
+  }
+
+  async getMaintainedRooms() {
+    const maintainedRooms = await this.roomRepository.findUnderMaintenance();
+    if (!maintainedRooms || maintainedRooms.length == 0) {
+      return {
+        message: "belum ada kamar yang sedang diperbaiki",
+      };
+    }
+    return {
+      maintainedRooms: maintainedRooms,
+    };
+  }
+
+  async getReservedRooms() {
+    const reservedRooms = await this.roomRepository.findReserved();
+    if (!reservedRooms || reservedRooms.length == 0) {
+      return {
+        message: "belum ada kamar yang direservasi",
+      };
+    }
+    return {
+      reservedRooms: reservedRooms,
+    };
+  }
 }
 
 export default new RoomService();
