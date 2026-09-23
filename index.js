@@ -10,6 +10,7 @@ import dotenv from "dotenv";
 import authRouter from "./src/routes/authRoutes.js";
 import boardingHouseRouter from "./src/routes/boardingHouseRoutes.js";
 import userRouter from "./src/routes/userRoutes.js";
+import roomRouter from "./src/routes/roomRoutes.js";
 
 import { fileURLToPath } from "url";
 
@@ -28,6 +29,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(authRouter);
 app.use(boardingHouseRouter);
 app.use(userRouter);
+app.use(roomRouter);
 
 app.get("/", (req, res) => {
   res.json({ message: "Halo ini adalah kosabi" });

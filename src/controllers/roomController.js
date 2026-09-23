@@ -1,6 +1,6 @@
 import roomService from "../services/roomService.js";
 
-export default class roomController {
+export default class RoomController {
   async getAllRooms(req, res) {
     try {
       const rooms = await roomService.getAllRooms();
