@@ -63,6 +63,7 @@ class RoomService {
       }
     }
 
+    console.log("fasilitas : " + facilities);
     const parsedFacilities = facilities ? JSON.parse(facilities) : [];
     const photoPaths = photos ? photos.map((file) => file.path) : [];
 
@@ -77,7 +78,7 @@ class RoomService {
       capacity,
       status,
       size,
-      parsedFacilities,
+      facilities: parsedFacilities,
       description,
       photoPaths,
     });
@@ -135,7 +136,7 @@ class RoomService {
       capacity,
       status,
       size,
-      parsedFacilities,
+      facilities: parsedFacilities,
       description,
       photoPaths,
     });
