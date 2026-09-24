@@ -57,13 +57,15 @@ class RoomService {
     }
 
     if (occupant !== null) {
-      const isUserAvailable = await this.UserRepository.findById(occupant);
-      if (!isUserAvailable) {
+      const user = await this.UserRepository.findById(occupant);
+      if (!user) {
         throw new Error("User not found for this room");
+      }
+      if (user.role !== "TENANT") {
+        throw new Error("User is not a tenant");
       }
     }
 
-    console.log("fasilitas : " + facilities);
     const parsedFacilities = facilities ? JSON.parse(facilities) : [];
     const photoPaths = photos ? photos.map((file) => file.path) : [];
 
@@ -80,7 +82,7 @@ class RoomService {
       size,
       facilities: parsedFacilities,
       description,
-      photoPaths,
+      photos: photoPaths,
     });
   }
 
@@ -116,9 +118,12 @@ class RoomService {
     }
 
     if (occupant !== null) {
-      const isUserAvailable = await this.UserRepository.findById(occupant);
-      if (!isUserAvailable) {
+      const user = await this.UserRepository.findById(occupant);
+      if (!user) {
         throw new Error("User not found for this room");
+      }
+      if (user.role !== "TENANT") {
+        throw new Error("User is not a tenant");
       }
     }
 
