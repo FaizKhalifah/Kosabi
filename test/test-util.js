@@ -1,11 +1,13 @@
 import User from "../src/models/User.js";
 import bcrypt from "bcrypt";
+import mongoose from "mongoose";
 
-const removeTestUser = async () => {
-  await User.deleteMany({ name: "test" });
+export const removeTestUser = async () => {
+  console.log("MongoDB readyState:", mongoose.connection.readyState);
+  await User.deleteMany();
 };
 
-const createTestUser = async () => {
+export const createTestUser = async () => {
   await User.create({
     name: "test",
     email: "test@gmail.com",
@@ -13,12 +15,6 @@ const createTestUser = async () => {
   });
 };
 
-const getTestUser = async () => {
-  await User.findOne({ name: "test" });
-};
-
-export default {
-  removeTestUser,
-  createTestUser,
-  getTestUser,
+export const getTestUser = async () => {
+  return await User.findOne({ name: "test" });
 };
