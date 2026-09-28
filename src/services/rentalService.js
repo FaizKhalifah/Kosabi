@@ -58,7 +58,7 @@ class RentalService {
     }
     const monthlyPrice = room.price;
     const deposit = room.deposit;
-    return await this.rentalRepository.create({
+    const createResult = await this.rentalRepository.create({
       tenantId,
       roomId,
       startDate,
@@ -69,6 +69,59 @@ class RentalService {
       status,
       notes,
     });
+    await this.roomRepository.update(room.id, { status: "OCCUPIED" });
+    return createResult;
+  }
+
+  async updateRental(id, data) {
+    if (!id) {
+      throw new ResponseError(
+        401,
+        "Id diperlukan untuk mengupdate data rental",
+      );
+    }
+    const rental = await this.rentalRepository.findById(id);
+    if (!rental) {
+      throw new ResponseError(401, "Rental tidak ditemukan");
+    }
+
+    const updateData = {};
+
+    let tenant;
+    if (data.tenantId) {
+      tenant = await this.userRepository.findById(data.tenantId);
+      if (!tenant) {
+        throw new ResponseError(401, "Tenant not found");
+      }
+    }
+
+    let room;
+    if (data.roomId) {
+      room = await this.roomRepository.findById(data.roomId);
+      if (!room) {
+        throw new ResponseError(401, "room not found");
+      }
+      updateData["monthlyPrice"] = room.price;
+      updateData["deposit"] = room.deposit;
+    }
+
+    const allowedFields = [
+      "tenantId",
+      "roomId",
+      "startDate",
+      "endDate",
+      "billingDay",
+      "status",
+      "notes",
+    ];
+
+    for (const field of allowedFields) {
+      if (data[field] !== undefined) {
+        updateData[field] = data[field];
+      }
+    }
+
+    return await this.rentalRepository.update(updateData);
   }
 }
 

@@ -55,21 +55,30 @@ class ExpenseService {
     if (!id) {
       throw new ResponseError(401, "Tidak ada ID");
     }
-
-    const { title, category, amount, expenseDate, description } = data;
     const expense = await this.expenseRepository.findById(id);
     if (!expense) {
       throw new ResponseError(401, "data expense tidak ditemukan");
     }
-    const photoPaths = photos ? photos.map((file) => file.path) : [];
-    return await this.expenseRepository.update(id, {
-      title,
-      category,
-      amount,
-      expenseDate,
-      description,
-      receiptImage: photoPaths,
-    });
+
+    const allowedFields = [
+      "title",
+      "category",
+      "amount",
+      "expenseDate",
+      "description",
+    ];
+
+    const updateData = {};
+
+    for (const field of allowedFields) {
+      if (data[field] !== undefined) {
+        updateData[field] = data[field];
+      }
+    }
+    if (photos && photos.length > 0) {
+      updateData.receiptImage = photos.map((file) => file.path);
+    }
+    return await this.expenseRepository.update(id, updateData);
   }
 
   async deleteExpense(id) {
@@ -103,7 +112,7 @@ class ExpenseService {
   }
 
   async findByDate(date) {
-    if (date) {
+    if (!date) {
       throw new ResponseError(401, "Data tanggal tidak ditemukan");
     }
     const expenses = await this.expenseRepository.findByDate(date);
