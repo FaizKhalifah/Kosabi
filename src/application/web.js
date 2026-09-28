@@ -3,6 +3,7 @@ import authRouter from "../routes/authRoutes.js";
 import boardingHouseRouter from "../routes/boardingHouseRoutes.js";
 import roomRouter from "../routes/roomRoutes.js";
 import userRouter from "../routes/userRoutes.js";
+import expenseRouter from "../routes/expenseRoutes.js";
 import bodyParser from "body-parser";
 
 const web = express();
@@ -17,6 +18,7 @@ web.use(authRouter);
 web.use(boardingHouseRouter);
 web.use(roomRouter);
 web.use(userRouter);
+web.use(expenseRouter);
 
 web.get("/", (req, res) => {
   res.json({ message: "Halo ini adalah kosabi" });
