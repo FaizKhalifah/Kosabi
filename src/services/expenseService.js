@@ -71,6 +71,51 @@ class ExpenseService {
       receiptImage: photoPaths,
     });
   }
+
+  async deleteExpense(id) {
+    if (!id) {
+      throw new ResponseError(401, "Tidak ada ID");
+    }
+
+    const expense = await this.expenseRepository.findById(id);
+    if (!expense) {
+      throw new ResponseError(401, "Data expense tidak ditemukan");
+    }
+    await this.expenseRepository.delete(id);
+    return {
+      message: "expense has been deleted",
+    };
+  }
+
+  async findByCategory(category) {
+    if (!category) {
+      throw new ResponseError(401, "Data kategori tidak ditemukan");
+    }
+    const expenses = await this.expenseRepository.findByCategory(category);
+    if (!expenses || expenses.length == 0) {
+      return {
+        message: "Belum ada pengeluaran di kategori tersebut",
+      };
+    }
+    return {
+      expenses: expenses,
+    };
+  }
+
+  async findByDate(date) {
+    if (date) {
+      throw new ResponseError(401, "Data tanggal tidak ditemukan");
+    }
+    const expenses = await this.expenseRepository.findByDate(date);
+    if (!expenses || expenses.length == 0) {
+      return {
+        message: "Belum ada pengeluaran di tanggal tersebut",
+      };
+    }
+    return {
+      expenses: expenses,
+    };
+  }
 }
 
 export default new ExpenseService();
