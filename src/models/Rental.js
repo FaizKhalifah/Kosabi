@@ -1,59 +1,57 @@
 import mongoose from "mongoose";
 
-const RentalSchema = new mongoose.Schema({
-    tenant:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref:"User",
-        required: true,
+const RentalSchema = new mongoose.Schema(
+  {
+    tenant: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
-    room:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref:"Room",
-        required: true,
+    room: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Room",
+      required: true,
     },
-    startDate:{
-        type:Date,
-        required:true
-    }
-    ,
-    endDate:{
-        type:Date,
-        required:true
+    startDate: {
+      type: Date,
+      required: true,
     },
-    monthlyPrice:{
-        type:Number,
-        min:0,
-        required:true
+    endDate: {
+      type: Date,
+      required: true,
     },
-    deposit:{
-        type:Number,
-        min:0,
-        required:true
+    monthlyPrice: {
+      type: Number,
+      min: 0,
+      required: true,
     },
-    billingDay:{
-        type:Number,
-        min:1,
-        max:31
+    deposit: {
+      type: Number,
+      min: 0,
+      required: true,
     },
-    status:{
-        type:String,
-        enum:[
-            "ACTIVE",
-            "FINISHED",
-            "CANCELLED"
-        ],
-        default:"ACTIVE"
+    billingDay: {
+      type: Number,
+      min: 1,
+      max: 31,
     },
-    notes:{
-        type:String,
-        trim:true
+    status: {
+      type: String,
+      enum: ["ACTIVE", "FINISHED", "CANCELLED"],
+      default: "ACTIVE",
     },
-    createdBy:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"User"
-    }
-
-}, {timestamps:true});
+    notes: {
+      type: String,
+      trim: true,
+    },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      default: null,
+    },
+  },
+  { timestamps: true },
+);
 
 RentalSchema.index({ tenant: 1 });
 RentalSchema.index({ room: 1 });
