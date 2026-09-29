@@ -121,7 +121,54 @@ class RentalService {
       }
     }
 
-    return await this.rentalRepository.update(updateData);
+    return await this.rentalRepository.update(id, updateData);
+  }
+
+  async deleteRental(id) {
+    if (!id) {
+      throw new ResponseError(401, "Id diperlukan untuk menghapus data rental");
+    }
+    const rental = await this.rentalRepository.findById(id);
+    if (!rental) {
+      throw new ResponseError(401, "Data rental tidak ditemukan");
+    }
+    return await this.rentalRepository.delete(id);
+  }
+
+  async getActiveRentals() {
+    const rentals = await this.rentalRepository.getActiveRentals();
+    if (!rentals || rentals.length == 0) {
+      return {
+        message: "Tidak ada rental yang aktif",
+      };
+    }
+    return {
+      rentals: rentals,
+    };
+  }
+
+  async getFinishedRentals() {
+    const rentals = await this.rentalRepository.getFinishedRentals();
+    if (!rentals || rentals.length == 0) {
+      return {
+        message: "Tidak ada rental yang selesai",
+      };
+    }
+    return {
+      rentals: rentals,
+    };
+  }
+
+  async getCanceledRentals() {
+    const rentals = await this.rentalRepository.getCanceledRentals();
+    if (!rentals || rentals.length == 0) {
+      return {
+        message: "Tidak ada rental yang dibatalkan",
+      };
+    }
+    return {
+      rentals: rentals,
+    };
   }
 }
 

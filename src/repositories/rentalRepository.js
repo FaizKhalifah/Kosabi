@@ -9,4 +9,16 @@ export default class RentalRepository extends BaseRepository {
   async findByTenant(id) {
     return Rental.findOne({ tenant: id });
   }
+
+  async getActiveRentals() {
+    return Rental.find({ status: "ACTIVE" });
+  }
+
+  async getFinishedRentals() {
+    return Rental.find({ status: "FINISHED" });
+  }
+
+  async getCanceledRentals() {
+    return Rental.find({ status: "CANCELLED" });
+  }
 }
