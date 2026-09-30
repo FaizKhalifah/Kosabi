@@ -1,5 +1,5 @@
-import ExpenseRepository from "../repositories/expenseRepository";
-import { ResponseError } from "../utils/errorsUtils";
+import ExpenseRepository from "../repositories/expenseRepository.js";
+import { ResponseError } from "../utils/errorsUtils.js";
 
 class ExpenseService {
   constructor() {

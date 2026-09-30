@@ -4,7 +4,7 @@ export default class RentalController {
   async getAllRentals(req, res) {
     try {
       const rentals = await RentalService.getAllRentals();
-      res.status(201).json(rentals);
+      res.status(200).json(rentals);
     } catch (err) {
       res.status(500).json({ message: err.message });
     }
@@ -13,7 +13,7 @@ export default class RentalController {
   async getRentalById(req, res) {
     try {
       const rental = await RentalService.getRentalById(req.params.id);
-      res.status(201).json(rental);
+      res.status(200).json(rental);
     } catch (err) {
       res.status(500).json({ message: err.message });
     }

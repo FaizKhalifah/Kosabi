@@ -4,7 +4,7 @@ export default class ClassBoardingHouseController {
   async getAll(req, res) {
     try {
       const boardingHouses = await BoardingHouseService.getAllBoardingHouse();
-      res.status(201).json(boardingHouses);
+      res.status(200).json(boardingHouses);
     } catch (err) {
       res.status(500).json({ message: err.message });
     }
@@ -15,7 +15,7 @@ export default class ClassBoardingHouseController {
       const boardingHouse = await BoardingHouseService.getBoardingHouseById(
         req.params.id,
       );
-      res.status(201).json(boardingHouse);
+      res.status(200).json(boardingHouse);
     } catch (err) {
       res.status(500).json({ message: err.message });
     }
