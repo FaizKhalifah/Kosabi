@@ -56,7 +56,7 @@ class AuthService {
       { expiresIn: "1h" },
     );
     return {
-      user: {
+      admin: {
         id: user._id,
         name: user.name,
         email: user.email,
@@ -115,7 +115,7 @@ class AuthService {
       { expiresIn: "1h" },
     );
     return {
-      user: {
+      tenant: {
         id: user._id,
         name: user.name,
         email: user.email,

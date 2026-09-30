@@ -59,8 +59,8 @@ class RentalService {
     const monthlyPrice = room.price;
     const deposit = room.deposit;
     const createResult = await this.rentalRepository.create({
-      tenantId,
-      roomId,
+      tenant: tenantId,
+      room: roomId,
       startDate,
       endDate,
       monthlyPrice: monthlyPrice,

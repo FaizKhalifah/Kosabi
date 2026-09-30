@@ -3,8 +3,10 @@ import AuthService from "../services/authService.js";
 export default class AuthController {
   async registerAdmin(req, res) {
     try {
-      const admin = await AuthService.registerAdmin(req.body);
-      res.status(201).json({ message: "Registrasi admin berhasil", admin });
+      const { admin, token } = await AuthService.registerAdmin(req.body);
+      res
+        .status(201)
+        .json({ message: "Registrasi admin berhasil", admin, token });
     } catch (err) {
       res.status(400).json({ error: err.message });
     }
@@ -12,8 +14,10 @@ export default class AuthController {
 
   async registerTenant(req, res) {
     try {
-      const tenant = await AuthService.registerTenant(req.body);
-      res.status(201).json({ message: "Registrasi tenant berhasil", tenant });
+      const { tenant, token } = await AuthService.registerTenant(req.body);
+      res
+        .status(201)
+        .json({ message: "Registrasi tenant berhasil", tenant, token });
     } catch (err) {
       res.status(400).json({ error: err.message });
     }
