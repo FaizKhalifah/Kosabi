@@ -6,6 +6,7 @@ import userRouter from "../routes/userRoutes.js";
 import expenseRouter from "../routes/expenseRoutes.js";
 import bodyParser from "body-parser";
 import rentalRouter from "../routes/rentalRoutes.js";
+import invoiceRouter from "../routes/invoiceRoutes.js";
 
 const web = express();
 
@@ -21,6 +22,7 @@ web.use(roomRouter);
 web.use(userRouter);
 web.use(expenseRouter);
 web.use(rentalRouter);
+web.use(invoiceRouter);
 
 web.get("/", (req, res) => {
   res.json({ message: "Halo ini adalah kosabi" });
