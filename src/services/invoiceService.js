@@ -133,6 +133,54 @@ class InvoiceService {
     }
     return await this.invoiceRepository.delete(id);
   }
+
+  async getUnpaidInvoices() {
+    const invoices = await this.invoiceRepository.getUnpaid();
+    if (!invoices || invoices.length == 0) {
+      return {
+        message: "Belum ada invoice yang belum dibayar",
+      };
+    }
+    return {
+      invoices: invoices,
+    };
+  }
+
+  async getPaidInvoices() {
+    const invoices = await this.invoiceRepository.getPaid();
+    if (!invoices || invoices.length == 0) {
+      return {
+        message: "Belum ada invoice yang dibayar",
+      };
+    }
+    return {
+      invoices: invoices,
+    };
+  }
+
+  async getPartialInvoices() {
+    const invoices = await this.invoiceRepository.getPartial();
+    if (!invoices || invoices.length == 0) {
+      return {
+        message: "Belum ada invoice yang dibayar sebagian",
+      };
+    }
+    return {
+      invoices: invoices,
+    };
+  }
+
+  async getOverDueInvoices() {
+    const invoices = await this.invoiceRepository.getOverDue();
+    if (!invoices || invoices.length == 0) {
+      return {
+        message: "Belum ada invoice yang telah dibayar",
+      };
+    }
+    return {
+      invoices: invoices,
+    };
+  }
 }
 
 export default new InvoiceService();

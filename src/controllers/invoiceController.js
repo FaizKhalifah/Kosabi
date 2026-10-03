@@ -48,4 +48,40 @@ export default class InvoiceController {
       res.status(500).json({ message: err.message });
     }
   }
+
+  async getUnpaidInvoices(req, res) {
+    try {
+      const invoices = await InvoiceService.getUnpaidInvoices();
+      res.status(201).json(invoices);
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  }
+
+  async getPaidInvoices(req, res) {
+    try {
+      const invoices = await InvoiceService.getPaidInvoices();
+      res.status(201).json(invoice);
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  }
+
+  async getPartialInvoices(req, res) {
+    try {
+      const invoices = await InvoiceService.getPartialInvoices();
+      res.status(201).json(invoices);
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  }
+
+  async getOverdueInvoices(req, res) {
+    try {
+      const invoices = await InvoiceService.getOverDueInvoices();
+      res.status(201).json(invoices);
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  }
 }
