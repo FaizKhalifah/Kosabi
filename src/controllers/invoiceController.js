@@ -61,7 +61,7 @@ export default class InvoiceController {
   async getPaidInvoices(req, res) {
     try {
       const invoices = await InvoiceService.getPaidInvoices();
-      res.status(201).json(invoice);
+      res.status(201).json(invoices);
     } catch (err) {
       res.status(500).json({ message: err.message });
     }
