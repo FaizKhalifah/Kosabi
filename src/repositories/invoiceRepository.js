@@ -6,19 +6,19 @@ export default class InvoiceRepository extends BaseRepository {
     super(Invoice);
   }
 
-  async getUnpaidInvoices() {
+  async getUnpaid() {
     return await Invoice.find({ status: "UNPAID" });
   }
 
-  async getPaidInvoices() {
+  async getPaid() {
     return await Invoice.find({ status: "PAID" });
   }
 
-  async getPartialInvoices() {
+  async getPartial() {
     return await Invoice.find({ status: "PARTIAL" });
   }
 
-  async getOverDueInvoices() {
+  async getOverDue() {
     return await Invoice.find({ status: "OVERDUE" });
   }
 }
