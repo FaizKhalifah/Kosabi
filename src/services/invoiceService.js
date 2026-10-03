@@ -1,6 +1,8 @@
 import InvoiceRepository from "../repositories/invoiceRepository.js";
 import RentalRepository from "../repositories/rentalRepository.js";
 import { ResponseError } from "../utils/errorsUtils.js";
+import calculateDueDate from "../utils/dateUtils.js";
+import calculateStatus from "../utils/dateUtils.js";
 
 class InvoiceService {
   constructor() {
@@ -37,33 +39,31 @@ class InvoiceService {
     if (!data) {
       throw new ResponseError(401, "Data needed to create new invoice");
     }
-    const {
-      rentalId,
-      invoiceNumber,
-      month,
-      year,
-      amount,
-      lateFee,
-      totalAmount,
-      paidAmount,
-      dueDate,
-      status,
-      notes,
-    } = data;
+    const { rentalId, invoiceNumber, month, year, lateFee, paidAmount, notes } =
+      data;
     const rental = await this.rentalRepository.findById(rentalId);
     if (!rental) {
       throw new ResponseError(401, "Data tidak ditemukan");
     }
-    if (dueDate > rental.endDate) {
+
+    const amount = rental.monthlyPrice;
+    const totalAmount = amount + lateFee;
+    const dueDate = calculateDueDate(
+      year,
+      month,
+      rental.billingDay,
+      rental.endDate,
+    );
+
+    if (paidAmount > totalAmount) {
       throw new ResponseError(
-        401,
-        "Tenggat pembayaran tidak boleh melebihi masa akhir sewa",
+        400,
+        "Pembayaran tidak boleh melebihi total tagihan",
       );
     }
 
-    if (paidAmount > totalAmount) {
-      throw new ResponseError(401, "Pembayaran tidak boleh melebihi tagihan");
-    }
+    const status = calculateStatus(paidAmount, totalAmount, dueDate);
+
     return await this.invoiceRepository.create({
       rental: rentalId,
       invoiceNumber,
@@ -100,25 +100,39 @@ class InvoiceService {
         throw new ResponseError(401, "Data rental tidak ditemukan");
       }
     }
-    const allowedFields = [
-      "rentalId",
-      "invoiceNumber",
-      "month",
-      "year",
-      "amount",
-      "lateFee",
-      "totalAmount",
-      "paidAmount",
-      "dueDate",
-      "status",
-      "notes",
-    ];
+    const allowedFields = ["invoiceNumber", "lateFee", "paidAmount", "notes"];
 
     for (const field of allowedFields) {
       if (data[field] !== undefined) {
         updateData[field] = data[field];
       }
     }
+
+    const newLateFee =
+      data.lateFee !== undefined ? data.lateFee : invoice.lateFee;
+
+    const newPaidAmount =
+      data.paidAmount !== undefined ? data.paidAmount : invoice.paidAmount;
+
+    const totalAmount = invoice.amount + newLateFee;
+
+    if (newPaidAmount > totalAmount) {
+      throw new ResponseError(
+        400,
+        "Pembayaran tidak boleh melebihi total tagihan",
+      );
+    }
+
+    const status = this.calculateStatus(
+      newPaidAmount,
+      totalAmount,
+      invoice.dueDate,
+    );
+
+    updateData.lateFee = newLateFee;
+    updateData.paidAmount = newPaidAmount;
+    updateData.totalAmount = totalAmount;
+    updateData.status = status;
 
     return await this.invoiceRepository.update(id, updateData);
   }
