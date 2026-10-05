@@ -48,8 +48,7 @@ class AuthService {
 
     const token = jwt.sign(
       {
-        id: user._id,
-        name: user.name,
+        sub: user._id,
         role: user.role,
       },
       config.APP_SECRET,
@@ -107,8 +106,7 @@ class AuthService {
     });
     const token = jwt.sign(
       {
-        id: user._id,
-        name: user.name,
+        sub: user._id,
         role: user.role,
       },
       config.APP_SECRET,
@@ -147,7 +145,7 @@ class AuthService {
     await this.repository.update(user._id, { lastLogin: new Date() });
 
     const token = jwt.sign(
-      { id: user._id, name: user.name, role: user.role },
+      { sub: user._id, role: user.role },
       config.APP_SECRET,
       { expiresIn: "1h" },
     );
