@@ -5,6 +5,7 @@ import { useRoute } from "vue-router";
 import {
   Home,
   Building2,
+  LucideBuilding,
   Wallet,
   BarChart3,
   ChevronDown,
@@ -14,6 +15,7 @@ import {
   CreditCard,
   Receipt,
   X,
+  Building,
 } from "lucide-vue-next";
 
 const props = defineProps({
@@ -43,6 +45,11 @@ const navigation = [
     icon: Building2,
     key: "property",
     children: [
+      {
+        label: "Kostan",
+        icon: Building,
+        to: "/boardingHouses",
+      },
       {
         label: "Kamar",
         icon: DoorOpen,

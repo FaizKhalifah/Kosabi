@@ -4,6 +4,7 @@ import DefaultLayout from "@/layouts/DefaultLayout.vue";
 
 import DashboardView from "@/views/DashboardView.vue";
 import NotFoundView from "@/views/NotFoundView.vue";
+import BoardingHouseView from "@/views/BoardingHouseView.vue";
 
 const routes = [
   {
@@ -14,6 +15,18 @@ const routes = [
         path: "",
         name: "dashboard",
         component: DashboardView,
+      },
+    ],
+  },
+
+  {
+    path: "/boardingHouses",
+    component: DefaultLayout,
+    children: [
+      {
+        path: "",
+        name: "boarding houses",
+        component: BoardingHouseView,
       },
     ],
   },
