@@ -1,5 +1,5 @@
 import { ResponseError } from "./errorsUtils.js";
-export default calculateDueDate = (year, month, billingDay, rentalEndDate) => {
+const calculateDueDate = (year, month, billingDay, rentalEndDate) => {
   if (!billingDay) {
     throw new ResponseError(400, "Billing day belum ditentukan pada rental");
   }
@@ -18,3 +18,5 @@ export default calculateDueDate = (year, month, billingDay, rentalEndDate) => {
 
   return dueDate;
 };
+
+export default calculateDueDate;

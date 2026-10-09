@@ -15,8 +15,7 @@ const web = express();
 web.use(express.json());
 web.use(express.urlencoded({ extended: true }));
 web.use(bodyParser.json());
-web.use(cors);
-
+web.use(cors());
 //routes;
 web.use(authRouter);
 web.use(boardingHouseRouter);
