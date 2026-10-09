@@ -23,7 +23,7 @@ const upload = multer({
 
 const roomController = new RoomController();
 const roomRouter = express.Router();
-const baseUrl = "/rooms";
+const baseUrl = "/api/rooms";
 
 roomRouter.get(`${baseUrl}/`, roomController.getAllRooms);
 roomRouter.post(
