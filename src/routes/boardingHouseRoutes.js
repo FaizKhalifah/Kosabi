@@ -23,7 +23,7 @@ const upload = multer({
 
 const boardingHouseController = new BoardingHouseController();
 const boardingHouseRouter = express.Router();
-const baseUrl = "/boardingHouse";
+const baseUrl = "/api/boardingHouse";
 
 boardingHouseRouter.get(`${baseUrl}/`, boardingHouseController.getAll);
 boardingHouseRouter.post(

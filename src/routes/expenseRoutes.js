@@ -23,7 +23,7 @@ const upload = multer({
 
 const expenseController = new ExpenseController();
 const expenseRouter = express.Router();
-const baseUrl = "/expense";
+const baseUrl = "/api/expense";
 
 expenseRouter.get(`${baseUrl}/`, expenseController.getAll);
 expenseRouter.get(`${baseUrl}/:id`, expenseController.getbyId);

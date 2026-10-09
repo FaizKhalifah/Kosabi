@@ -3,7 +3,7 @@ import InvoiceController from "../controllers/invoiceController.js";
 
 const invoiceController = new InvoiceController();
 const invoiceRouter = express.Router();
-const baseUrl = "/invoice";
+const baseUrl = "/api/invoice";
 
 invoiceRouter.get(`${baseUrl}/`, invoiceController.getAllInvoice);
 invoiceRouter.get(`${baseUrl}/unpaid`, invoiceController.getUnpaidInvoices);

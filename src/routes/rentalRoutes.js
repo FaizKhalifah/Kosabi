@@ -3,7 +3,7 @@ import RentalController from "../controllers/rentalController.js";
 
 const rentalController = new RentalController();
 const rentalRouter = express.Router();
-const baseUrl = "/rental";
+const baseUrl = "/api/rental";
 
 rentalRouter.get(`${baseUrl}/`, rentalController.getAllRentals);
 rentalRouter.get(`${baseUrl}/active`, rentalController.getActiveRentals);

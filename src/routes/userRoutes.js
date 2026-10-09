@@ -3,7 +3,7 @@ import express from "express";
 
 const userController = new UserController();
 const userRouter = express.Router();
-const baseUrl = "/user";
+const baseUrl = "/api/user";
 
 userRouter.get(`${baseUrl}/:id`, userController.getUserById);
 userRouter.patch(`${baseUrl}/changeRole/:id`, userController.changeUserRole);

@@ -7,6 +7,7 @@ import expenseRouter from "../routes/expenseRoutes.js";
 import bodyParser from "body-parser";
 import rentalRouter from "../routes/rentalRoutes.js";
 import invoiceRouter from "../routes/invoiceRoutes.js";
+import cors from "cors";
 
 const web = express();
 
@@ -14,6 +15,7 @@ const web = express();
 web.use(express.json());
 web.use(express.urlencoded({ extended: true }));
 web.use(bodyParser.json());
+web.use(cors);
 
 //routes;
 web.use(authRouter);
