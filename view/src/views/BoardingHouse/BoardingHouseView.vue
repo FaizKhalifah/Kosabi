@@ -2,7 +2,7 @@
   <BoardingHouseCard />
 </template>
 <script>
-import BoardingHouseCard from "@/components/card/BoardingHouseCard.vue";
+import BoardingHouseCard from "@/components/card/BoardingHouse/BoardingHouseCard.vue";
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
 export default {
   name: "BoardingHouseView",

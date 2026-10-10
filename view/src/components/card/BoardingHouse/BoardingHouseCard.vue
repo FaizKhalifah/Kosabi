@@ -146,8 +146,7 @@
 </template>
 
 <script>
-import BaseCard from "../base/BaseCard.vue";
-
+import BaseCard from "@/components/base/BaseCard.vue";
 export default {
   name: "BoardingHouseCard",
 

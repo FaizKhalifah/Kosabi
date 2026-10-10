@@ -4,7 +4,7 @@ import DefaultLayout from "@/layouts/DefaultLayout.vue";
 
 import DashboardView from "@/views/DashboardView.vue";
 import NotFoundView from "@/views/NotFoundView.vue";
-import BoardingHouseView from "@/views/BoardingHouseView.vue";
+import BoardingHouseView from "@/views/BoardingHouse/BoardingHouseView.vue";
 
 const routes = [
   {
