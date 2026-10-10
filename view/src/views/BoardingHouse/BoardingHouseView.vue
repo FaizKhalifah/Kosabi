@@ -2,13 +2,11 @@
   <BoardingHouseCard />
 </template>
 <script>
-import BoardingHouseCard from "@/components/card/BoardingHouseCard.vue";
-import DefaultLayout from "@/layouts/DefaultLayout.vue";
+import BoardingHouseCard from "@/components/card/BoardingHouse/BoardingHouseCard.vue";
 export default {
   name: "BoardingHouseView",
   components: {
     BoardingHouseCard,
-    DefaultLayout,
   },
 };
 </script>
