@@ -44,7 +44,9 @@
 
       <!-- Data table -->
       <div v-else class="table-container">
-        <button class="addButton">Create New Boarding House</button>
+        <button class="addButton" @click="addBoardingHouse">
+          Create New Boarding House
+        </button>
         <table>
           <thead>
             <tr>
@@ -144,110 +146,6 @@
     </div>
   </BaseCard>
 </template>
-
-<script>
-import BaseCard from "@/components/base/BaseCard.vue";
-export default {
-  name: "BoardingHouseCard",
-
-  components: {
-    BaseCard,
-  },
-
-  data() {
-    return {
-      boardingHouses: [],
-      isLoading: false,
-      errorMessage: "",
-    };
-  },
-
-  created() {
-    this.fetchBoardingHouses();
-  },
-
-  methods: {
-    async fetchBoardingHouses() {
-      this.isLoading = true;
-      this.errorMessage = "";
-
-      try {
-        const response = await fetch(
-          "http://localhost:3001/api/boardingHouse",
-          {
-            method: "GET",
-            headers: {
-              Accept: "application/json",
-            },
-          },
-        );
-
-        if (!response.ok) {
-          throw new Error(`Server mengembalikan status ${response.status}.`);
-        }
-
-        const responseData = await response.json();
-
-        if (!Array.isArray(responseData.boardingHouses)) {
-          throw new Error("Format data dari server tidak sesuai.");
-        }
-
-        this.boardingHouses = responseData.boardingHouses;
-      } catch (error) {
-        console.error("Gagal mengambil data kostan:", error);
-
-        this.errorMessage =
-          "Data kostan tidak dapat dimuat. Periksa koneksi ke server, lalu coba lagi.";
-      } finally {
-        this.isLoading = false;
-      }
-    },
-
-    displayValue(value) {
-      if (value === null || value === undefined || value === "") {
-        return "-";
-      }
-
-      return value;
-    },
-
-    formatList(value) {
-      if (Array.isArray(value)) {
-        return value.length > 0 ? value.join(", ") : "-";
-      }
-
-      if (value === null || value === undefined || value === "") {
-        return "-";
-      }
-
-      return value;
-    },
-
-    getStatusClass(status) {
-      const normalizedStatus = String(status || "")
-        .trim()
-        .toLowerCase();
-
-      if (
-        ["available", "tersedia", "active", "aktif"].includes(normalizedStatus)
-      ) {
-        return "status-active";
-      }
-
-      if (
-        ["unavailable", "tidak tersedia", "inactive", "nonaktif"].includes(
-          normalizedStatus,
-        )
-      ) {
-        return "status-inactive";
-      }
-
-      return "status-neutral";
-    },
-  },
-};
-</script>
-
 <style scoped>
 .boarding-house-page {
   width: 100%;
@@ -555,3 +453,110 @@ tbody tr:last-child td {
   }
 }
 </style>
+
+<script>
+import BaseCard from "@/components/base/BaseCard.vue";
+export default {
+  name: "BoardingHouseCard",
+
+  components: {
+    BaseCard,
+  },
+
+  data() {
+    return {
+      boardingHouses: [],
+      isLoading: false,
+      errorMessage: "",
+    };
+  },
+
+  created() {
+    this.fetchBoardingHouses();
+  },
+
+  methods: {
+    async fetchBoardingHouses() {
+      this.isLoading = true;
+      this.errorMessage = "";
+
+      try {
+        const response = await fetch(
+          "http://localhost:3001/api/boardingHouse",
+          {
+            method: "GET",
+            headers: {
+              Accept: "application/json",
+            },
+          },
+        );
+
+        if (!response.ok) {
+          throw new Error(`Server mengembalikan status ${response.status}.`);
+        }
+
+        const responseData = await response.json();
+
+        if (!Array.isArray(responseData.boardingHouses)) {
+          throw new Error("Format data dari server tidak sesuai.");
+        }
+
+        this.boardingHouses = responseData.boardingHouses;
+      } catch (error) {
+        console.error("Gagal mengambil data kostan:", error);
+
+        this.errorMessage =
+          "Data kostan tidak dapat dimuat. Periksa koneksi ke server, lalu coba lagi.";
+      } finally {
+        this.isLoading = false;
+      }
+    },
+
+    displayValue(value) {
+      if (value === null || value === undefined || value === "") {
+        return "-";
+      }
+
+      return value;
+    },
+
+    formatList(value) {
+      if (Array.isArray(value)) {
+        return value.length > 0 ? value.join(", ") : "-";
+      }
+
+      if (value === null || value === undefined || value === "") {
+        return "-";
+      }
+
+      return value;
+    },
+
+    getStatusClass(status) {
+      const normalizedStatus = String(status || "")
+        .trim()
+        .toLowerCase();
+
+      if (
+        ["available", "tersedia", "active", "aktif"].includes(normalizedStatus)
+      ) {
+        return "status-active";
+      }
+
+      if (
+        ["unavailable", "tidak tersedia", "inactive", "nonaktif"].includes(
+          normalizedStatus,
+        )
+      ) {
+        return "status-inactive";
+      }
+
+      return "status-neutral";
+    },
+
+    addBoardingHouse() {
+      this.$router.push("/boardingHouses/add");
+    },
+  },
+};
+</script>
