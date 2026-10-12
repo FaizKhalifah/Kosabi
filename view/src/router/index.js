@@ -6,6 +6,7 @@ import DashboardView from "@/views/DashboardView.vue";
 import NotFoundView from "@/views/NotFoundView.vue";
 import BoardingHouseView from "@/views/BoardingHouse/BoardingHouseView.vue";
 import AddBoardingHouseView from "@/views/BoardingHouse/AddBoardingHouseView.vue";
+import UpdateBoardingHouseView from "@/views/BoardingHouse/UpdateBoardingHouseView.vue";
 
 const routes = [
   {
@@ -40,6 +41,18 @@ const routes = [
         path: "",
         name: "add boarding house",
         component: AddBoardingHouseView,
+      },
+    ],
+  },
+
+  {
+    path: "/boardingHouses/edit/:id",
+    component: DefaultLayout,
+    children: [
+      {
+        path: "",
+        name: "update boarding house",
+        component: UpdateBoardingHouseView,
       },
     ],
   },
