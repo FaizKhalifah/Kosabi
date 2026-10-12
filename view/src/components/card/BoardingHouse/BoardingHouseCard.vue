@@ -124,10 +124,16 @@
                 </span>
               </td>
               <td class="actionButtons">
-                <button @click="editBook(book._id)" class="editButton">
+                <button
+                  @click="editBoardingHouse(boardingHouse._id)"
+                  class="editButton"
+                >
                   Edit
                 </button>
-                <button @click="deleteBook(book._id)" class="deleteButton">
+                <button
+                  @click="deleteBoardingHouse(boardingHouse._id)"
+                  class="deleteButton"
+                >
                   Delete
                 </button>
               </td>
@@ -556,6 +562,17 @@ export default {
 
     addBoardingHouse() {
       this.$router.push("/boardingHouses/add");
+    },
+
+    editBoardingHouse(id) {
+      this.$router.push(`/boardingHouses/edit/${id}`);
+    },
+
+    async deleteBoardingHouse(id) {
+      await fetch(`http://localhost:3001/api/boardingHouse/${id}`, {
+        method: "DELETE",
+      });
+      this.fetchBoardingHouses();
     },
   },
 };
