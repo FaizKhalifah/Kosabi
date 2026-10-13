@@ -51,6 +51,7 @@
           <thead>
             <tr>
               <th class="number-column">No.</th>
+              <th>Foto</th>
               <th>Nama Kostan</th>
               <th>Deskripsi</th>
               <th>Alamat</th>
@@ -73,6 +74,27 @@
             >
               <td class="number-column">
                 {{ index + 1 }}
+              </td>
+
+              <td class="photo-cell">
+                <div
+                  v-if="
+                    Array.isArray(boardingHouse.photos) &&
+                    boardingHouse.photos.length
+                  "
+                  class="photo-gallery"
+                >
+                  <img
+                    v-for="(photo, photoIndex) in boardingHouse.photos"
+                    :key="photoIndex"
+                    :src="getPhotoUrl(photo)"
+                    :alt="`Foto ${boardingHouse.name} ${photoIndex + 1}`"
+                    class="boarding-house-photo"
+                    loading="lazy"
+                  />
+                </div>
+
+                <span v-else class="no-photo"> Tidak ada foto </span>
               </td>
 
               <td class="name-cell">
@@ -446,6 +468,39 @@ tbody tr:last-child td {
   border-color: red;
 }
 
+/* Photo gallery */
+
+.photo-cell {
+  min-width: 180px;
+  max-width: 250px;
+}
+
+.photo-gallery {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.boarding-house-photo {
+  width: 65px;
+  height: 65px;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
+  transition: transform 0.2s ease;
+}
+
+.boarding-house-photo:hover {
+  transform: scale(1.1);
+}
+
+.no-photo {
+  color: #9ca3af;
+  font-size: 0.8rem;
+  font-style: italic;
+}
+
 /* Small screens */
 
 @media (max-width: 640px) {
@@ -524,6 +579,15 @@ export default {
       }
 
       return value;
+    },
+
+    getPhotoUrl(photo) {
+      if (!photo) return "";
+
+      // Mengubah backslash menjadi forward slash
+      const normalizedPath = photo.replace(/\\/g, "/").replace(/^\/+/, "");
+
+      return `http://localhost:3001/${normalizedPath}`;
     },
 
     formatList(value) {
