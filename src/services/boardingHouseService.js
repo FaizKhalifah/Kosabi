@@ -26,7 +26,7 @@ class BoardingHouseService {
 
     const safeSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
-    const boardingHouses = await this.repository.findAllBoardingHouse({
+    const boardingHouses = await this.repository.findAll({
       search: safeSearch,
       sortBy,
       sortOrder,

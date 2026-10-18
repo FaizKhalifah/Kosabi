@@ -11,6 +11,47 @@
         <div class="total-badge">{{ boardingHouses.length }} kostan</div>
       </div>
 
+      <!-- Search & Sorting Controls -->
+      <div class="filter-container">
+        <form class="search-form" @submit.prevent="fetchBoardingHouses">
+          <input
+            v-model="searchQuery"
+            type="text"
+            placeholder="Cari nama kostan, kota, alamat..."
+            class="search-input"
+          />
+
+          <button type="submit" class="search-button" :disabled="isLoading">
+            Cari
+          </button>
+
+          <button
+            type="button"
+            class="reset-button"
+            @click="resetFilters"
+            :disabled="isLoading"
+          >
+            Reset
+          </button>
+        </form>
+
+        <div class="sorting-controls">
+          <label for="sortBy">Urutkan berdasarkan:</label>
+
+          <select id="sortBy" v-model="sortBy" @change="fetchBoardingHouses">
+            <option value="createdAt">Tanggal dibuat</option>
+            <option value="name">Nama kostan</option>
+            <option value="city">Kota</option>
+            <option value="province">Provinsi</option>
+          </select>
+
+          <select v-model="sortOrder" @change="fetchBoardingHouses">
+            <option value="asc">Ascending (A-Z)</option>
+            <option value="desc">Descending (Z-A)</option>
+          </select>
+        </div>
+      </div>
+
       <!-- Error state -->
       <div v-if="errorMessage" class="state-message error-state">
         <h3>Gagal memuat data</h3>
@@ -38,8 +79,16 @@
         class="state-message empty-state"
       >
         <div class="empty-icon">⌂</div>
-        <h3>Belum Ada Data Kostan</h3>
-        <p>Saat ini belum ada kostan yang tersedia untuk ditampilkan.</p>
+
+        <template v-if="searchQuery">
+          <h3>Data Tidak Ditemukan</h3>
+          <p>Tidak ditemukan kostan dengan kata kunci "{{ searchQuery }}".</p>
+        </template>
+
+        <template v-else>
+          <h3>Belum Ada Data Kostan</h3>
+          <p>Saat ini belum ada kostan yang tersedia untuk ditampilkan.</p>
+        </template>
       </div>
 
       <!-- Data table -->
@@ -501,6 +550,84 @@ tbody tr:last-child td {
   font-style: italic;
 }
 
+/* Search and Sorting */
+
+.filter-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.search-form {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.search-input {
+  min-width: 200px;
+  flex: 1;
+  padding: 0.65rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  outline: none;
+}
+
+.search-input:focus {
+  border-color: #2563eb;
+}
+
+.search-button,
+.reset-button {
+  padding: 0.65rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.search-button {
+  background-color: #2563eb;
+  color: white;
+}
+
+.reset-button {
+  background-color: #e5e7eb;
+  color: #374151;
+}
+
+.search-button:disabled,
+.reset-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.sorting-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.sorting-controls label {
+  font-size: 0.875rem;
+  color: #4b5563;
+}
+
+.sorting-controls select {
+  padding: 0.65rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  background-color: white;
+  font-size: 0.875rem;
+}
+
 /* Small screens */
 
 @media (max-width: 640px) {
@@ -529,6 +656,13 @@ export default {
       boardingHouses: [],
       isLoading: false,
       errorMessage: "",
+
+      // Searching
+      searchQuery: "",
+
+      // Sorting
+      sortBy: "createdAt",
+      sortOrder: "desc",
     };
   },
 
@@ -542,8 +676,14 @@ export default {
       this.errorMessage = "";
 
       try {
+        const params = new URLSearchParams({
+          search: this.searchQuery.trim(),
+          sortBy: this.sortBy,
+          sortOrder: this.sortOrder,
+        });
+
         const response = await fetch(
-          "http://localhost:3001/api/boardingHouse",
+          `http://localhost:3001/api/boardingHouse?${params.toString()}`,
           {
             method: "GET",
             headers: {
@@ -571,6 +711,14 @@ export default {
       } finally {
         this.isLoading = false;
       }
+    },
+
+    resetFilters() {
+      this.searchQuery = "";
+      this.sortBy = "createdAt";
+      this.sortOrder = "desc";
+
+      this.fetchBoardingHouses();
     },
 
     displayValue(value) {
