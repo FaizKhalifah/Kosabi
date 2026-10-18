@@ -3,7 +3,9 @@ import BoardingHouseService from "../services/boardingHouseService.js";
 export default class ClassBoardingHouseController {
   async getAll(req, res) {
     try {
-      const boardingHouses = await BoardingHouseService.getAllBoardingHouse();
+      const boardingHouses = await BoardingHouseService.getAllBoardingHouse(
+        req.query,
+      );
       res.status(200).json(boardingHouses);
     } catch (err) {
       res.status(500).json({ message: err.message });

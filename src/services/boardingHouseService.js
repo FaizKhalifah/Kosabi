@@ -5,15 +5,36 @@ class BoardingHouseService {
     this.repository = new BoardingHouseRepository();
   }
 
-  async getAllBoardingHouse() {
-    const boardingHouses = await this.repository.findAll();
-    if (!boardingHouses || boardingHouses.length == 0) {
-      return {
-        message: "belum ada data boarding house",
-      };
+  async getAllBoardingHouse(query = {}) {
+    const { search = "", sortBy = "createdAt", sortOrder = "desc" } = query;
+
+    const allowedSortFields = [
+      "name",
+      "city",
+      "province",
+      "createdAt",
+      "updatedAt",
+    ];
+
+    if (!allowedSortFields.includes(sortBy)) {
+      throw new Error("Invalid sorting field");
     }
+
+    if (!["asc", "desc"].includes(sortOrder)) {
+      throw new Error("Invalid sorting order");
+    }
+
+    const safeSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+    const boardingHouses = await this.repository.findAllBoardingHouse({
+      search: safeSearch,
+      sortBy,
+      sortOrder,
+    });
+
     return {
-      boardingHouses: boardingHouses,
+      boardingHouses,
+      total: boardingHouses.length,
     };
   }
 
