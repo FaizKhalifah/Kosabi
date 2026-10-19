@@ -10,6 +10,29 @@
 
         <div class="total-badge">{{ rooms.length }} kamar</div>
       </div>
+
+      <!-- Search & Sorting Controls -->
+      <div class="filter-container">
+        <div class="sorting-controls">
+          <label for="sortBy">Urutkan berdasarkan:</label>
+
+          <select id="sortBy" v-model="sortBy" @change="fetchRooms">
+            <option value="boardingHouse">Nama kostan</option>
+            <option value="occupant">Nama penghuni</option>
+            <option value="roomNumber">Nomor kamar</option>
+            <option value="floor">Lantai Kamar</option>
+            <option value="price">Harga</option>
+            <option value="deposit">Deposit</option>
+            <option value="capacity">Kapasitas</option>
+            <option value="size">Ukuran</option>
+          </select>
+
+          <select v-model="sortOrder" @change="fetchBoardingHouses">
+            <option value="asc">Ascending (A-Z)</option>
+            <option value="desc">Descending (Z-A)</option>
+          </select>
+        </div>
+      </div>
       <!-- Error state -->
       <div v-if="errorMessage" class="state-message error-state">
         <h3>Gagal memuat data</h3>
@@ -509,6 +532,9 @@ export default {
       rooms: [],
       isLoading: false,
       errorMessage: "",
+
+      sortBy: "createdAt",
+      sortOrder: "desc",
     };
   },
 
@@ -521,13 +547,21 @@ export default {
       this.isLoading = true;
       this.errorMessage = "";
 
+      const params = new URLSearchParams({
+        sortBy: this.sortBy,
+        sortOrder: this.sortOrder,
+      });
+
       try {
-        const response = await fetch("http://localhost:3001/api/rooms", {
-          method: "GET",
-          headers: {
-            Accept: "application/json",
+        const response = await fetch(
+          "http://localhost:3001/api/rooms?${params.toString()}",
+          {
+            method: "GET",
+            headers: {
+              Accept: "application/json",
+            },
           },
-        });
+        );
 
         if (!response.ok) {
           throw new Error(`Server mengembalikan status ${response.status}.`);
@@ -548,6 +582,12 @@ export default {
       } finally {
         this.isLoading = false;
       }
+    },
+
+    resetFilters() {
+      this.sortBy = "createdAt";
+      this.sortOrder = "desc";
+      this.fetchRooms();
     },
 
     displayValue(value) {

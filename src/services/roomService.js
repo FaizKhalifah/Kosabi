@@ -9,8 +9,30 @@ class RoomService {
     this.BoardingHouseRepository = new BoardingHouseRepository();
   }
 
-  async getAllRooms() {
-    const rooms = await this.roomRepository.findAll();
+  async getAllRooms(query = {}) {
+    const { sortBy = "createdAt", sortOrder = "desc" } = query;
+
+    const allowedSortFields = [
+      "boardingHouse",
+      "occupant",
+      "roomNumber",
+      "floor",
+      "price",
+      "deposit",
+      "capacity",
+      "size",
+      "updatedAt",
+    ];
+
+    if (!allowedSortFields.includes(sortBy)) {
+      throw new Error("Invalid sorting field");
+    }
+
+    if (!["asc", "desc"].includes(sortOrder)) {
+      throw new Error("Invalid sorting order");
+    }
+
+    const rooms = await this.roomRepository.findAll({ sortBy, sortOrder });
     if (!rooms || rooms.length == 0) {
       return {
         message: "belum ada data kamar sama sekali",

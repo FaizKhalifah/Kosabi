@@ -6,9 +6,12 @@ export default class RoomRepository extends BaseRepository {
     super(Room);
   }
 
-  async findAll(filter = {}) {
+  async findAll({ sortBy = "createdAt", sortOrder = "desc" }) {
+    const sortOptions = {
+      [sortBy]: sortOrder === "asc" ? 1 : -1,
+    };
     return await this.model
-      .find(filter)
+      .sort(sortOptions)
       .populate("boardingHouse", "name")
       .populate("occupant", "name");
   }
