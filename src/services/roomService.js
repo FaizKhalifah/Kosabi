@@ -78,11 +78,13 @@ class RoomService {
       throw new Error("Boarding house not found");
     }
 
-    if (occupant !== null) {
+    if (occupant) {
       const user = await this.UserRepository.findById(occupant);
+
       if (!user) {
         throw new Error("User not found for this room");
       }
+
       if (user.role !== "TENANT") {
         throw new Error("User is not a tenant");
       }
@@ -93,7 +95,7 @@ class RoomService {
 
     return await this.roomRepository.create({
       boardingHouse,
-      occupant,
+      occupant: occupant || null,
       roomNumber,
       floor,
       type,

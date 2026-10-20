@@ -12,8 +12,8 @@ const RoomSchema = new mongoose.Schema(
     occupant: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true,
       default: null,
+      required: false,
     },
 
     roomNumber: {
