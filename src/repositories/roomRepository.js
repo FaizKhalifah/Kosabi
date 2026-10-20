@@ -11,6 +11,7 @@ export default class RoomRepository extends BaseRepository {
       [sortBy]: sortOrder === "asc" ? 1 : -1,
     };
     return await this.model
+      .find()
       .sort(sortOptions)
       .populate("boardingHouse", "name")
       .populate("occupant", "name");

@@ -21,6 +21,7 @@ class RoomService {
       "deposit",
       "capacity",
       "size",
+      "createdAt",
       "updatedAt",
     ];
 
