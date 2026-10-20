@@ -554,7 +554,7 @@ export default {
 
       try {
         const response = await fetch(
-          "http://localhost:3001/api/rooms?${params.toString()}",
+          `http://localhost:3001/api/rooms?${params.toString()}`,
           {
             method: "GET",
             headers: {
