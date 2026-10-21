@@ -1,5 +1,7 @@
 <script>
 import BaseCard from "@/components/base/BaseCard.vue";
+const API_URL = "http://localhost:3001/api/rooms";
+const SERVER_URL = "http://localhost:3001";
 export default {
   name: "editRoomCard",
   components: {
@@ -178,6 +180,136 @@ export default {
       URL.revokeObjectURL(photo.url);
 
       this.newPhotos.splice(index, 1);
+    },
+
+    validateForm() {
+      if (!this.boardingHouse) {
+        throw new Error("Pilih boarding house terlebih dahulu.");
+      }
+
+      if (!this.roomNumber) {
+        throw new Error("Nomor ruangan wajib diisi.");
+      }
+
+      if (!Number.isInteger(this.floor) || this.floor < 1) {
+        throw new Error("Lantai minimal 1.");
+      }
+
+      if (!["STANDARD", "DELUXE", "VIP"].includes(this.type)) {
+        throw new Error("Tipe ruangan tidak valid.");
+      }
+
+      if (
+        !Number.isFinite(this.price) ||
+        this.price < 0 ||
+        !Number.isFinite(this.deposit) ||
+        this.deposit < 0
+      ) {
+        throw new Error("Harga dan deposit tidak valid.");
+      }
+
+      if (!Number.isInteger(this.capacity) || this.capacity < 1) {
+        throw new Error("Kapasitas minimal 1.");
+      }
+
+      if (!Number.isFinite(this.size) || this.size < 0) {
+        throw new Error("Ukuran ruangan tidak valid.");
+      }
+
+      const validStatuses = [
+        "AVAILABLE",
+        "OCCUPIED",
+        "MAINTENANCE",
+        "RESERVED",
+      ];
+
+      if (!validStatuses.includes(this.status)) {
+        throw new Error("Status ruangan tidak valid.");
+      }
+
+      if (this.photos.length === 0) {
+        throw new Error("Upload minimal satu foto ruangan.");
+      }
+
+      if (this.photos.length > 10) {
+        throw new Error("Maksimal 10 foto ruangan.");
+      }
+    },
+
+    async updateRooms() {
+      this.isLoading = true;
+      this.errorMessage = "";
+      this.successMessage = "";
+
+      try {
+        this.validateForm();
+
+        const id = this.$route.params.id;
+
+        const formData = new FormData();
+
+        formData.append("boardingHouse", this.boardingHouse);
+
+        // Occupant: null karena ruangan baru belum memiliki penghuni
+        formData.append("occupant", "");
+
+        // Room Information
+        formData.append("roomNumber", this.roomNumber);
+        formData.append("floor", this.floor);
+        formData.append("type", this.type);
+        formData.append("description", this.description);
+
+        // Price
+        formData.append("price", this.price);
+        formData.append("deposit", this.deposit);
+
+        // Capacity and Size
+        formData.append("capacity", this.capacity);
+        formData.append("size", this.size);
+
+        // Status
+        formData.append("status", this.status);
+
+        // Facilities
+        const parsedFacilities = this.facilities
+          .map((facility) => facility.trim())
+          .filter(Boolean);
+
+        formData.append("facilities", JSON.stringify(parsedFacilities));
+
+        // Existing photos that should be retained
+        formData.append(
+          "existingPhotos",
+          JSON.stringify(this.existingPhotos.map((photo) => photo.path)),
+        );
+
+        // New photos
+        this.newPhotos.forEach((photo) => {
+          formData.append("photos", photo.file);
+        });
+
+        // Request backend
+        const response = await fetch(`${API_URL}/${id}`, {
+          method: "PUT",
+          body: formData,
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message || "Gagal memperbarui ruangan.");
+        }
+
+        this.successMessage = "Ruangan berhasil diperbarui!";
+
+        // Redirect after successful update
+        this.$router.push("/rooms");
+      } catch (error) {
+        console.error("Update error:", error);
+        this.errorMessage = error.message;
+      } finally {
+        this.isLoading = false;
+      }
     },
   },
 };
