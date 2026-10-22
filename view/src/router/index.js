@@ -9,6 +9,7 @@ import AddBoardingHouseView from "@/views/BoardingHouse/AddBoardingHouseView.vue
 import UpdateBoardingHouseView from "@/views/BoardingHouse/UpdateBoardingHouseView.vue";
 import RoomListView from "@/views/Room/RoomListView.vue";
 import AddRoomView from "@/views/Room/AddRoomView.vue";
+import EditRoomView from "@/views/Room/EditRoomView.vue";
 
 const routes = [
   {
@@ -79,6 +80,18 @@ const routes = [
         path: "",
         name: "Add Rooms",
         component: AddRoomView,
+      },
+    ],
+  },
+
+  {
+    path: "/rooms/edit/:id",
+    component: DefaultLayout,
+    children: [
+      {
+        path: "",
+        name: "Edit Rooms",
+        component: EditRoomView,
       },
     ],
   },
