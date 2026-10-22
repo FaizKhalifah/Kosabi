@@ -7,6 +7,14 @@ export default {
   components: {
     BaseCard,
   },
+
+  props: {
+    boardingHouses: {
+      type: Array,
+      default: () => [],
+    },
+  },
+
   data() {
     return {
       boardingHouse: "",
