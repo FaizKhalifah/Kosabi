@@ -1,7 +1,7 @@
 import BoardingHouseView from "@/views/BoardingHouse/BoardingHouseView.vue";
 import AddBoardingHouseView from "@/views/BoardingHouse/AddBoardingHouseView.vue";
 import UpdateBoardingHouseView from "@/views/BoardingHouse/UpdateBoardingHouseView.vue";
-
+import DefaultLayout from "@/layouts/DefaultLayout.vue";
 export default [
   {
     path: "/boardingHouses",

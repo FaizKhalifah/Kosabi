@@ -573,7 +573,7 @@ export default {
         });
 
         // Request Backend
-        const response = await fetch("http://localhost:3001/api/room/", {
+        const response = await fetch("http://localhost:3001/api/rooms/", {
           method: "POST",
           body: formData,
         });
