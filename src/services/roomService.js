@@ -132,32 +132,47 @@ class RoomService {
     } = data;
 
     const room = await this.roomRepository.findById(id);
+
     if (!room) {
       throw new Error("Room not found");
     }
 
     const isBoardingHouseAvailable =
       await this.BoardingHouseRepository.findById(boardingHouse);
+
     if (!isBoardingHouseAvailable) {
       throw new Error("Boarding house not found");
     }
 
-    if (occupant !== null) {
-      const user = await this.UserRepository.findById(occupant);
-      if (!user) {
-        throw new Error("User not found for this room");
-      }
-      if (user.role !== "TENANT") {
-        throw new Error("User is not a tenant");
+    // Handle optional occupant
+    let occupantToUpdate;
+
+    if (occupant !== undefined) {
+      if (occupant === "" || occupant == null || occupant == "null") {
+        // Tidak ada penghuni
+        occupantToUpdate = null;
+      } else {
+        // Validasi jika ada ID occupant
+        const user = await this.UserRepository.findById(occupant);
+
+        if (!user) {
+          throw new Error("User not found for this room");
+        }
+
+        if (user.role !== "TENANT") {
+          throw new Error("User is not a tenant");
+        }
+
+        occupantToUpdate = occupant;
       }
     }
 
     const parsedFacilities = facilities ? JSON.parse(facilities) : [];
+
     const photoPaths = photos ? photos.map((file) => file.path) : [];
 
-    return await this.roomRepository.update(id, {
+    const updateData = {
       boardingHouse,
-      occupant,
       roomNumber,
       floor,
       type,
@@ -169,7 +184,14 @@ class RoomService {
       facilities: parsedFacilities,
       description,
       photoPaths,
-    });
+    };
+
+    // Hanya update occupant jika field dikirim
+    if (occupant !== undefined) {
+      updateData.occupant = occupantToUpdate;
+    }
+
+    return await this.roomRepository.update(id, updateData);
   }
 
   async deleteRoom(id) {

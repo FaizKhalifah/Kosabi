@@ -84,25 +84,26 @@ export default {
         const room = data.room;
 
         if (!room) {
-          throw new Error("Data ruangan house tidak ditemukan.");
+          throw new Error("Data ruangan tidak ditemukan.");
         }
 
         // Basic information
-        this.boardingHouse = house.boardingHouse || "";
-        this.roomNumber = house.roomNumber || "";
-        this.floor = house.floor || "";
-        this.type = house.type || "";
-        this.price = house.price || "";
-        this.deposit = house.deposit || "";
-        this.capacity = house.capacity || "";
-        this.size = house.size || "";
+        this.boardingHouse =
+          room.boardingHouse?._id || room.boardingHouse || "";
 
-        // Dynamic arrays
-        this.rules = house.rules?.length ? [...house.rules] : [""];
+        this.roomNumber = room.roomNumber || "";
+        this.floor = room.floor ?? 1;
+        this.type = room.type || "";
+        this.price = room.price ?? 0;
+        this.deposit = room.deposit ?? 0;
+        this.capacity = room.capacity ?? 1;
+        this.size = room.size ?? 0;
 
+        // Facilities
         this.facilities = room.facilities?.length ? [...room.facilities] : [""];
 
-        this.description = room.description;
+        // Description
+        this.description = room.description || "";
 
         // Status
         this.status = room.status || "AVAILABLE";
@@ -235,16 +236,16 @@ export default {
         throw new Error("Status ruangan tidak valid.");
       }
 
-      if (this.photos.length === 0) {
-        throw new Error("Upload minimal satu foto ruangan.");
+      if (this.totalPhotos === 0) {
+        throw new Error("Minimal harus ada satu foto ruangan.");
       }
 
-      if (this.photos.length > 10) {
+      if (this.totalPhotos > 10) {
         throw new Error("Maksimal 10 foto ruangan.");
       }
     },
 
-    async updateRooms() {
+    async editRoom() {
       this.isLoading = true;
       this.errorMessage = "";
       this.successMessage = "";
@@ -259,7 +260,11 @@ export default {
         formData.append("boardingHouse", this.boardingHouse);
 
         // Occupant: null karena ruangan baru belum memiliki penghuni
-        formData.append("occupant", "");
+        if (this.occupant) {
+          formData.append("occupant", this.occupant);
+        } else {
+          formData.append("occupant", null);
+        }
 
         // Room Information
         formData.append("roomNumber", this.roomNumber);
@@ -495,6 +500,7 @@ export default {
       </section>
 
       <!-- PHOTOS -->
+
       <section>
         <h3>Foto Ruangan</h3>
 
@@ -514,23 +520,49 @@ export default {
           </p>
         </div>
 
-        <div v-if="previewUrls.length > 0" class="preview-container">
+        <!-- Foto lama -->
+        <h4>Foto Saat Ini</h4>
+
+        <div v-if="existingPhotos.length > 0" class="preview-container">
           <div
-            v-for="(url, index) in previewUrls"
-            :key="url"
+            v-for="(photo, index) in existingPhotos"
+            :key="photo.path"
             class="preview-item"
           >
-            <img :src="url" alt="Preview foto ruangan" />
+            <img :src="photo.url" alt="Foto ruangan" />
 
             <button
               type="button"
               class="remove-button"
-              @click="removePhoto(index)"
+              @click="removeExistingPhoto(index)"
             >
               Hapus
             </button>
           </div>
         </div>
+
+        <!-- Foto baru -->
+        <h4>Foto Baru</h4>
+
+        <div v-if="newPhotos.length > 0" class="preview-container">
+          <div
+            v-for="(photo, index) in newPhotos"
+            :key="photo.id"
+            class="preview-item"
+          >
+            <img :src="photo.url" alt="Foto baru" />
+
+            <button
+              type="button"
+              class="remove-button"
+              @click="removeNewPhoto(index)"
+            >
+              Hapus
+            </button>
+          </div>
+        </div>
+
+        <p>Total foto: {{ totalPhotos }} / 10</p>
       </section>
 
       <!-- FEEDBACK -->
@@ -544,7 +576,7 @@ export default {
 
       <!-- SUBMIT -->
       <button type="submit" class="submit-button" :disabled="isLoading">
-        {{ isLoading ? "Menyimpan..." : "Tambah Ruangan" }}
+        {{ isLoading ? "Menyimpan..." : "Update ruangan" }}
       </button>
     </form>
   </BaseCard>

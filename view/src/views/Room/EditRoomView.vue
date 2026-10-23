@@ -11,6 +11,9 @@ export default {
       boardingHouses: [],
     };
   },
+  mounted() {
+    this.fetchBoardingHouses();
+  },
   methods: {
     async fetchBoardingHouses() {
       try {
@@ -34,5 +37,5 @@ export default {
 </script>
 
 <template>
-  <EditRoomCard boarding-houses="boardingHouses" />
+  <EditRoomCard :boarding-houses="boardingHouses" />
 </template>
