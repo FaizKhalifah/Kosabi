@@ -8,5 +8,6 @@ const baseUrl = "/api/user";
 userRouter.get(`${baseUrl}/:id`, userController.getUserById);
 userRouter.patch(`${baseUrl}/changeRole/:id`, userController.changeUserRole);
 userRouter.put(`${baseUrl}/:id`, userController.updateUserProfile);
+userRouter.get(`${baseUrl}/tenants`, userController.getAllTenants);
 
 export default userRouter;

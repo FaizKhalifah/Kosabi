@@ -25,4 +25,8 @@ export default class UserRepository extends BaseRepository {
   async deactivate(id) {
     return User.updateOne({ _id: id }, { $set: { isActive: false } });
   }
+
+  async getAllTenants() {
+    return User.find({ role: "TENANT" });
+  }
 }
