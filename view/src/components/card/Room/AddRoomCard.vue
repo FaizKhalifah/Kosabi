@@ -24,6 +24,26 @@
         </div>
       </section>
 
+      <section>
+        <h3>Informasi Penghuni Ruangan</h3>
+
+        <div class="form-group">
+          <label>Penghuni ruangan</label>
+
+          <select v-model="occupant" required>
+            <option value="" disabled>Pilih Tenant</option>
+
+            <option
+              v-for="tenant in occupants"
+              :key="tenant._id"
+              :value="tenant._id"
+            >
+              {{ tenant.name }}
+            </option>
+          </select>
+        </div>
+      </section>
+
       <!-- ROOM INFORMATION -->
       <section>
         <h3>Informasi Ruangan</h3>
@@ -382,6 +402,11 @@ export default {
       type: Array,
       default: () => [],
     },
+
+    occupants: {
+      type: Array,
+      default: () => [],
+    },
   },
 
   data() {
@@ -394,6 +419,8 @@ export default {
 
       price: 0,
       deposit: 0,
+
+      occupant: "",
 
       capacity: 1,
       size: 0,
@@ -541,7 +568,7 @@ export default {
         formData.append("boardingHouse", this.boardingHouse);
 
         // Occupant: null karena ruangan baru belum memiliki penghuni
-        formData.append("occupant", "");
+        formData.append("occupant", this.occupant);
 
         // Room Information
         formData.append("roomNumber", this.roomNumber);
