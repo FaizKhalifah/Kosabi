@@ -32,4 +32,13 @@ export default class UserController {
       res.status(500).json({ success: false, message: err.message });
     }
   }
+
+  async getAllTenants(req, res) {
+    try {
+      const tenants = await userService.getAllTenants();
+      res.status(200).json({ message: "Seluruh tenant didapat", tenants });
+    } catch (err) {
+      res.status(500).json({ success: false, message: err.message });
+    }
+  }
 }

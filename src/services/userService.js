@@ -118,6 +118,11 @@ class UserService {
       rental: userRental,
     };
   }
+
+  async getAllTenants() {
+    const tenants = await this.repository.getAllTenants();
+    return tenants;
+  }
 }
 
 export default new UserService();

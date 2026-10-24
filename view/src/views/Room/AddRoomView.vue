@@ -6,11 +6,13 @@ export default {
   data() {
     return {
       boardingHouses: [],
+      tenants: [],
     };
   },
 
   mounted() {
     this.fetchBoardingHouses();
+    this.fetchTenants();
   },
   methods: {
     async fetchBoardingHouses() {
@@ -30,10 +32,24 @@ export default {
         console.error("Gagal mengambil boarding house:", error);
       }
     },
+
+    async fetchTenants() {
+      try {
+        const response = await fetch("http://localhost:3001/api/user/tenants");
+        const result = await response.json();
+
+        if (!response.ok) {
+          throw new Error(result.message);
+        }
+        this.tenants = result.tenants;
+      } catch (error) {
+        console.error("Gagal mengambil tenant:", error);
+      }
+    },
   },
 };
 </script>
 
 <template>
-  <AddRoomCard :boarding-houses="boardingHouses" />
+  <AddRoomCard :boarding-houses="boardingHouses" :occupants="tenants" />
 </template>
