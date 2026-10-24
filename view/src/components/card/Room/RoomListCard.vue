@@ -121,7 +121,7 @@
               </td>
 
               <td>
-                {{ displayValue(room.occupant) }}
+                {{ displayValue(room.occupant?.name) }}
               </td>
 
               <td>
@@ -573,6 +573,7 @@ export default {
           throw new Error("Format data dari server tidak sesuai.");
         }
 
+        console.log("Informasi  : ", responseData.rooms);
         this.rooms = responseData.rooms;
       } catch (error) {
         console.error("Gagal mengambil data ruangan:", error);
