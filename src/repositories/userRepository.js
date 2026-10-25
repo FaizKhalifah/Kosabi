@@ -6,6 +6,23 @@ export default class UserRepository extends BaseRepository {
     super(User);
   }
 
+  async findAll({ search = "", sortBy = "createdAt", sortOrder = "desc" }) {
+    const filter = {};
+    if (search) {
+      filter.$or = [
+        { name: { $regex: search, $options: "i" } },
+        { email: { $regex: search, $options: "i" } },
+        { phone: { $regex: search, $options: "i" } },
+      ];
+    }
+
+    const sortOptions = {
+      [sortBy]: sortOrder === "asc" ? 1 : -1,
+    };
+
+    return await this.model.find(filter).sort(sortOptions);
+  }
+
   async findByName(name) {
     return User.findOne({ name });
   }

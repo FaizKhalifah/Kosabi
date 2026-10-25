@@ -9,6 +9,30 @@ class UserService {
     this.rentalRepository = new RentalRepository();
   }
 
+  async getAllUser() {
+    const { search = "", sortBy = "createdAt", sortOrder = "desc" } = query;
+    const allowedSortFields = ["name", "email", "createdAt", "updatedAt"];
+
+    if (!allowedSortFields.includes(sortBy)) {
+      throw new Error("Invalid sorting field");
+    }
+
+    if (!["asc", "desc"].includes(sortOrder)) {
+      throw new Error("Invalid sorting order");
+    }
+
+    const safeSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const users = await this.repository.findAll({
+      search: safeSearch,
+      sortBy,
+      sortOrder,
+    });
+    return {
+      users,
+      total: users.length,
+    };
+  }
+
   async getUserById(id) {
     const user = await this.repository.findById(id);
     if (!user) {
