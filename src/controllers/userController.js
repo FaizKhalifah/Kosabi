@@ -1,6 +1,14 @@
 import userService from "../services/userService.js";
 
 export default class UserController {
+  async getAllUsers(req, res) {
+    try {
+      const users = await userService.getAllUsers();
+      res.status(200).json({ message: "Seluruh user didapat", users });
+    } catch (err) {
+      res.status(400).json({ error: err.message });
+    }
+  }
   async getUserById(req, res) {
     try {
       const result = await userService.getUserById(req.params.id);

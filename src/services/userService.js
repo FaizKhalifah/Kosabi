@@ -9,7 +9,7 @@ class UserService {
     this.rentalRepository = new RentalRepository();
   }
 
-  async getAllUser() {
+  async getAllUsers() {
     const { search = "", sortBy = "createdAt", sortOrder = "desc" } = query;
     const allowedSortFields = ["name", "email", "createdAt", "updatedAt"];
 
