@@ -61,7 +61,7 @@
           </thead>
 
           <tbody>
-            <tr v-for="(room, index) in rooms" :key="room._id || index">
+            <tr v-for="(user, index) in users" :key="user._id || index">
               <td class="number-column">
                 {{ index + 1 }}
               </td>
@@ -113,4 +113,96 @@
 </template>
 <script>
 import BaseCard from "@/components/base/BaseCard.vue";
+export default {
+  name: "UserListCard",
+  components: {
+    BaseCard,
+  },
+  data() {
+    return {
+      users: [],
+      isLoading: false,
+      errorMessage: "",
+
+      sortBy: "createdAt",
+      sortOrder: "desc",
+    };
+  },
+
+  created() {
+    this.fetchUsers();
+  },
+
+  methods: {
+    async fetchUsers() {
+      this.isLoading = true;
+      this.errorMessage = "";
+
+      const params = new URLSearchParams({
+        sortBy: this.sortBy,
+        sortOrder: this.sortOrder,
+      });
+
+      try {
+        const response = await fetch(
+          `http://localhost:3001/api/users?${params.toString()}`,
+          {
+            method: "GET",
+            headers: {
+              Accept: "application/json",
+            },
+          },
+        );
+
+        if (!response.ok) {
+          throw new Error(`Server mengembalikan status ${response.status}.`);
+        }
+
+        const responseData = await response.json();
+
+        if (!Array.isArray(responseData.users)) {
+          throw new Error("Format data dari server tidak sesuai.");
+        }
+
+        this.users = responseData.users;
+      } catch (error) {
+        console.error("Gagal mengambil data user:", error);
+
+        this.errorMessage =
+          "Data ruangan tidak dapat dimuat. Periksa koneksi ke server, lalu coba lagi.";
+      } finally {
+        this.isLoading = false;
+      }
+    },
+
+    resetFilters() {
+      this.sortBy = "createdAt";
+      this.sortOrder = "desc";
+      this.fetchUsers();
+    },
+
+    displayValue(value) {
+      if (value === null || value === undefined || value === "") {
+        return "-";
+      }
+
+      return value;
+    },
+
+    addUser() {
+      this.$router.push("/users/add");
+    },
+
+    editUser(id) {
+      this.$router.push(`/users/edit/${id}`);
+    },
+
+    async deleteUser(id) {
+      await fetch(`http://localhost:3001/api/users/${id}`, {
+        method: "DELETE",
+      });
+      this.fetchUsers();
+    },
+  },
+};
 </script>
