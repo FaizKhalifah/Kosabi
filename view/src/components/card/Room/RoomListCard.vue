@@ -539,7 +539,7 @@ export default {
   },
 
   created() {
-    this, this.fetchRooms();
+    this.fetchRooms();
   },
 
   methods: {

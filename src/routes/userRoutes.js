@@ -3,7 +3,7 @@ import express from "express";
 
 const userController = new UserController();
 const userRouter = express.Router();
-const baseUrl = "/api/user";
+const baseUrl = "/api/users";
 
 userRouter.get(`${baseUrl}/`, userController.getAllUsers);
 userRouter.get(`${baseUrl}/tenants`, userController.getAllTenants);
