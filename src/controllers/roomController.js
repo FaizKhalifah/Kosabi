@@ -3,7 +3,7 @@ import roomService from "../services/roomService.js";
 export default class RoomController {
   async getAllRooms(req, res) {
     try {
-      const rooms = await roomService.getAllRooms();
+      const rooms = await roomService.getAllRooms(req.query);
       res.status(201).json(rooms);
     } catch (err) {
       res.status(500).json({ message: err.message });
