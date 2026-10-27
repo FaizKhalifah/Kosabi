@@ -35,7 +35,7 @@ export default {
 
     async fetchTenants() {
       try {
-        const response = await fetch("http://localhost:3001/api/user/tenants");
+        const response = await fetch("http://localhost:3001/api/users/tenants");
         const result = await response.json();
 
         if (!response.ok) {

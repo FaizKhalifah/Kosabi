@@ -56,9 +56,9 @@ const navigation = [
         to: "/rooms",
       },
       {
-        label: "Penghuni",
+        label: "Users",
         icon: Users,
-        to: "/tenants",
+        to: "/users",
       },
     ],
   },
