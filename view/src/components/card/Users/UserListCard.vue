@@ -111,7 +111,7 @@
     </div>
   </BaseCard>
 </template>
-<style>
+<style scoped>
 .user-page {
   width: 100%;
   min-width: 0;
@@ -494,17 +494,19 @@ export default {
           },
         );
 
+        console.log("Response fetch : ", response);
+
         if (!response.ok) {
           throw new Error(`Server mengembalikan status ${response.status}.`);
         }
 
         const responseData = await response.json();
 
-        if (!Array.isArray(responseData.users)) {
+        if (!Array.isArray(responseData.data?.users)) {
           throw new Error("Format data dari server tidak sesuai.");
         }
 
-        this.users = responseData.users;
+        this.users = responseData.data.users;
       } catch (error) {
         console.error("Gagal mengambil data user:", error);
 
