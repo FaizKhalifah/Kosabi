@@ -64,4 +64,80 @@
 </template>
 <script>
 import BaseCard from "@/components/base/BaseCard.vue";
+export default {
+  name: "AddUserCard",
+  components: {
+    BaseCard,
+  },
+  data() {
+    return {
+      name: "",
+      email: "",
+      phone: "",
+      password: "",
+      role: "TENANT",
+      isLoading: false,
+      errorMessage: "",
+      successMessage: "",
+    };
+  },
+  beforeUnmount() {
+    this.previewUrls.forEach((url) => {
+      URL.revokeObjectURL(url);
+    });
+  },
+  methods: {
+    validateForm() {
+      if (!this.name) {
+        throw new Error("Nama diperlukan untuk membuat user baru");
+      }
+      if (!this.email) {
+        throw new Error("Email diperlukan untuk membuat user baru");
+      }
+      if (!this.phone) {
+        throw new Error("No telepon diperlukan untuk membuat user baru");
+      }
+      if (!this.password) {
+        throw new Error("Password diperlukan untuk membuat user baru");
+      }
+      if (!["TENANT", "ADMIN"].includes(this.role)) {
+        throw new Error("Role user tidak valid");
+      }
+    },
+
+    async addUser() {
+      this.isLoading = true;
+      this.errorMessage = "";
+      this.successMessage = "";
+      try {
+        this.validateForm();
+
+        const formData = new FormData();
+        formData.append("name", this.name);
+        formData.append("email", this.email);
+        formData.append("phone", this.phone);
+        formData.append("password", this.password);
+        formData.append("role", this.role);
+        const response = await fetch("http://localhost:3001/api/user/", {
+          method: "POST",
+          body: formData,
+        });
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message || "Gagal menambahkan ruangan.");
+        }
+
+        this.successMessage = "Ruangan berhasil ditambahkan!";
+
+        this.$router.push("/users");
+      } catch (error) {
+        console.error("Error:", error);
+        this.errorMessage = error.message;
+      } finally {
+        this.isLoading = false;
+      }
+    },
+  },
+};
 </script>
