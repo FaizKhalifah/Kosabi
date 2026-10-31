@@ -49,4 +49,13 @@ export default class UserController {
       res.status(500).json({ success: false, message: err.message });
     }
   }
+
+  async createUser(req, res) {
+    try {
+      const user = await userService.createUser(req.body);
+      res.status(201).json(user);
+    } catch (err) {
+      res.status(500).json({ success: false, message: err.message });
+    }
+  }
 }
