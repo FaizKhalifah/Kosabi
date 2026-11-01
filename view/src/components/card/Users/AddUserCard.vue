@@ -259,7 +259,7 @@ export default {
         formData.append("phone", this.phone);
         formData.append("password", this.password);
         formData.append("role", this.role);
-        const response = await fetch("http://localhost:3001/api/user/", {
+        const response = await fetch("http://localhost:3001/api/users/", {
           method: "POST",
           body: formData,
         });
