@@ -147,6 +147,48 @@ class UserService {
     const tenants = await this.repository.getAllTenants();
     return tenants;
   }
+
+  async createUser() {
+    const { name, email, phone, password, role } = data;
+    if (!name) {
+      throw new Error("User name is required");
+    }
+    if (!email) {
+      throw new Error("User email is required");
+    }
+    if (!phone) {
+      throw new Error("User phone number is required");
+    }
+    if (!password) {
+      throw new Error("User password is required");
+    }
+    if (!role) {
+      throw new Error("Role is required");
+    }
+
+    const isEmailUsed = await this.repository.findByEmail(email);
+    if (isEmailUsed) {
+      throw new Error("Email is already registered");
+    }
+
+    const isPhoneNumberUsed = await this.repository.findByPhone(phone);
+    if (isPhoneNumberUsed) {
+      throw new Error("Phone number already used");
+    }
+
+    const hashedPassword = await bcrypt.hash(data.password, 10);
+    const user = await this.repository.create({
+      name,
+      email,
+      phone,
+      password: hashedPassword,
+      role,
+      isActive: true,
+    });
+    return {
+      user,
+    };
+  }
 }
 
 export default new UserService();

@@ -1,4 +1,5 @@
 import UserListView from "@/views/Users/UserListView.vue";
+import AddUserView from "@/views/Users/AddUserView.vue";
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
 
 export default [
@@ -10,6 +11,11 @@ export default [
         path: "",
         name: "Users",
         component: UserListView,
+      },
+      {
+        path: "add",
+        name: "AddUser",
+        component: AddUserView,
       },
     ],
   },
