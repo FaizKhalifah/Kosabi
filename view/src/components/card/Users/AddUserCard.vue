@@ -15,7 +15,7 @@
         <label>Email</label>
         <input
           v-model.trim="email"
-          type="text"
+          type="email"
           placeholder="Contoh: FaizKhalifah@gmail.com"
           required
         />
@@ -45,7 +45,6 @@
           <option value="ADMIN">Admin</option>
           <option value="TENANT">Tenant</option>
         </select>
-        />
       </div>
       <p v-if="errorMessage" class="error-message">
         {{ errorMessage }}
@@ -222,11 +221,6 @@ export default {
       successMessage: "",
     };
   },
-  beforeUnmount() {
-    this.previewUrls.forEach((url) => {
-      URL.revokeObjectURL(url);
-    });
-  },
   methods: {
     validateForm() {
       if (!this.name) {
@@ -250,27 +244,33 @@ export default {
       this.isLoading = true;
       this.errorMessage = "";
       this.successMessage = "";
+
       try {
         this.validateForm();
 
-        const formData = new FormData();
-        formData.append("name", this.name);
-        formData.append("email", this.email);
-        formData.append("phone", this.phone);
-        formData.append("password", this.password);
-        formData.append("role", this.role);
+        const payload = {
+          name: this.name,
+          email: this.email,
+          phone: this.phone,
+          password: this.password,
+          role: this.role,
+        };
+
         const response = await fetch("http://localhost:3001/api/users/", {
           method: "POST",
-          body: formData,
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
         });
+
         const data = await response.json();
 
         if (!response.ok) {
-          throw new Error(data.message || "Gagal menambahkan ruangan.");
+          throw new Error(data.message || "Gagal menambahkan user.");
         }
 
-        this.successMessage = "Ruangan berhasil ditambahkan!";
-
+        this.successMessage = "User berhasil ditambahkan!";
         this.$router.push("/users");
       } catch (error) {
         console.error("Error:", error);

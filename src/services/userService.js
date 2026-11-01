@@ -1,6 +1,7 @@
 import UserRepository from "../repositories/UserRepository.js";
 import RoomRepository from "../repositories/roomRepository.js";
 import RentalRepository from "../repositories/rentalRepository.js";
+import bcrypt from "bcrypt";
 
 class UserService {
   constructor() {
@@ -148,7 +149,8 @@ class UserService {
     return tenants;
   }
 
-  async createUser() {
+  async createUser(data) {
+    console.log("data di service ", data);
     const { name, email, phone, password, role } = data;
     if (!name) {
       throw new Error("User name is required");
