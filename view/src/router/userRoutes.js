@@ -12,9 +12,15 @@ export default [
         name: "Users",
         component: UserListView,
       },
+    ],
+  },
+  {
+    path: "/users/add",
+    component: DefaultLayout,
+    children: [
       {
-        path: "add",
-        name: "AddUser",
+        path: "",
+        name: "add users",
         component: AddUserView,
       },
     ],
