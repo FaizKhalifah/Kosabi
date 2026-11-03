@@ -120,6 +120,60 @@ export default {
         this.isFetching = false;
       }
     },
+
+    validateForm() {
+      if (!this.name) {
+        throw new Error("Nama diperlukan untuk membuat user baru");
+      }
+      if (!this.email) {
+        throw new Error("Email diperlukan untuk membuat user baru");
+      }
+      if (!this.phone) {
+        throw new Error("No telepon diperlukan untuk membuat user baru");
+      }
+      if (!this.password) {
+        throw new Error("Password diperlukan untuk membuat user baru");
+      }
+      if (!["TENANT", "ADMIN"].includes(this.role)) {
+        throw new Error("Role user tidak valid");
+      }
+    },
+
+    async editUser() {
+      this.isLoading = true;
+      this.errorMessage = "";
+      this.successMessage = "";
+      try {
+        this.validateForm();
+        const id = this.$route.params.id;
+        const payload = {
+          name: this.name,
+          email: this.email,
+          phone: this.phone,
+          password: this.password,
+          role: this.role,
+        };
+        const response = await fetch(`${API_URL}/${id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message || "Gagal mengedit user.");
+        }
+        this.successMessage = "User berhasil diperbarui!";
+        this.$router.push("/users");
+      } catch (error) {
+        console.error("Update error:", error);
+        this.errorMessage = error.message;
+      } finally {
+        this.isLoading = false;
+      }
+    },
   },
 };
 </script>
