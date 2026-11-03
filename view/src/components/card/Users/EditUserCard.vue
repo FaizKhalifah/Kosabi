@@ -63,4 +63,63 @@
 </template>
 <script>
 import BaseCard from "@/components/base/BaseCard.vue";
+const API_URL = "http://localhost:3001/api/user";
+const SERVER_URL = "http://localhost:3001";
+export default {
+  name: "EditUserCard",
+  components: {
+    BaseCard,
+  },
+  data() {
+    return {
+      name: "",
+      email: "",
+      phone: "",
+      password: "",
+      role: "TENANT",
+      isFetching: false,
+      isLoading: false,
+      errorMessage: "",
+      successMessage: "",
+    };
+  },
+  async mounted() {
+    await this.fetchUser();
+  },
+  methods: {
+    async fetchUser() {
+      this.isFetching = true;
+      this.errorMessage = "";
+      try {
+        const id = this.$route.params.id;
+
+        if (!id) {
+          throw new Error("ID ruangan tidak ditemukan.");
+        }
+
+        const response = await fetch(`${API_URL}/${id}`);
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message || "Gagal mengambil data user.");
+        }
+        const user = data.user;
+        this.name = user.name;
+        this.email = user.email;
+        this.phone = user.phone;
+        this.password = user.password;
+        this.role = user.role;
+        if (!user) {
+          throw new Error("Data ruangan tidak ditemukan.");
+        }
+      } catch (error) {
+        console.error("Fetch error:", error);
+        this.errorMessage = error.message;
+      } finally {
+        this.isFetching = false;
+      }
+    },
+  },
+};
 </script>
