@@ -65,15 +65,18 @@ class UserService {
       throw new Error("Id is required to update user data");
     }
 
-    const { name, email, phone } = data;
+    const { name, email, phone, password, role } = data;
     const user = await this.repository.findById(id);
     if (!user) {
       throw new Error("User not found");
     }
+    const hashedPassword = await bcrypt.hash(password, 10);
     return await this.repository.update(id, {
       name,
       email,
       phone,
+      password,
+      role,
     });
   }
 
