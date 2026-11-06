@@ -91,10 +91,10 @@
               </td>
 
               <td class="actionButtons">
-                <button @click="editRoom(user._id)" class="editButton">
+                <button @click="editUser(user._id)" class="editButton">
                   Edit
                 </button>
-                <button @click="deleteRoom(user._id)" class="deleteButton">
+                <button @click="deleteUser(user._id)" class="deleteButton">
                   Delete
                 </button>
               </td>
