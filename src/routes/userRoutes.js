@@ -9,7 +9,8 @@ userRouter.get(`${baseUrl}/`, userController.getAllUsers);
 userRouter.get(`${baseUrl}/tenants`, userController.getAllTenants);
 userRouter.get(`${baseUrl}/:id`, userController.getUserById);
 userRouter.post(`${baseUrl}/`, userController.createUser);
-userRouter.patch(`${baseUrl}/:id`, userController.updateUserProfile);
+userRouter.put(`${baseUrl}/:id`, userController.updateUserProfile);
 userRouter.patch(`${baseUrl}/changeRole/:id`, userController.changeUserRole);
+userRouter.delete(`${baseUrl}/:id`, userController.deleteUser);
 
 export default userRouter;
