@@ -1,6 +1,6 @@
 <template>
   <BaseCard>
-    <form>
+    <form @submit.prevent="editUser">
       <h2>Edit User</h2>
       <div class="form-group">
         <label>Nama</label>
@@ -63,7 +63,7 @@
 </template>
 <script>
 import BaseCard from "@/components/base/BaseCard.vue";
-const API_URL = "http://localhost:3001/api/user";
+const API_URL = "http://localhost:3001/api/users";
 const SERVER_URL = "http://localhost:3001";
 export default {
   name: "EditUserCard",
@@ -98,13 +98,14 @@ export default {
         }
 
         const response = await fetch(`${API_URL}/${id}`);
+        console.log("response ", response);
 
         const data = await response.json();
 
         if (!response.ok) {
           throw new Error(data.message || "Gagal mengambil data user.");
         }
-        const user = data.user;
+        const user = data.result.user;
         this.name = user.name;
         this.email = user.email;
         this.phone = user.phone;

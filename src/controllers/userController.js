@@ -52,9 +52,17 @@ export default class UserController {
 
   async createUser(req, res) {
     try {
-      console.log("req body ", req);
       const user = await userService.createUser(req.body);
       res.status(201).json(user);
+    } catch (err) {
+      res.status(500).json({ success: false, message: err.message });
+    }
+  }
+
+  async deleteUser(req, res) {
+    try {
+      const deleteResult = await userService.deleteUser(req.params.id);
+      res.status(200).json({ success: true, result: deleteResult });
     } catch (err) {
       res.status(500).json({ success: false, message: err.message });
     }
