@@ -1,4 +1,12 @@
 <script>
-import RentalListCard from "../../components/card/Rental/rentalList/RentalListCard.vue";
+import RentalListCard from "@/components/card/Rental/rentalList/RentalListCard.vue";
+export default {
+  name: "RentalListView",
+  components: {
+    RentalListCard,
+  },
+};
 </script>
-<template></template>
+<template>
+  <RentalListCard />
+</template>

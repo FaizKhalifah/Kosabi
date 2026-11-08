@@ -68,6 +68,11 @@ const navigation = [
     key: "finance",
     children: [
       {
+        label: "Penyewaan",
+        icon: CreditCard,
+        to: "/rentals",
+      },
+      {
         label: "Pembayaran",
         icon: CreditCard,
         to: "/payments",
