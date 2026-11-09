@@ -6,6 +6,25 @@ export default class RentalRepository extends BaseRepository {
     super(Rental);
   }
 
+  async findAll({ search = "", sortBy = "createdAt", sortOrder = "desc" }) {
+    const filter = {};
+    if (search) {
+      filter.$or = [
+        { tenant: { $regex: search, $options: "i" } },
+        { monthlyPrice: { $regex: search, $options: "i" } },
+        { deposit: { $regex: search, $options: "i" } },
+        { billingDay: { $regex: search, $options: "i" } },
+        { notes: { $regex: search, $options: "i" } },
+      ];
+    }
+
+    const sortOptions = {
+      [sortBy]: sortOrder === "asc" ? 1 : -1,
+    };
+
+    return await this.model.find(filter).sort(sortOptions);
+  }
+
   async findByTenant(id) {
     return Rental.findOne({ tenant: id });
   }

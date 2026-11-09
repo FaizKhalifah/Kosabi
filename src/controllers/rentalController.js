@@ -3,7 +3,7 @@ import RentalService from "../services/rentalService.js";
 export default class RentalController {
   async getAllRentals(req, res) {
     try {
-      const rentals = await RentalService.getAllRentals();
+      const rentals = await RentalService.getAllRentals(req.query);
       res.status(200).json(rentals);
     } catch (err) {
       res.status(500).json({ message: err.message });
