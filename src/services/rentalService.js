@@ -10,8 +10,31 @@ class RentalService {
     this.userRepository = new UserRepository();
   }
 
-  async getAllRentals() {
-    const rentals = await this.rentalRepository.findAll();
+  async getAllRentals(query = {}) {
+    const { search = "", sortBy = "createdAt", sortOrder = "desc" } = query;
+    const allowedSortFields = [
+      "startDate",
+      "endDate",
+      "billingDay",
+      "status",
+      "createdAt",
+      "updatedAt",
+    ];
+
+    if (!allowedSortFields.includes(sortBy)) {
+      throw new Error("Invalid sorting field");
+    }
+
+    if (!["asc", "desc"].includes(sortOrder)) {
+      throw new Error("Invalid sorting order");
+    }
+
+    const safeSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const rentals = await this.rentalRepository.findAll({
+      search: safeSearch,
+      sortBy,
+      sortOrder,
+    });
     if (!rentals || rentals.length == 0) {
       return {
         message: "belum ada data sewa",
@@ -19,6 +42,7 @@ class RentalService {
     }
     return {
       rentals: rentals,
+      total: rentals.length,
     };
   }
 

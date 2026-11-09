@@ -5,11 +5,13 @@ import NotFoundView from "@/views/NotFoundView.vue";
 import boardingHouseRoutes from "./boardingHouseRoutes";
 import roomRoutes from "./roomRoutes";
 import userRoutes from "./userRoutes";
+import rentalRoutes from "./rentalRoutes";
 
 const routes = [
   ...boardingHouseRoutes,
   ...roomRoutes,
   ...userRoutes,
+  ...rentalRoutes,
   {
     path: "/",
     component: DefaultLayout,
