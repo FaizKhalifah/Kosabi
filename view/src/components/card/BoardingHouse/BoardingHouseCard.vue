@@ -20,19 +20,20 @@
             placeholder="Cari nama kostan, kota, alamat..."
             class="search-input"
           />
+          <div class="searchFormButtons">
+            <button type="submit" class="search-button" :disabled="isLoading">
+              Cari
+            </button>
 
-          <button type="submit" class="search-button" :disabled="isLoading">
-            Cari
-          </button>
-
-          <button
-            type="button"
-            class="reset-button"
-            @click="resetFilters"
-            :disabled="isLoading"
-          >
-            Reset
-          </button>
+            <button
+              type="button"
+              class="reset-button"
+              @click="resetFilters"
+              :disabled="isLoading"
+            >
+              Reset
+            </button>
+          </div>
         </form>
 
         <div class="sorting-controls">
@@ -549,7 +550,6 @@ tbody tr:last-child td {
   font-size: 0.8rem;
   font-style: italic;
 }
-
 /* Search and Sorting */
 
 .filter-container {
@@ -558,48 +558,77 @@ tbody tr:last-child td {
   align-items: center;
   flex-wrap: wrap;
   gap: 1rem;
+  width: 100%;
   margin-bottom: 1.5rem;
 }
 
+/* Search form */
+
 .search-form {
   display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  flex: 1;
+  align-items: flex-start;
+  gap: 0.65rem;
+  flex: 1 1 400px;
+  min-width: 0;
 }
 
 .search-input {
-  min-width: 200px;
   flex: 1;
-  padding: 0.65rem 1rem;
+  min-width: 180px;
+  width: 100%;
+  height: 48px;
+  box-sizing: border-box;
+  padding: 0.5rem 1rem;
   border: 1px solid #d1d5db;
   border-radius: 0.5rem;
+  background-color: #ffffff;
+  color: #1f2937;
   font-size: 0.875rem;
   outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-input::placeholder {
+  color: #9ca3af;
 }
 
 .search-input:focus {
   border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
+
+/* Search buttons */
 
 .search-button,
 .reset-button {
-  padding: 0.65rem 1rem;
-  border: none;
+  flex-shrink: 0;
+  height: 42px;
+  padding: 0 1.25rem;
+  border: 1px solid transparent;
   border-radius: 0.5rem;
-  cursor: pointer;
+  font-size: 0.875rem;
   font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .search-button {
   background-color: #2563eb;
-  color: white;
+  color: #ffffff;
+}
+
+.search-button:hover:not(:disabled) {
+  background-color: #1d4ed8;
 }
 
 .reset-button {
-  background-color: #e5e7eb;
+  background-color: #f3f4f6;
   color: #374151;
+  border-color: #e5e7eb;
+}
+
+.reset-button:hover:not(:disabled) {
+  background-color: #e5e7eb;
 }
 
 .search-button:disabled,
@@ -608,36 +637,107 @@ tbody tr:last-child td {
   cursor: not-allowed;
 }
 
+/* Sorting controls */
+
 .sorting-controls {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0.65rem;
+  flex-shrink: 0;
 }
 
 .sorting-controls label {
-  font-size: 0.875rem;
   color: #4b5563;
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
 }
 
 .sorting-controls select {
-  padding: 0.65rem;
+  height: 42px;
+  min-width: 145px;
+  box-sizing: border-box;
+  padding: 0 2rem 0 0.75rem;
   border: 1px solid #d1d5db;
   border-radius: 0.5rem;
-  background-color: white;
+  background-color: #ffffff;
+  color: #374151;
   font-size: 0.875rem;
+  cursor: pointer;
+  outline: none;
 }
 
-/* Small screens */
+.sorting-controls select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* Responsive layout */
+
+@media (max-width: 900px) {
+  .filter-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-form {
+    width: 100%;
+    flex: none;
+  }
+
+  .sorting-controls {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
 
 @media (max-width: 640px) {
-  .page-header h1 {
-    font-size: 1.25rem;
+  .search-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+
+  .search-input {
+    grid-column: 1 / -1;
+    min-width: 0;
+  }
+
+  .search-button,
+  .reset-button {
+    width: 100%;
+  }
+
+  .sorting-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+
+  .sorting-controls label {
+    grid-column: 1 / -1;
+  }
+
+  .sorting-controls select {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .page-header {
+    align-items: flex-start;
   }
 
   .state-message {
     min-height: 200px;
     padding: 1.5rem 1rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .sorting-controls {
+    grid-template-columns: 1fr;
   }
 }
 </style>
