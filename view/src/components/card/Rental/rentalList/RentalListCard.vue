@@ -18,19 +18,20 @@
             placeholder="Cari tanggal mulai, tanggal selesai..."
             class="search-input"
           />
+          <div class="searchFormButtons">
+            <button type="submit" class="search-button" :disabled="isLoading">
+              Cari
+            </button>
 
-          <button type="submit" class="search-button" :disabled="isLoading">
-            Cari
-          </button>
-
-          <button
-            type="button"
-            class="reset-button"
-            @click="resetFilters"
-            :disabled="isLoading"
-          >
-            Reset
-          </button>
+            <button
+              type="button"
+              class="reset-button"
+              @click="resetFilters"
+              :disabled="isLoading"
+            >
+              Reset
+            </button>
+          </div>
         </form>
 
         <div class="sorting-controls">
@@ -77,7 +78,7 @@
       </div>
 
       <div v-else class="table-container">
-        <button class="addRental" @click="addRental">Create New Rental</button>
+        <button class="addButton" @click="addRental">Create New Rental</button>
         <table>
           <thead>
             <tr>
