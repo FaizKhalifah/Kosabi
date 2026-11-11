@@ -22,7 +22,10 @@ export default class RentalRepository extends BaseRepository {
       [sortBy]: sortOrder === "asc" ? 1 : -1,
     };
 
-    return await this.model.find(filter).sort(sortOptions);
+    return await this.model
+      .find(filter)
+      .sort(sortOptions)
+      .populate("tenant", "name");
   }
 
   async findByTenant(id) {

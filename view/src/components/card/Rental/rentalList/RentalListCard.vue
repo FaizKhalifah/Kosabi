@@ -103,7 +103,7 @@
               </td>
 
               <td>
-                {{ displayValue(rental.tenant.name) }}
+                {{ displayValue(rental.tenant?.name) }}
               </td>
 
               <td class="room-number-cell">
@@ -111,11 +111,11 @@
               </td>
 
               <td>
-                {{ displayValue(rental.startDate) }}
+                {{ formatDate(rental.startDate) }}
               </td>
 
               <td>
-                {{ displayValue(rental.endDate) }}
+                {{ formatDate(rental.endDate) }}
               </td>
 
               <td>
