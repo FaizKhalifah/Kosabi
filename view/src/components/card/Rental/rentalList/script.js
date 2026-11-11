@@ -88,6 +88,23 @@ export default {
       return "status-neutral";
     },
 
+    formatDate(date) {
+      if (!date) return "-";
+
+      const parsedDate = new Date(date);
+
+      if (Number.isNaN(parsedDate.getTime())) {
+        return "-";
+      }
+
+      return new Intl.DateTimeFormat("id-ID", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric",
+        timeZone: "Asia/Jakarta",
+      }).format(parsedDate);
+    },
+
     addRental() {
       this.$router.push("/rentals/add");
     },
