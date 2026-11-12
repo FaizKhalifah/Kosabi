@@ -107,7 +107,7 @@
               </td>
 
               <td class="room-number-cell">
-                {{ displayValue(rental.room.roomNumber) }}
+                {{ displayValue(rental.room?.roomNumber) }}
               </td>
 
               <td>
