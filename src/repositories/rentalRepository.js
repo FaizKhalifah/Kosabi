@@ -25,7 +25,8 @@ export default class RentalRepository extends BaseRepository {
     return await this.model
       .find(filter)
       .sort(sortOptions)
-      .populate("tenant", "name");
+      .populate("tenant", "name")
+      .populate("room", "roomNumber");
   }
 
   async findByTenant(id) {
