@@ -6,10 +6,12 @@ const BoardingHouseSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
+      maxlength: 150,
     },
 
     description: {
       type: String,
+      trim: true,
     },
 
     address: {
@@ -35,16 +37,16 @@ const BoardingHouseSchema = new mongoose.Schema(
     email: {
       type: String,
       required: true,
-      trim: true,
       unique: true,
+      trim: true,
       lowercase: true,
     },
 
     phone: {
       type: String,
       required: true,
-      trim: true,
       unique: true,
+      trim: true,
     },
 
     rules: [
@@ -67,8 +69,17 @@ const BoardingHouseSchema = new mongoose.Schema(
     ],
 
     location: {
-      latitude: Number,
-      longitude: Number,
+      latitude: {
+        type: Number,
+        min: -90,
+        max: 90,
+      },
+
+      longitude: {
+        type: Number,
+        min: -180,
+        max: 180,
+      },
     },
 
     status: {
@@ -80,11 +91,14 @@ const BoardingHouseSchema = new mongoose.Schema(
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: false,
+      default: null,
     },
   },
-  { timestamps: true },
+  {
+    timestamps: true,
+  },
 );
 
 const BoardingHouse = mongoose.model("BoardingHouse", BoardingHouseSchema);
+
 export default BoardingHouse;
