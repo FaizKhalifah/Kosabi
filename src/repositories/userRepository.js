@@ -61,4 +61,8 @@ export default class UserRepository extends BaseRepository {
   async getAllTenants() {
     return User.find({ role: "TENANT" });
   }
+
+  async findByIdForRental(id, session) {
+    return await this.model.findById(id).session(session);
+  }
 }
