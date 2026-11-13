@@ -6,8 +6,13 @@ export default class UserRepository extends BaseRepository {
     super(User);
   }
 
-  async findAll({ search = "", sortBy = "createdAt", sortOrder = "desc" }) {
+  async findAll({
+    search = "",
+    sortBy = "createdAt",
+    sortOrder = "desc",
+  } = {}) {
     const filter = {};
+
     if (search) {
       filter.$or = [
         { name: { $regex: search, $options: "i" } },
@@ -21,6 +26,16 @@ export default class UserRepository extends BaseRepository {
     };
 
     return await this.model.find(filter).sort(sortOptions);
+  }
+
+  async findById(id, options = {}) {
+    let query = this.model.findById(id);
+
+    if (options.session) {
+      query = query.session(options.session);
+    }
+
+    return await query;
   }
 
   async findByName(name) {
@@ -45,5 +60,9 @@ export default class UserRepository extends BaseRepository {
 
   async getAllTenants() {
     return User.find({ role: "TENANT" });
+  }
+
+  async findByIdForRental(id, session) {
+    return await this.model.findById(id).session(session);
   }
 }

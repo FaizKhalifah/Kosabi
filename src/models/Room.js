@@ -1,4 +1,3 @@
-import { UUID } from "bson";
 import mongoose from "mongoose";
 
 const RoomSchema = new mongoose.Schema(
@@ -13,12 +12,12 @@ const RoomSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       default: null,
-      required: false,
     },
 
     roomNumber: {
       type: String,
       required: true,
+      trim: true,
     },
 
     floor: {
@@ -41,25 +40,27 @@ const RoomSchema = new mongoose.Schema(
 
     deposit: {
       type: Number,
+      min: 0,
       required: true,
     },
 
     capacity: {
       type: Number,
-      required: true,
       min: 1,
       default: 1,
+      required: true,
     },
 
     status: {
       type: String,
-      required: true,
       enum: ["AVAILABLE", "OCCUPIED", "MAINTENANCE", "RESERVED"],
       default: "AVAILABLE",
+      required: true,
     },
 
     size: {
       type: Number,
+      min: 0,
       required: true,
     },
 
@@ -81,8 +82,24 @@ const RoomSchema = new mongoose.Schema(
       trim: true,
     },
   },
-  { timestamps: true },
+  {
+    timestamps: true,
+  },
 );
 
+RoomSchema.index(
+  {
+    boardingHouse: 1,
+    roomNumber: 1,
+  },
+  {
+    unique: true,
+  },
+);
+
+RoomSchema.index({ status: 1 });
+RoomSchema.index({ boardingHouse: 1, status: 1 });
+
 const Room = mongoose.model("Room", RoomSchema);
+
 export default Room;
