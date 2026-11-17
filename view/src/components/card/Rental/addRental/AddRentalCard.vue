@@ -1,6 +1,6 @@
 <template>
   <BaseCard>
-    <form>
+    <form @submit.prevent="addRental">
       <h2>Tambah Rental</h2>
       <div class="form-group">
         <label>Penghuni ruangan</label>
@@ -79,6 +79,19 @@
         <label>Catatan</label>
         <input v-model="notes" type="text" required />
       </div>
+      <!-- FEEDBACK -->
+      <p v-if="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </p>
+
+      <p v-if="successMessage" class="success-message">
+        {{ successMessage }}
+      </p>
+
+      <!-- SUBMIT -->
+      <button type="submit" class="submit-button" :disabled="isLoading">
+        {{ isLoading ? "Menyimpan..." : "Tambah rental" }}
+      </button>
     </form>
   </BaseCard>
 </template>
